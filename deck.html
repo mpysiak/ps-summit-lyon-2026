@@ -300,6 +300,12 @@
   .split .term { align-self: start; }
   .split.skills ul { font-size: 1.72cqi; }
 
+  /* ---- video ---- */
+  .slide.video { padding: 6cqi 5cqi 4.5cqi; }
+  .vid-wrap { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; }
+  .vid { max-width: 100%; max-height: 100%; border-radius: .6cqi; box-shadow: var(--shadow); background: #000; display: block; }
+  .vid-wrap .badge { position: absolute; top: 1.2cqi; right: 1.2cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .08em; text-transform: uppercase; background: var(--mark); color: var(--mark-ink); padding: .4cqi .9cqi; border-radius: .4cqi; }
+
   /* ---- nav & notes ---- */
   .notes { display: none; }
   body.notes-on .slide.is-active .notes {
@@ -401,10 +407,12 @@
   </section>
 
   <!-- 5 · demo przebieg 1 -->
-  <section class="slide big">
-    <div class="eyebrow">Demo · przebieg 1</div>
-    <h1>Demo</h1>
-    <p class="lede">Goły agent. Bez Mate.</p>
+  <section class="slide video">
+    <div class="eyebrow">Demo · przebieg 1 · goły agent, bez Mate</div>
+    <div class="vid-wrap">
+      <video class="vid" src="media/demo-1-bare.webm" preload="auto" playsinline></video>
+      <span class="badge">nagranie ×5</span>
+    </div>
   </section>
 
   <!-- 6 · piramida -->
@@ -509,11 +517,12 @@
     <p class="lede">Zero sieci, sekundy. Agent dostaje instrukcje i skille w plikach. <strong>Między nagraniem 1 a 2 zmieniło się tylko to.</strong></p>
   </section>
 
-  <!-- 11 · demo przebieg 2 -->
-  <section class="slide big">
-    <div class="eyebrow">Demo · przebieg 2</div>
-    <h1>Demo</h1>
-    <p class="lede">Ten sam prompt. Nowa sesja. Z Mate.</p>
+  <!-- 10 · demo przebieg 2 -->
+  <section class="slide video">
+    <div class="eyebrow">Demo · przebieg 2 · ten sam prompt, nowa sesja, z Mate</div>
+    <div class="vid-wrap">
+      <video class="vid" src="media/demo-2-mate.webm" preload="auto" playsinline></video>
+    </div>
   </section>
 
   <!-- 12 · co dostał agent -->
@@ -764,7 +773,14 @@
     return isNaN(n) ? 0 : Math.min(Math.max(n - 1, 0), slides.length - 1);
   }
   function paint() {
-    slides.forEach(function (s, k) { s.classList.toggle('is-active', k === idx); });
+    slides.forEach(function (s, k) {
+      var active = k === idx;
+      s.classList.toggle('is-active', active);
+      Array.prototype.forEach.call(s.querySelectorAll('video'), function (v) {
+        if (active) { v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        else { v.pause(); v.currentTime = 0; }
+      });
+    });
     var nodes = slides[idx].querySelectorAll('.step');
     Array.prototype.forEach.call(nodes, function (n) {
       n.classList.toggle('hot', parseInt(n.getAttribute('data-step'), 10) === step);
@@ -790,7 +806,12 @@
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     switch (e.key) {
-      case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case ' ':
+        e.preventDefault();
+        var vid = slides[idx].querySelector('video');
+        if (vid) { vid.paused ? vid.play() : vid.pause(); } else { next(); }
+        break;
+      case 'ArrowRight': case 'ArrowDown': case 'PageDown': e.preventDefault(); next(); break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); prev(); break;
       case 'Home': e.preventDefault(); go(0, false); break;
       case 'End': e.preventDefault(); go(slides.length - 1, false); break;
