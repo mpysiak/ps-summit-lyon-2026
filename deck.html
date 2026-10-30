@@ -413,6 +413,11 @@
   .harness .thesis { margin-top: auto; }
   .harness-photo { margin: 0; border-radius: 2.2cqi; overflow: hidden; min-height: 0; }
   .harness-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .ex-cards { display: grid; gap: 1cqi; align-content: start; }
+  .ex-cards .card.pss-card { padding: 1.3cqi 2cqi 1.5cqi; border-radius: 1.4cqi; gap: .3cqi; }
+  .ex-cards .card.pss-card h3 { font-size: 1.25cqi; }
+  .ex-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.75cqi; gap: .25cqi; }
 </style>
 
 <div class="stage" id="stage">
@@ -497,19 +502,27 @@
 
   <!-- 5 · example -->
   <section class="slide example">
-    <div class="eyebrow">Example · the same in both runs</div>
+    <div class="eyebrow">A simple example · before any tooling</div>
     <h2>Clean Sylius, <span class="q">one customization</span></h2>
     <div class="ex-grid">
-      <ul>
-        <li><strong>Sylius Standard 2.2</strong>, default fixtures. Product list <em>T-shirts › Men</em>: 9 products × 5 variants</li>
-        <li><strong>Ticket:</strong> under the product name show "5 variants · S, M, L, XL, XXL · 28 in stock"</li>
-        <li><strong>Done the Sylius way:</strong> twig hook + template, zero PHP. The template iterates over the variants and their options</li>
-        <li><strong>Result:</strong> <mark>45× the same SELECT</mark> on one page, 111 queries in total</li>
-      </ul>
+      <div class="ex-cards">
+        <div class="card pss-card">
+          <h3>Setup</h3>
+          <p class="kw"><span>Sylius Standard 2.2</span><span>9 products × 5 variants</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>Ticket</h3>
+          <p class="kw"><span>Show variants and stock on the product card</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>Result</h3>
+          <p class="kw"><span>45× the same SELECT</span><span>111 queries on one page</span></p>
+        </div>
+      </div>
       <div class="shots">
         <img class="shot" src="media/example-listing.png" alt="T-shirts / Men product list with a variants line under the name and the profiler toolbar">
         <img class="shot strip" src="media/example-toolbar.png" alt="Profiler toolbar: 111 database queries, in yellow">
-        <p class="cap">Profiler toolbar: <strong>111 queries</strong>, in yellow. The profiler itself sees it. The question is whether the agent will ask it.</p>
+        <p class="cap">The profiler sees it. <strong>Will the agent ask?</strong></p>
       </div>
     </div>
     <div class="notes">Context before recording 1. The customization is correct in terms of conventions (hook, not override), the bug sits in the data path: a loop in the template over a relation = classic N+1. With the customization 111 queries, of which 45 are the same SELECT on option values. Do NOT give the baseline (71 on a clean listing) from the stage — if someone asks: "part of it is Sylius itself, but our 40 is one template". Both recordings get the same page and the same prompt.</div>
