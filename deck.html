@@ -397,8 +397,9 @@
   /* black rounded card from the PS Summit template */
   .card.pss-card { background: #000; border: 0; border-radius: 2.2cqi; color: #fff; padding: 2.6cqi 2.6cqi 2.8cqi; backdrop-filter: none; gap: 1.2cqi; }
   .card.pss-card .tag { color: var(--pss-green); }
-  .card.pss-card h3 { color: #fff; font-size: 2.3cqi; }
-  .intro-grid .card.pss-card p { color: #c9d2db; }
+  .card.pss-card h3 { color: #fff; font-size: 3.1cqi; letter-spacing: -.02em; }
+  .card.pss-card ul { list-style: none; margin: .4cqi 0 0; padding: 0; font-size: 1.9cqi; color: #c9d2db; display: grid; gap: .5cqi; }
+  .card.pss-card li::before { content: "—"; color: var(--pss-green); margin-right: .8cqi; }
 </style>
 
 <div class="stage" id="stage">
@@ -424,19 +425,16 @@
     <p class="role">Senior Backend Developer at <strong>Sylius</strong></p>
     <div class="intro-grid">
       <div class="card pss-card">
-        <div class="tag">Product</div>
-        <h3>Sylius core and the B2B Suite</h3>
-        <p>Building the platform and its B2B module.</p>
+        <h3>Product</h3>
+        <ul><li>Sylius core</li><li>B2B Suite</li></ul>
       </div>
       <div class="card pss-card">
-        <div class="tag">Projects</div>
-        <h3>Audits and architecture</h3>
-        <p>Reviewing e-commerce implementations and advising the teams behind them.</p>
+        <h3>Projects</h3>
+        <ul><li>e-commerce audits</li><li>architecture advice</li></ul>
       </div>
       <div class="card pss-card">
-        <div class="tag">Developer tooling</div>
-        <h3>AI tools for developers</h3>
-        <p>Author of the Sylius extension for Symfony AI Mate. Open source by default.</p>
+        <h3>Developer tooling</h3>
+        <ul><li>Sylius Mate extension</li><li>open source</li></ul>
       </div>
     </div>
     <div class="intro-foot"><span>github.com/mpysiak</span><span>linkedin.com/in/mpysiak</span></div>
