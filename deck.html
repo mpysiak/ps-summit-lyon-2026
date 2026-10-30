@@ -384,10 +384,13 @@
   .pss-thanks .links strong { color: #fff; font-weight: 500; }
   .pss-thanks .qr-wrap { position: absolute; right: 7cqi; bottom: 5cqi; top: auto; transform: none; width: 13cqi; padding: .8cqi; border-radius: .6cqi; box-shadow: none; }
   .stage.on-pss .counter, .stage.on-pss .brand, .stage.on-pss .progress { opacity: 0; }
-  /* variant A: gradient behind every slide */
+  /* variant A: the cover gradient behind every slide, light theme on top */
   body.bg-all .stage { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; }
-  body.bg-all .card, body.bg-all .thesis { background: rgba(255,255,255,.74); border-color: rgba(255,255,255,.6); }
-  body.bg-all .brand { color: #16202a; }
+  body.bg-all .card, body.bg-all .thesis { background: rgba(255,255,255,.62); border-color: rgba(255,255,255,.7); backdrop-filter: blur(6px); }
+  body.bg-all .card.hot { background: var(--accent); }
+  body.bg-all .brand, body.bg-all .counter { color: #16202a; }
+  body.bg-all .progress { background: #16202a; opacity: .35; }
+  body.bg-all.acc-green { --accent: #0f9b7f; --accent-ink: #ffffff; }
   /* variant B: gradient frame, content on a white panel (template inner pages) */
   body.bg-card .stage { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; }
   body.bg-card .slide:not(.pss) { inset: 2.6cqi 2.6cqi 2.6cqi 2.6cqi; padding: 4.2cqi 5cqi 5cqi; background: var(--paper); border-radius: 1.1cqi; }
@@ -1023,6 +1026,7 @@ description: Use when a task touches
   });
   window.addEventListener('hashchange', function () { if (fromHash() !== idx) go(fromHash(), false); });
   var bg = /[?&]bg=(all|card)/.exec(location.search); if (bg) document.body.classList.add('bg-' + bg[1]);
+  if (bg && bg[1] === 'all') document.documentElement.setAttribute('data-theme', 'light');
   if (/[?&]acc=green/.test(location.search)) document.body.classList.add('acc-green');
   go(fromHash(), false);
 })();
