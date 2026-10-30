@@ -1,6 +1,7 @@
+<meta charset="utf-8">
 <title>Your AI Knows PHP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@700&family=Instrument+Serif:ital@1&display=swap">
 <style>
   :root {
     --ground: #e9edf1;
@@ -361,19 +362,51 @@
     content: "notes · n"; display: block; font-family: "JetBrains Mono", ui-monospace, monospace;
     font-size: 1cqi; letter-spacing: .12em; text-transform: uppercase; opacity: .6; margin-bottom: .4cqi;
   }
+
+  /* ---- PS Summit template: cover + thank-you (required), gradient variants (prototype) ---- */
+  :root { --pss-green: #22b99a; }
+  .slide.pss { padding: 0; }
+  .pss .wordmark { position: absolute; display: block; }
+  .pss-cover { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; color: #000; }
+  .pss-cover .wordmark { left: 4.83cqi; top: 5.07cqi; width: 26.8cqi; }
+  .pss-cover .lockup { position: absolute; left: 50%; bottom: 2.65cqi; width: 25.7cqi; transform: translateX(-50%); display: block; }
+  .pss-cover .hero { position: absolute; left: 7cqi; right: 7cqi; top: 19.5cqi; }
+  .pss-cover h1 { font-family: "Inter Tight", "Bricolage Grotesque", Arial, sans-serif; font-weight: 700; font-size: 5.2cqi; letter-spacing: -.03em; line-height: 1.02; max-width: 17ch; color: #000; }
+  .pss-cover h1 em { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; color: var(--pss-green); letter-spacing: 0; }
+  .pss-cover .sub { font-family: "Instrument Sans", Arial, sans-serif; font-size: 2cqi; line-height: 1.35; color: #16202a; margin-top: 1.6cqi; max-width: 46ch; }
+  .pss-cover .who { margin-top: 2cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.35cqi; letter-spacing: .08em; text-transform: uppercase; color: #16202a; display: flex; gap: 2.4cqi; }
+  .pss-cover .who b { font-weight: 500; }
+  .pss-thanks { background: #000; color: #fff; }
+  .pss-thanks .wordmark { left: 3.82cqi; top: 3.33cqi; width: 18.7cqi; }
+  .pss-thanks .t1 { position: absolute; left: 22cqi; top: 17.1cqi; font-family: "Inter Tight", Arial, sans-serif; font-weight: 700; font-size: 16.25cqi; line-height: 1; letter-spacing: -.02em; color: #fff; margin: 0; }
+  .pss-thanks .t2 { position: absolute; left: 52.2cqi; top: 21.6cqi; font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-size: 18.75cqi; line-height: 1; color: var(--pss-green); margin: 0; }
+  .pss-thanks .links { position: absolute; left: 7cqi; bottom: 6cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.35cqi; letter-spacing: .06em; color: #cfd6dc; display: grid; gap: .7cqi; }
+  .pss-thanks .links strong { color: #fff; font-weight: 500; }
+  .pss-thanks .qr-wrap { position: absolute; right: 7cqi; bottom: 5cqi; top: auto; transform: none; width: 13cqi; padding: .8cqi; border-radius: .6cqi; box-shadow: none; }
+  .stage.on-pss .counter, .stage.on-pss .brand, .stage.on-pss .progress { opacity: 0; }
+  /* variant A: gradient behind every slide */
+  body.bg-all .stage { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; }
+  body.bg-all .card, body.bg-all .thesis { background: rgba(255,255,255,.74); border-color: rgba(255,255,255,.6); }
+  body.bg-all .brand { color: #16202a; }
+  /* variant B: gradient frame, content on a white panel (template inner pages) */
+  body.bg-card .stage { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; }
+  body.bg-card .slide:not(.pss) { inset: 2.6cqi 2.6cqi 2.6cqi 2.6cqi; padding: 4.2cqi 5cqi 5cqi; background: var(--paper); border-radius: 1.1cqi; }
+  body.bg-card .counter, body.bg-card .brand { color: #16202a; }
+  body.acc-green { --accent: #22b99a; --accent-ink: #06231c; }
+  body.bg-card .counter { bottom: .75cqi; } body.bg-card .brand { bottom: .5cqi; } body.bg-card .progress { display: none; }
 </style>
 
 <div class="stage" id="stage">
 
   <!-- 1 · title -->
-  <section class="slide title">
-    <div class="kicker">PHPers Bydgoszcz · 16.09.2026</div>
-    <h1>Your AI Knows PHP.<br>But Does It Know Your Project?</h1>
-    <p class="sub">Symfony AI Mate in practice, on the example of Sylius</p>
-    <div class="foot">
-      <span>Michał Pysiak</span>
-      <span>Sylius</span>
+  <section class="slide title pss pss-cover">
+    <img class="wordmark" src="media/pss/pss-wordmark-dark.png" alt="PS Summit 2026 · powered by PrestaShop & Sylius">
+    <div class="hero">
+      <h1>Your AI Knows PHP.<br>But Does It Know <em>Your</em> Sylius Project?</h1>
+      <p class="sub">Symfony AI Mate and the Sylius Mate extension: facts for your agent instead of guesses</p>
+      <div class="who"><b>Michał Pysiak</b><span>Sylius</span><span>Lyon · 5 Nov 2026</span></div>
     </div>
+    <img class="lockup" src="media/pss/sylius-prestashop-lockup.png" alt="Sylius | PrestaShop">
   </section>
 
   <!-- 2 · about me -->
@@ -862,16 +895,15 @@ description: Use when a task touches
   </section>
 
   <!-- 20 · thanks -->
-  <section class="slide title thanks">
-    <div class="kicker">Thanks</div>
-    <h1>Questions?</h1>
-    <p class="sub">Slides, links, commands from the demo:<br><strong>github.com/mpysiak/phpers-bydgoszcz-2026</strong></p>
-    <div class="qr-wrap"><svg xmlns="http://www.w3.org/2000/svg" class="qr" role="img" aria-label="QR: github.com/mpysiak/phpers-bydgoszcz-2026" viewBox="0 0 41 41" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h41v41H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h7M4 5.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h6m1 0h2m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m4 0h3m1 0h3m1 0h2m2 0h2m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M14 11.5h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2M4 12.5h1m1 0h1m1 0h1m1 0h1m5 0h2m2 0h2m3 0h3m4 0h1m2 0h1M5 13.5h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h3m1 0h2m2 0h4m3 0h2M4 14.5h2m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h1M4 15.5h1m1 0h2m6 0h1m2 0h3m1 0h4m2 0h1m2 0h1m1 0h1m3 0h1M4 16.5h8m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h4m2 0h1m2 0h1M4 17.5h2m1 0h2m3 0h2m2 0h9m5 0h1m3 0h1m1 0h1M4 18.5h1m4 0h2m3 0h12m2 0h2m1 0h1m1 0h4M4 19.5h5m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h2m4 0h1m4 0h1M5 20.5h2m2 0h2m3 0h4m1 0h1m1 0h1m1 0h3m1 0h4M4 21.5h2m2 0h2m1 0h1m2 0h1m1 0h3m1 0h1m3 0h1m3 0h4m4 0h1M4 22.5h1m3 0h3m3 0h2m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m3 0h3M8 23.5h1m5 0h1m3 0h1m1 0h1m3 0h2m1 0h2m1 0h3m2 0h2M4 24.5h1m3 0h3m1 0h1m1 0h3m1 0h2m3 0h1m1 0h1m3 0h2m2 0h1m2 0h1M5 25.5h3m1 0h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M4 26.5h1m2 0h1m2 0h2m2 0h3m5 0h1m2 0h2m2 0h2m1 0h1m2 0h2M5 27.5h1m1 0h1m1 0h1m2 0h3m1 0h2m1 0h1m1 0h3m1 0h2m3 0h1m4 0h1M4 28.5h1m1 0h3m1 0h7m3 0h2m2 0h2m2 0h6m1 0h1M12 29.5h1m1 0h1m1 0h3m2 0h1m3 0h1m2 0h1m3 0h2m2 0h1M4 30.5h7m2 0h2m2 0h2m3 0h1m3 0h3m1 0h1m1 0h1m1 0h3M4 31.5h1m5 0h1m2 0h1m1 0h1m5 0h5m2 0h1m3 0h1M4 32.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h4m1 0h3m1 0h1m1 0h6m1 0h2M4 33.5h1m1 0h3m1 0h1m2 0h5m1 0h6m7 0h5M4 34.5h1m1 0h3m1 0h1m1 0h2m2 0h5m1 0h4m6 0h3m1 0h1M4 35.5h1m5 0h1m3 0h2m1 0h2m1 0h3m1 0h7m1 0h1m2 0h1M4 36.5h7m1 0h2m1 0h2m2 0h3m1 0h3m1 0h2m3 0h1m2 0h2"/></svg>
-</div>
-    <div class="foot">
-      <span>Michał Pysiak</span>
-      <span>Sylius</span>
+  <section class="slide title pss pss-thanks">
+    <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
+    <p class="t1">Thank</p>
+    <p class="t2">you</p>
+    <div class="links">
+      <span>Slides, links, commands from the demo</span>
+      <strong>github.com/mpysiak/phpers-bydgoszcz-2026</strong>
     </div>
+    <div class="qr-wrap"><svg xmlns="http://www.w3.org/2000/svg" class="qr" role="img" aria-label="QR: github.com/mpysiak/phpers-bydgoszcz-2026" viewBox="0 0 41 41" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h41v41H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h7M4 5.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h6m1 0h2m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m4 0h3m1 0h3m1 0h2m2 0h2m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M14 11.5h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2M4 12.5h1m1 0h1m1 0h1m1 0h1m5 0h2m2 0h2m3 0h3m4 0h1m2 0h1M5 13.5h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h3m1 0h2m2 0h4m3 0h2M4 14.5h2m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h1M4 15.5h1m1 0h2m6 0h1m2 0h3m1 0h4m2 0h1m2 0h1m1 0h1m3 0h1M4 16.5h8m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h4m2 0h1m2 0h1M4 17.5h2m1 0h2m3 0h2m2 0h9m5 0h1m3 0h1m1 0h1M4 18.5h1m4 0h2m3 0h12m2 0h2m1 0h1m1 0h4M4 19.5h5m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h2m4 0h1m4 0h1M5 20.5h2m2 0h2m3 0h4m1 0h1m1 0h1m1 0h3m1 0h4M4 21.5h2m2 0h2m1 0h1m2 0h1m1 0h3m1 0h1m3 0h1m3 0h4m4 0h1M4 22.5h1m3 0h3m3 0h2m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m3 0h3M8 23.5h1m5 0h1m3 0h1m1 0h1m3 0h2m1 0h2m1 0h3m2 0h2M4 24.5h1m3 0h3m1 0h1m1 0h3m1 0h2m3 0h1m1 0h1m3 0h2m2 0h1m2 0h1M5 25.5h3m1 0h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M4 26.5h1m2 0h1m2 0h2m2 0h3m5 0h1m2 0h2m2 0h2m1 0h1m2 0h2M5 27.5h1m1 0h1m1 0h1m2 0h3m1 0h2m1 0h1m1 0h3m1 0h2m3 0h1m4 0h1M4 28.5h1m1 0h3m1 0h7m3 0h2m2 0h2m2 0h6m1 0h1M12 29.5h1m1 0h1m1 0h3m2 0h1m3 0h1m2 0h1m3 0h2m2 0h1M4 30.5h7m2 0h2m2 0h2m3 0h1m3 0h3m1 0h1m1 0h1m1 0h3M4 31.5h1m5 0h1m2 0h1m1 0h1m5 0h5m2 0h1m3 0h1M4 32.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h4m1 0h3m1 0h1m1 0h6m1 0h2M4 33.5h1m1 0h3m1 0h1m2 0h5m1 0h6m7 0h5M4 34.5h1m1 0h3m1 0h1m1 0h2m2 0h5m1 0h4m6 0h3m1 0h1M4 35.5h1m5 0h1m3 0h2m1 0h2m1 0h3m1 0h7m1 0h1m2 0h1M4 36.5h7m1 0h2m1 0h2m2 0h3m1 0h3m1 0h2m3 0h1m2 0h2"/></svg></div>
   </section>
 
   <div class="brand" aria-label="Sylius">
@@ -895,6 +927,7 @@ description: Use when a task touches
   }
   function paint() {
     document.getElementById('stage').classList.toggle('on-video', slides[idx].classList.contains('video'));
+    document.getElementById('stage').classList.toggle('on-pss', slides[idx].classList.contains('pss'));
     slides.forEach(function (s, k) {
       var active = k === idx;
       s.classList.toggle('is-active', active);
@@ -966,6 +999,8 @@ description: Use when a task touches
     }
   });
   window.addEventListener('hashchange', function () { if (fromHash() !== idx) go(fromHash(), false); });
+  var bg = /[?&]bg=(all|card)/.exec(location.search); if (bg) document.body.classList.add('bg-' + bg[1]);
+  if (/[?&]acc=green/.test(location.search)) document.body.classList.add('acc-green');
   go(fromHash(), false);
 })();
 </script>
