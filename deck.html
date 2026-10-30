@@ -442,32 +442,23 @@
   </section>
 
   <!-- 3 · how it went for us -->
-  <section class="slide" data-steps="2">
+  <section class="slide story">
     <div class="eyebrow">How it went for us</div>
-    <h2>Bare prompt, <span class="q">then ever-longer instructions</span></h2>
-    <div class="duo">
-      <div class="card step" data-step="1">
-        <div class="tag">Era 1 · bare prompt</div>
-        <h3>The model guesses</h3>
-        <ul>
-          <li>it <strong>has to</strong> answer, even when it doesn't know</li>
-          <li>gaps in context get filled in from training</li>
-          <li><strong>non-determinism:</strong> same question, different answers</li>
-          <li><strong>zero control</strong> over when it guessed</li>
-        </ul>
+    <h2>Three ways to work with an agent</h2>
+    <div class="intro-grid">
+      <div class="card pss-card">
+        <h3>June 2025</h3>
+        <p class="kw"><span>First experiments with Codex</span><span>Written up on the Sylius blog</span></p>
       </div>
-      <div class="card step" data-step="2">
-        <div class="tag">Era 2 · instructions</div>
-        <h3>Instructions grow, guessing stays</h3>
-        <ul>
-          <li>the reflex: let's describe the project in CLAUDE.md</li>
-          <li>every session pays for all of it</li>
-          <li>in our case: ~2,000 lines of instructions</li>
-          <li>the code compiles, but breaks conventions</li>
-        </ul>
+      <div class="card pss-card">
+        <h3>Bare prompts</h3>
+        <p class="kw"><span>Generic PHP</span><span>The model guesses</span></p>
+      </div>
+      <div class="card pss-card">
+        <h3>AGENTS.md</h3>
+        <p class="kw"><span>Instructions keep growing</span><span>Guessing stays</span></p>
       </div>
     </div>
-    <p class="thesis">Guessing is not a bug in the model. <mark>It is what the model does when it has no fact.</mark></p>
   </section>
 
   <!-- 4 · prose doesn't scale -->
