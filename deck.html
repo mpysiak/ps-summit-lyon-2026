@@ -10,7 +10,7 @@
     --line: #c9d2db;
     --ink: #16202a;
     --muted: #5a6b7a;
-    --accent: #2456c8;
+    --accent: #0f9b7f;
     --accent-ink: #ffffff;
     --mark: #ffd84d;
     --mark-ink: #3b2f00;
@@ -20,15 +20,6 @@
     --term-ink: #e6edf3;
     --term-hi: #ffd866;
     --shadow: 0 1.2cqi 3cqi rgba(22, 32, 42, .12);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ground: #0e141b; --paper: #182330; --paper-2: #1f2c3a; --line: #34465a;
-      --ink: #e8edf2; --muted: #97a8b8; --accent: #7fa6ff; --accent-ink: #0e141b;
-      --mark: #e3bf3f; --mark-ink: #1a1400; --ok: #5cc48a; --warn: #f08a72;
-      --term: #0a0f14; --term-ink: #e6edf3; --term-hi: #ffd866;
-      --shadow: 0 1.2cqi 3cqi rgba(0, 0, 0, .45);
-    }
   }
   :root[data-theme="dark"] {
     --ground: #0e141b; --paper: #182330; --paper-2: #1f2c3a; --line: #34465a;
@@ -384,19 +375,12 @@
   .pss-thanks .links strong { color: #fff; font-weight: 500; }
   .pss-thanks .qr-wrap { position: absolute; right: 7cqi; bottom: 5cqi; top: auto; transform: none; width: 13cqi; padding: .8cqi; border-radius: .6cqi; box-shadow: none; }
   .stage.on-pss .counter, .stage.on-pss .brand, .stage.on-pss .progress { opacity: 0; }
-  /* variant A: the cover gradient behind every slide, light theme on top */
-  body.bg-all .stage { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; }
-  body.bg-all .card, body.bg-all .thesis { background: rgba(255,255,255,.62); border-color: rgba(255,255,255,.7); backdrop-filter: blur(6px); }
-  body.bg-all .card.hot { background: var(--accent); }
-  body.bg-all .brand, body.bg-all .counter { color: #16202a; }
-  body.bg-all .progress { background: #16202a; opacity: .35; }
-  body.bg-all.acc-green { --accent: #0f9b7f; --accent-ink: #ffffff; }
-  /* variant B: gradient frame, content on a white panel (template inner pages) */
-  body.bg-card .stage { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; }
-  body.bg-card .slide:not(.pss) { inset: 2.6cqi 2.6cqi 2.6cqi 2.6cqi; padding: 4.2cqi 5cqi 5cqi; background: var(--paper); border-radius: 1.1cqi; }
-  body.bg-card .counter, body.bg-card .brand { color: #16202a; }
-  body.acc-green { --accent: #22b99a; --accent-ink: #06231c; }
-  body.bg-card .counter { bottom: .75cqi; } body.bg-card .brand { bottom: .5cqi; } body.bg-card .progress { display: none; }
+  /* PS Summit gradient behind every slide */
+  .stage { background: url(media/pss/pss-gradient.jpg) center / 100% 100% no-repeat; }
+  .card, .thesis { background: rgba(255,255,255,.62); border-color: rgba(255,255,255,.7); backdrop-filter: blur(6px); }
+  .card.hot { background: var(--accent); }
+  .brand, .counter { color: #16202a; }
+  .progress { background: #16202a; opacity: .35; }
 </style>
 
 <div class="stage" id="stage">
@@ -1025,9 +1009,6 @@ description: Use when a task touches
     }
   });
   window.addEventListener('hashchange', function () { if (fromHash() !== idx) go(fromHash(), false); });
-  var bg = /[?&]bg=(all|card)/.exec(location.search); if (bg) document.body.classList.add('bg-' + bg[1]);
-  if (bg && bg[1] === 'all') document.documentElement.setAttribute('data-theme', 'light');
-  if (/[?&]acc=green/.test(location.search)) document.body.classList.add('acc-green');
   go(fromHash(), false);
 })();
 </script>
