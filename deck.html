@@ -386,6 +386,13 @@
   .card.hot { background: var(--accent); }
   .brand, .counter { color: #16202a; }
   .progress { background: #16202a; opacity: .35; }
+
+  /* slide 2: about me */
+  .intro .role { font-size: 2.3cqi; color: var(--muted); margin: .6cqi 0 0; }
+  .intro .role strong { color: var(--ink); font-weight: 600; }
+  .intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2cqi; margin-top: 4cqi; }
+  .intro-grid .card p { margin: 0; font-size: 1.7cqi; color: var(--muted); line-height: 1.45; }
+  .intro-foot { margin-top: auto; display: flex; gap: 3cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .06em; color: var(--muted); }
 </style>
 
 <div class="stage" id="stage">
@@ -405,21 +412,28 @@
   </section>
 
   <!-- 2 · about me -->
-  <section class="slide">
+  <section class="slide intro">
     <div class="eyebrow">About me</div>
-    <h2>Hi!</h2>
-    <div class="about">
-      <div class="who"><div class="photo"><img src="media/michal.jpg" alt="Michał Pysiak"></div><p class="name">Michał Pysiak</p></div>
-      <div>
-        <h3>What I do at Sylius</h3>
-        <ul>
-          <li>I develop the <strong>B2B module</strong> in Sylius</li>
-          <li>I audit <strong>e-commerce projects</strong> and advise teams on implementations</li>
-          <li>I build <strong>AI tools for Sylius developers</strong></li>
-          <li>I am a fan of <strong>open source</strong></li>
-        </ul>
+    <h2>Michał Pysiak</h2>
+    <p class="role">Senior Backend Developer at <strong>Sylius</strong></p>
+    <div class="intro-grid">
+      <div class="card">
+        <div class="tag">Product</div>
+        <h3>Sylius core and the B2B Suite</h3>
+        <p>Building the platform and its B2B module.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Projects</div>
+        <h3>Audits and architecture</h3>
+        <p>Reviewing e-commerce implementations and advising the teams behind them.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Developer tooling</div>
+        <h3>AI tools for developers</h3>
+        <p>Author of the Sylius extension for Symfony AI Mate. Open source by default.</p>
       </div>
     </div>
+    <div class="intro-foot"><span>github.com/mpysiak</span><span>linkedin.com/in/mpysiak</span></div>
   </section>
 
   <!-- 3 · how it went for us -->
