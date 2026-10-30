@@ -418,6 +418,21 @@
   .ex-cards .card.pss-card { padding: 1.3cqi 2cqi 1.5cqi; border-radius: 1.4cqi; gap: .3cqi; }
   .ex-cards .card.pss-card h3 { font-size: 1.25cqi; }
   .ex-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.75cqi; gap: .25cqi; }
+
+  /* video with step-driven blocks */
+  .vsteps { padding: 4.9cqi 4cqi 3.6cqi; }
+  .vs-grid { display: grid; grid-template-columns: 56fr 44fr; gap: 1.8cqi; flex: 1; min-height: 0; margin-top: 1cqi; align-items: start; }
+  .vs-video { position: relative; background: #000; border-radius: 1.4cqi; overflow: hidden; aspect-ratio: 1792 / 1140; }
+  .vs-video video { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .vs-overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; opacity: 0; transition: opacity .18s ease; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 2.4cqi; color: #fff; text-shadow: 0 .2cqi 1cqi rgba(0,0,0,.6); }
+  .vs-overlay.show { opacity: 1; }
+  .vs-overlay span { background: rgba(0,0,0,.55); padding: .8cqi 1.6cqi; border-radius: 1cqi; }
+  .vs-steps { display: grid; gap: .8cqi; }
+  .vs-steps .step.card.pss-card { padding: 1cqi 1.6cqi 1.1cqi; border-radius: 1.2cqi; gap: .2cqi; opacity: .4; transition: opacity .2s ease, outline-color .2s ease; outline: .25cqi solid transparent; }
+  .vs-steps .step.hot { opacity: 1; outline-color: var(--pss-green); }
+  .vs-steps .step h3 { font-size: 1.15cqi; }
+  .vs-steps .step .kw { margin-top: .3cqi; font-size: 1.6cqi; line-height: 1.3; }
+  .vs-steps .step code { display: block; margin-top: .4cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.05cqi; color: #8fa3b0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: none; padding: 0; }
 </style>
 
 <div class="stage" id="stage">
@@ -645,12 +660,42 @@
   </section>
 
   <!-- 10 · demo run 2 -->
-  <section class="slide video">
+  <section class="slide vsteps" data-steps="5">
     <div class="eyebrow">Demo · run 2 · same prompt, new session, with Mate</div>
-    <div class="vid-wrap">
-      <video class="vid" src="media/demo-2-mate.webm" preload="auto" playsinline controls></video>
+    <div class="vs-grid">
+      <div class="vs-video">
+        <video class="vid" src="media/demo-2-mate.webm" preload="auto" playsinline></video>
+        <div class="vs-overlay" aria-hidden="true"></div>
+      </div>
+      <div class="vs-steps">
+        <div class="step card pss-card" data-step="1" data-at="3" data-until="3">
+          <h3>0:00</h3>
+          <p class="kw"><span>The same prompt as in run 1</span></p>
+          <code>Strona …/t-shirts/men działa mi wolno</code>
+        </div>
+        <div class="step card pss-card" data-step="2" data-at="5" data-until="12">
+          <h3>0:08 · first line</h3>
+          <p class="kw"><span>Goes straight to the profiler, via Mate</span></p>
+          <code>Sprawdzę tę stronę profilerem Symfony przez Mate</code>
+        </div>
+        <div class="step card pss-card" data-step="3" data-at="14" data-until="27">
+          <h3>0:16 · asks</h3>
+          <p class="kw"><span>Lists profiles, reads the request</span></p>
+          <code>mate tools:call symfony-profiler-list --url=…</code>
+        </div>
+        <div class="step card pss-card" data-step="4" data-at="38" data-until="52">
+          <h3>0:40 · fact</h3>
+          <p class="kw"><span>111 queries. Then: what changed?</span></p>
+          <code>"query_count": 111 · git show 1fd073e</code>
+        </div>
+        <div class="step card pss-card" data-step="5" data-at="70" data-until="79">
+          <h3>1:20 · verdict</h3>
+          <p class="kw"><span>Classic N+1, 45× the same SELECT</span></p>
+          <code>Winowajca to nowy blok „variants" … klasyczne N+1</code>
+        </div>
+      </div>
     </div>
-    <div class="notes">Autoplay on entering; space/k = pause/play, j/l = −10 s/+10 s, bar = seek. New session after mate init. First line: "I'll check this page with the Symfony profiler via Mate". 1:20 to the sentence about N+1, in real time.</div>
+    <div class="notes">Arrow = next block: the video jumps to it, plays the fragment and stops by itself. Left arrow goes back the same way. Space pauses/plays. Times are placeholders pinned to the September recording (Polish prompt); re-pin to the English recording. Mate init was the only thing that changed between runs.</div>
   </section>
 
   <!-- 12 · what the agent got -->
@@ -984,6 +1029,7 @@ description: Use when a task touches
     Array.prototype.forEach.call(nodes, function (n) {
       n.classList.toggle('hot', parseInt(n.getAttribute('data-step'), 10) === step);
     });
+    driveVideo();
     var max = stepsOf(idx);
     counter.textContent = (idx + 1) + ' / ' + slides.length + (max ? '  ·  ' + step + '/' + max : '');
     progress.style.width = ((idx + 1) / slides.length * 100) + '%';
@@ -1001,14 +1047,32 @@ description: Use when a task touches
   }
   var bt = document.getElementById('bonus-toggle'); if (bt) bt.addEventListener('click', function (e) { e.preventDefault(); openBonus(); });
   var bc = document.getElementById('bonus-close'); if (bc) bc.addEventListener('click', function (e) { e.stopPropagation(); closeBonus(); });
+  var lastIdx = -1, lastDir = 1;
+  function fmt(t) { t = Math.round(t); return Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2); }
+  function driveVideo() {
+    var sec = slides[idx]; if (!sec.classList.contains('vsteps')) { lastIdx = idx; return; }
+    var v = sec.querySelector('video'), cur = sec.querySelector('.step[data-step="' + step + '"]'); if (!v || !cur) return;
+    var at = parseFloat(cur.getAttribute('data-at')), until = parseFloat(cur.getAttribute('data-until'));
+    var entering = lastIdx !== idx; lastIdx = idx;
+    v._until = until;
+    if (entering) { v.pause(); v.currentTime = until; return; }
+    var ov = sec.querySelector('.vs-overlay');
+    ov.innerHTML = '<span>' + (lastDir < 0 ? '\u23EA' : '\u23E9') + ' ' + fmt(at) + '</span>';
+    ov.classList.add('show'); clearTimeout(ov._t); ov._t = setTimeout(function () { ov.classList.remove('show'); }, 600);
+    v.currentTime = at;
+    if (until > at) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.pause(); }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.vsteps video'), function (v) {
+    v.addEventListener('timeupdate', function () { if (v._until != null && !v.paused && v.currentTime >= v._until) { v.pause(); } });
+  });
   function go(i, fromRight) {
     idx = Math.min(Math.max(i, 0), slides.length - 1);
     var max = stepsOf(idx);
     step = fromRight && max ? max : 1;
     paint();
   }
-  function next() { var max = stepsOf(idx); if (max && step < max) { step++; paint(); } else { go(idx + 1, false); } }
-  function prev() { var max = stepsOf(idx); if (max && step > 1) { step--; paint(); } else { go(idx - 1, true); } }
+  function next() { lastDir = 1; var max = stepsOf(idx); if (max && step < max) { step++; paint(); } else { go(idx + 1, false); } }
+  function prev() { lastDir = -1; var max = stepsOf(idx); if (max && step > 1) { step--; paint(); } else { go(idx - 1, true); } }
   document.getElementById('stage').addEventListener('click', function (e) {
     if (e.target.closest('a') || e.target.closest('.bonus-player')) return;
     var r = e.currentTarget.getBoundingClientRect();
