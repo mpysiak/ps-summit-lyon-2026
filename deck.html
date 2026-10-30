@@ -365,8 +365,13 @@
   .pss-cover .question { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; font-size: 5.4cqi; line-height: 1.05; color: var(--pss-green); margin: .6cqi 0 0; letter-spacing: -.01em; }
   .pss-cover .question em { font-style: italic; text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .12em; }
   .pss-cover .sub { font-family: "Instrument Sans", Arial, sans-serif; font-size: 2cqi; line-height: 1.35; color: #16202a; margin-top: 1.6cqi; max-width: 46ch; }
-  .pss-cover .who { margin-top: 3.2cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.35cqi; letter-spacing: .08em; text-transform: uppercase; color: #16202a; display: flex; gap: 2.4cqi; }
-  .pss-cover .who b { font-weight: 500; }
+  .pss-cover .who { margin-top: 3.4cqi; display: grid; gap: .9cqi; }
+  .pss-cover .who p { margin: 0; }
+  .pss-cover .name { font-family: "Instrument Sans", Arial, sans-serif; font-weight: 600; font-size: 2.2cqi; color: #000; }
+  .pss-cover .role { font-weight: 400; color: #3a4751; }
+  .pss-cover .role::before { content: "·"; margin: 0 .7cqi; color: var(--pss-green); }
+  .pss-cover .meta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .08em; text-transform: uppercase; color: #3a4751; display: flex; gap: 2cqi; align-items: center; }
+  .pss-cover .tag { text-transform: none; color: var(--pss-green); font-weight: 500; }
   .pss-thanks { background: #000; color: #fff; }
   .pss-thanks .wordmark { left: 3.82cqi; top: 3.33cqi; width: 18.7cqi; }
   .pss-thanks .t1 { position: absolute; left: 22cqi; top: 17.1cqi; font-family: "Inter Tight", Arial, sans-serif; font-weight: 700; font-size: 16.25cqi; line-height: 1; letter-spacing: -.02em; color: #fff; margin: 0; }
@@ -391,7 +396,10 @@
     <div class="hero">
       <h1>Your AI Knows PHP.</h1>
       <p class="question">But does it know <em>your</em> Sylius project?</p>
-      <div class="who"><b>Michał Pysiak</b><span>Sylius</span><span>Lyon · 5 Nov 2026</span></div>
+      <div class="who">
+        <p class="name">Michał Pysiak <span class="role">Senior Backend Developer, Sylius</span></p>
+        <p class="meta"><span>Lyon · 5 Nov 2026</span><span class="tag">#PSSummit2026</span></p>
+      </div>
     </div>
     <img class="lockup" src="media/pss/sylius-prestashop-lockup.png" alt="Sylius | PrestaShop">
     <div class="notes">One-sentence thesis as a question. The model knows PHP and Symfony from training. But does it know your project? The difference is not the next, better model, but what it gets at the moment of need.</div>
