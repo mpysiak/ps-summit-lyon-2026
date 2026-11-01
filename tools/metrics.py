@@ -27,10 +27,16 @@ def metrics(rows):
     if not a: return {'error': 'no assistant messages'}
     t0 = ts(users[0]) if users else ts(a[0])
     usage = {'input_tokens': 0, 'output_tokens': 0, 'cache_creation_tokens': 0, 'cache_read_tokens': 0}
-    seen = set(); tools = []; final = ''
+    seen = set(); tools = []; final = ''; diagnosis = None; diag_turns = None
+    DIAG = ('n+1', 'n + 1', 'one query per', 'query per variant', 'query per product', 'lazy')
     for r in a:
         m = r['message']; u = m.get('usage') or {}
         rid = r.get('requestId')
+        if diagnosis is None:
+            for c in m.get('content', []):
+                if c.get('type') == 'text' and any(k in c.get('text', '').lower() for k in DIAG):
+                    diagnosis = round((ts(r) - t0).total_seconds(), 1); diag_turns = len(seen) + (rid not in seen)
+                    break
         if rid not in seen:          # usage repeats on every content block of one API request
             seen.add(rid)
             usage['input_tokens'] += u.get('input_tokens', 0)
@@ -47,6 +53,7 @@ def metrics(rows):
         'model': a[0].get('requestedModel') or a[0]['message'].get('model'),
         'api_requests': len(seen), 'assistant_messages': len(a), 'tool_calls': len(tools),
         'wall_s': round((ts(a[-1]) - t0).total_seconds(), 1),
+        'diagnosis_s': diagnosis, 'diagnosis_turns': diag_turns,   # first assistant text naming the N+1 / lazy loading
         **usage,
         'tools': tools,
         'final_answer': final[-1500:],
