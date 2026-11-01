@@ -187,19 +187,19 @@
   @media (prefers-reduced-motion: reduce) { .node { transition: none; } }
 
   /* ---- pyramid ---- */
-  .pyr-wrap { display: grid; grid-template-columns: auto auto 1fr; gap: 3cqi; flex: 1; min-height: 0; align-items: center; justify-items: start; }
-  .axis { display: flex; flex-direction: column; align-items: center; gap: .8cqi; height: 100%; justify-content: center;
-    font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .axis i { flex: 0 0 20cqi; width: .25cqi; background: linear-gradient(var(--warn), var(--accent)); border-radius: .2cqi; }
-  .pyr { height: 29cqi; width: auto; display: block; }
-  .pyr polygon { fill: var(--paper-2); stroke: var(--line); stroke-width: .3; transition: fill .2s ease; }
-  .pyr text { font-family: "Instrument Sans", Arial, sans-serif; font-size: 3.1px; fill: var(--ink); font-weight: 600; }
-  .pyr text.sub { font-size: 2.3px; font-weight: 400; fill: var(--muted); }
-  .pyr .hi { fill: var(--accent); font-weight: 600; }
-  .pyr .step.hot polygon { fill: var(--accent); stroke: var(--accent); }
-  .pyr .step.hot text, .pyr .step.hot text.sub, .pyr .step.hot .hi { fill: var(--accent-ink); }
-  .pyr-side { font-size: 1.9cqi; display: flex; flex-direction: column; gap: 1.2cqi; }
-  .pyr-wrap + .thesis { margin-top: 1.6cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
+  .pyr-wrap { display: grid; grid-template-columns: auto 1fr; gap: 3.5cqi; flex: 1; min-height: 0; align-items: center; justify-items: start; margin-top: .5cqi; }
+  .pyr { height: 28.5cqi; width: auto; display: block; }
+  .pyr polygon { fill: #000; stroke: #fff; stroke-width: .6; transition: fill .2s ease; }
+  .pyr text { font-family: "Instrument Sans", Arial, sans-serif; font-size: 3.1px; fill: #fff; font-weight: 600; }
+  .pyr text.sub { font-size: 2.3px; font-weight: 400; fill: #b8c4cc; }
+  .pyr .hi { fill: var(--pss-green); font-weight: 600; }
+  .pyr .step.hot polygon { fill: var(--accent); stroke: #fff; }
+  .pyr .step.hot text, .pyr .step.hot text.sub, .pyr .step.hot .hi { fill: #fff; }
+  .pyr-cards { display: grid; gap: 1cqi; width: 100%; max-width: 44cqi; }
+  .pyr-cards .card.pss-card { padding: 1.4cqi 2cqi 1.6cqi; border-radius: 1.4cqi; gap: .3cqi; }
+  .pyr-cards .card.pss-card h3 { font-size: 1.25cqi; }
+  .pyr-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.85cqi; gap: .3cqi; }
+  .pyr-wrap + .thesis { margin-top: 1.4cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   @media (prefers-reduced-motion: reduce) { .pyr polygon { transition: none; } }
 
   .what .gain h3 { font-size: 2.5cqi; }
@@ -666,19 +666,14 @@
   </section>
 
   <!-- 10 · pyramid -->
-  <section class="slide" data-steps="4">
-    <div class="eyebrow">Where the 5 minutes came from · Dave Liddament's pyramid</div>
+  <section class="slide pyramid" data-steps="4">
+    <div class="eyebrow">Why 5 minutes · Dave Liddament's pyramid</div>
     <h2>What the model doesn't know, <span class="q">it guesses</span></h2>
     <div class="pyr-wrap">
-      <div class="axis">
-        <span>human</span>
-        <i></i>
-        <span>machine</span>
-      </div>
       <svg class="pyr" viewBox="0 0 100 68" role="img" aria-label="Pyramid: deterministic checks at the bottom, code review at the top">
         <g class="step" data-step="4">
           <polygon points="50,2 61.25,18 38.75,18"/>
-          <text x="50" y="14.5" text-anchor="middle">CR</text>
+          <text x="50" y="14.5" text-anchor="middle">Review</text>
         </g>
         <g class="step" data-step="3">
           <polygon points="38.75,18 61.25,18 72.5,34 27.5,34"/>
@@ -686,7 +681,7 @@
         </g>
         <g class="step" data-step="2">
           <polygon points="27.5,34 72.5,34 83.75,50 16.25,50"/>
-          <text x="50" y="43.6" text-anchor="middle">CLAUDE.md, skills, agents</text>
+          <text x="50" y="43.6" text-anchor="middle">Instructions, skills, agents</text>
         </g>
         <g class="step" data-step="1">
           <polygon points="16.25,50 83.75,50 95,66 5,66"/>
@@ -694,13 +689,19 @@
           <text x="50" y="62.6" text-anchor="middle" class="sub">tests · static analysis · <tspan class="hi">profiler · container</tspan></text>
         </g>
       </svg>
-      <div class="pyr-side">
-        <p><strong>The answer lived at the bottom.</strong> Profiler, container, logs: things that don't guess, they know. The agent spent 5 minutes one floor up, inferring from code.</p>
-        <p class="muted">The bottom is enforced by code. The middle by the model. The top by a human.</p>
+      <div class="pyr-cards">
+        <div class="card pss-card">
+          <h3>Who enforces it</h3>
+          <p class="kw"><span>Bottom: code</span><span>Middle: the model</span><span>Top: a human</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>The 5 minutes</h3>
+          <p class="kw"><span>The answer lived at the bottom</span><span>The agent spent them one floor up</span></p>
+        </div>
       </div>
     </div>
     <p class="thesis">Everything above works only because <mark>the base is solid</mark>.</p>
-    <div class="notes">Diagnosis of the 5 minutes from the recording. Liddament's pyramid from SymfonyLive Berlin, Johannes added the profiler and the container to the base. I highlight from the bottom: code, model, human. One pass, without expanding the floors — this is no longer filler. Transition to 8: "Mate is exactly access to the bottom of this pyramid".</div>
+    <div class="notes">Diagnosis of the 5 minutes from recording 1. Liddament's pyramid from SymfonyLive Berlin, Johannes added the profiler and the container to the base. Highlight from the bottom: code, model, human. Profiler, container, logs: things that don't guess, they know. The bare agent knew the bottom existed and scraped it by hand; it spent most of the time one floor up, inferring from code. Transition to the next slide: "Mate is exactly access to the bottom of this pyramid".</div>
   </section>
 
   <!-- 11 · what Mate is -->
