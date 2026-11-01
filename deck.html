@@ -498,7 +498,7 @@
     </div>
   </section>
 
-  <!-- 4 · prose doesn't scale -->
+  <!-- 4 · harness -->
   <section class="slide harness">
     <div class="eyebrow">The word for it</div>
     <h2>Harness</h2>
@@ -543,7 +543,7 @@
     </div>
   </section>
 
-  <!-- 5 · demo run 1 -->
+  <!-- 6 · demo run 1 -->
   <section class="slide vsteps" data-steps="6">
     <div class="eyebrow">Demo · run 1 · bare agent, no Mate · recording ×5</div>
     <div class="vs-grid">
@@ -586,93 +586,7 @@
     </div>
   </section>
 
-
-  <!-- 6 · result of run 1 -->
-  <section class="slide">
-    <div class="eyebrow">Demo · run 1 · result</div>
-    <h2>It gets there. <span class="q">Eventually.</span></h2>
-    <div class="isnot">
-      <div class="is">
-        <h3>What we saw</h3>
-        <ul>
-          <li>starts with <strong>what changed recently</strong> in the project, then reads templates and entities</li>
-          <li>it <strong>knows</strong> the profiler exists, and gets at it by hand</li>
-          <li>several turns of grinding before it sees the queries</li>
-        </ul>
-      </div>
-      <div class="is">
-        <h3>What it means</h3>
-        <ul>
-          <li>the knowledge is there, the path is missing</li>
-          <li>in a small project it will hit, in a big one the same method costs more</li>
-        </ul>
-      </div>
-    </div>
-    <p class="thesis">Without a tool it gets there. The question: <mark>at what cost</mark>?</p>
-  </section>
-  <!-- 7 · pyramid -->
-  <section class="slide" data-steps="4">
-    <div class="eyebrow">Where the 5 minutes came from · Dave Liddament's pyramid</div>
-    <h2>What the model doesn't know, <span class="q">it guesses</span></h2>
-    <div class="pyr-wrap">
-      <div class="axis">
-        <span>human</span>
-        <i></i>
-        <span>machine</span>
-      </div>
-      <svg class="pyr" viewBox="0 0 100 68" role="img" aria-label="Pyramid: deterministic checks at the bottom, code review at the top">
-        <g class="step" data-step="4">
-          <polygon points="50,2 61.25,18 38.75,18"/>
-          <text x="50" y="14.5" text-anchor="middle">CR</text>
-        </g>
-        <g class="step" data-step="3">
-          <polygon points="38.75,18 61.25,18 72.5,34 27.5,34"/>
-          <text x="50" y="27.6" text-anchor="middle">Plan mode</text>
-        </g>
-        <g class="step" data-step="2">
-          <polygon points="27.5,34 72.5,34 83.75,50 16.25,50"/>
-          <text x="50" y="43.6" text-anchor="middle">CLAUDE.md, skills, agents</text>
-        </g>
-        <g class="step" data-step="1">
-          <polygon points="16.25,50 83.75,50 95,66 5,66"/>
-          <text x="50" y="57.4" text-anchor="middle">Deterministic checks</text>
-          <text x="50" y="62.6" text-anchor="middle" class="sub">tests · static analysis · <tspan class="hi">profiler · container</tspan></text>
-        </g>
-      </svg>
-      <div class="pyr-side">
-        <p><strong>The answer lived at the bottom.</strong> Profiler, container, logs: things that don't guess, they know. The agent spent 5 minutes one floor up, inferring from code.</p>
-        <p class="muted">The bottom is enforced by code. The middle by the model. The top by a human.</p>
-      </div>
-    </div>
-    <p class="thesis">Everything above works only because <mark>the base is solid</mark>.</p>
-  </section>
-
-  <!-- 9 · Mate* -->
-  <section class="slide">
-    <div class="eyebrow">Symfony AI Mate</div>
-    <h2>What <span class="q">Symfony Mate</span> is</h2>
-    <div class="cols cols-2x2 what">
-      <div class="gain">
-        <h3>A developer MCP server*</h3>
-        <p class="ex">for PHP and Symfony applications; dev dependency, a <code>symfony/ai</code> component</p>
-      </div>
-      <div class="gain">
-        <h3>Its own container next to the app</h3>
-        <p class="ex">Mate doesn't plug into the kernel: its own DI container, tools and skills discovered from Composer</p>
-      </div>
-      <div class="gain">
-        <h3>Extensible</h3>
-        <p class="ex">your own tools and skills right in the project; to share between projects: extension = a regular Composer package</p>
-      </div>
-      <div class="gain">
-        <h3>With any agent</h3>
-        <p class="ex">Claude Code, Codex, Cursor, Copilot, JetBrains AI</p>
-      </div>
-    </div>
-    <p class="thesis outside"><span class="muted">Platform · Agent · Store → your application uses AI</span><br>Mate → <mark>AI uses your application</mark></p>
-  </section>
-
-  <!-- 9 · mate init -->
+  <!-- 7 · install, the only change -->
   <section class="slide install">
     <div class="eyebrow">Installation</div>
     <h2>Installation: <span class="q">three commands</span></h2>
@@ -685,10 +599,10 @@
 <span class="ok">✓</span> AGENTS.md          instruction block for the agent
 <span class="ok">✓</span> CLAUDE.md          @AGENTS.md
 <span class="ok">✓</span> .agents/skills/    <span class="hi">5 skills</span>: profiler-debugging, request-triage, service-inspection, …</div>
-    <p class="lede">Zero network, seconds. The agent gets instructions and skills in files. <strong>Between recording 1 and 2, this is the only thing that changed.</strong></p>
+    <p class="lede">Zero network, seconds. The agent gets instructions and skills in files. <strong>Between recording 1 and 2, this is the only thing that changes.</strong> A dev dependency that hands the agent the profiler and the container. Details in a moment.</p>
   </section>
 
-  <!-- 10 · demo run 2 -->
+  <!-- 8 · demo run 2 -->
   <section class="slide vsteps" data-steps="5">
     <div class="eyebrow">Demo · run 2 · same prompt, new session, with Mate</div>
     <div class="vs-grid">
@@ -726,6 +640,84 @@
     </div>
   </section>
 
+  <!-- 9 · comparison -->
+  <section class="slide bonus">
+    <div class="eyebrow">What you just saw · same prompt, same project, one run each</div>
+    <h2>The model didn't get smarter. <span class="q">The harness did.</span></h2>
+    <table class="runs">
+      <thead><tr><th></th><th>model</th><th>harness</th><th>turns</th><th>to "it's N+1"</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Fable 5.1</td><td>bare</td><td>30</td><td>~5 min, then blames dev mode</td></tr>
+        <tr class="hot"><td>2</td><td>Fable 5.1</td><td>with Mate</td><td>12</td><td>1:20</td></tr>
+        <tr><td>3</td><td>Haiku 4.5</td><td>with Mate</td><td>71</td><td>1:20</td></tr>
+      </tbody>
+    </table>
+    <p class="thesis">How much do you pay for the model, <mark>and how much for the harness?</mark><span class="by"><a class="vlink" href="#" id="bonus-toggle">▶ recording 3: Haiku + Mate (1:23)</a></span></p>
+    <div class="bonus-player" id="bonus-player" hidden><span class="close" id="bonus-close">✕ close (Esc)</span><video id="bonus-video" src="media/demo-3-haiku-mate.webm" preload="metadata" playsinline controls></video></div>
+  </section>
+
+  <!-- 10 · pyramid -->
+  <section class="slide" data-steps="4">
+    <div class="eyebrow">Where the 5 minutes came from · Dave Liddament's pyramid</div>
+    <h2>What the model doesn't know, <span class="q">it guesses</span></h2>
+    <div class="pyr-wrap">
+      <div class="axis">
+        <span>human</span>
+        <i></i>
+        <span>machine</span>
+      </div>
+      <svg class="pyr" viewBox="0 0 100 68" role="img" aria-label="Pyramid: deterministic checks at the bottom, code review at the top">
+        <g class="step" data-step="4">
+          <polygon points="50,2 61.25,18 38.75,18"/>
+          <text x="50" y="14.5" text-anchor="middle">CR</text>
+        </g>
+        <g class="step" data-step="3">
+          <polygon points="38.75,18 61.25,18 72.5,34 27.5,34"/>
+          <text x="50" y="27.6" text-anchor="middle">Plan mode</text>
+        </g>
+        <g class="step" data-step="2">
+          <polygon points="27.5,34 72.5,34 83.75,50 16.25,50"/>
+          <text x="50" y="43.6" text-anchor="middle">CLAUDE.md, skills, agents</text>
+        </g>
+        <g class="step" data-step="1">
+          <polygon points="16.25,50 83.75,50 95,66 5,66"/>
+          <text x="50" y="57.4" text-anchor="middle">Deterministic checks</text>
+          <text x="50" y="62.6" text-anchor="middle" class="sub">tests · static analysis · <tspan class="hi">profiler · container</tspan></text>
+        </g>
+      </svg>
+      <div class="pyr-side">
+        <p><strong>The answer lived at the bottom.</strong> Profiler, container, logs: things that don't guess, they know. The agent spent 5 minutes one floor up, inferring from code.</p>
+        <p class="muted">The bottom is enforced by code. The middle by the model. The top by a human.</p>
+      </div>
+    </div>
+    <p class="thesis">Everything above works only because <mark>the base is solid</mark>.</p>
+  </section>
+
+  <!-- 11 · what Mate is -->
+  <section class="slide">
+    <div class="eyebrow">Symfony AI Mate</div>
+    <h2>What <span class="q">Symfony Mate</span> is</h2>
+    <div class="cols cols-2x2 what">
+      <div class="gain">
+        <h3>A developer MCP server*</h3>
+        <p class="ex">for PHP and Symfony applications; dev dependency, a <code>symfony/ai</code> component</p>
+      </div>
+      <div class="gain">
+        <h3>Its own container next to the app</h3>
+        <p class="ex">Mate doesn't plug into the kernel: its own DI container, tools and skills discovered from Composer</p>
+      </div>
+      <div class="gain">
+        <h3>Extensible</h3>
+        <p class="ex">your own tools and skills right in the project; to share between projects: extension = a regular Composer package</p>
+      </div>
+      <div class="gain">
+        <h3>With any agent</h3>
+        <p class="ex">Claude Code, Codex, Cursor, Copilot, JetBrains AI</p>
+      </div>
+    </div>
+    <p class="thesis outside"><span class="muted">Platform · Agent · Store → your application uses AI</span><br>Mate → <mark>AI uses your application</mark></p>
+  </section>
+
   <!-- 12 · what the agent got -->
   <section class="slide">
     <div class="eyebrow">Demo · what the agent got</div>
@@ -751,18 +743,7 @@
     </div>
   </section>
 
-  <!-- 13 · three conclusions -->
-  <section class="slide" data-steps="3">
-    <div class="eyebrow">What you just saw</div>
-    <h2>The knowledge was in both. <span class="q">The path in one.</span></h2>
-    <ol class="steps">
-      <li class="step" data-step="1"><span>In both cases the agent <strong>gets there</strong>.<span class="sub">A matter of time and tokens.</span></span></li>
-      <li class="step" data-step="2"><span>In both it went to the <strong>profiler</strong>, like a developer.<span class="sub">Bare: several turns of grinding, ~5 minutes to N+1. With Mate: 1:20, and the first line is "I'll check this page with the Symfony profiler via Mate".</span></span></li>
-      <li class="step" data-step="3"><span>The agent is not smarter. <strong>Different environment.</strong><span class="sub">Same model, same prompt, same project.</span></span></li>
-    </ol>
-  </section>
-
-  <!-- 14 · own tool, own skill -->
+  <!-- 13 · own tool, own skill -->
   <section class="slide">
     <div class="eyebrow">How to extend it</div>
     <h2 style="margin-bottom:1.4cqi">Your own tool, <span class="q">your own skill</span></h2>
@@ -800,7 +781,7 @@ description: Use when a task touches
     <p class="thesis">Does the tool work in other projects too? <mark>Make it a Mate extension.</mark><span class="by">a regular Composer package with extra.ai-mate · start: github.com/MatesOfMate/extension-template</span></p>
   </section>
 
-  <!-- 15 · synergy -->
+  <!-- 14 · synergy -->
   <section class="slide" data-steps="3">
     <div class="eyebrow">Synergy</div>
     <h2>Skills + tools <span class="q">> each on its own</span></h2>
@@ -864,7 +845,7 @@ description: Use when a task touches
     </div>
   </section>
 
-  <!-- 17 · skill = judgment -->
+  <!-- 16 · skill = judgment -->
   <section class="slide">
     <div class="eyebrow">Our case · skills</div>
     <h2>Tools are facts. <span class="q">A skill is judgment.</span></h2>
@@ -890,7 +871,7 @@ description: Use when a task touches
     </div>
   </section>
 
-  <!-- 18 · takeaway + closing bracket -->
+  <!-- 17 · takeaway + closing bracket -->
   <section class="slide">
     <div class="eyebrow">Your project</div>
     <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
@@ -959,7 +940,7 @@ description: Use when a task touches
     </div>
   </section>
 
-  <!-- 21 · community -->
+  <!-- 20 · community -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Community</h2>
@@ -983,23 +964,7 @@ description: Use when a task touches
     <p class="thesis"><span class="muted">The list:</span> <mark>github.com/MatesOfMate/awesome-mate</mark><br><span class="muted">Start your own:</span> <mark>github.com/MatesOfMate/extension-template</mark></p>
   </section>
 
-  <!-- 22 · bonus: weaker model -->
-  <section class="slide bonus">
-    <div class="eyebrow">Bonus · if there are a few minutes left</div>
-    <h2>What if we took <span class="q">a weaker model?</span></h2>
-    <table class="runs">
-      <thead><tr><th></th><th>model</th><th>environment</th><th>to "it's N+1"</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Fable 5.1</td><td>without Mate</td><td>~5 min</td></tr>
-        <tr><td>2</td><td>Fable 5.1</td><td>with Mate</td><td>1:20</td></tr>
-        <tr class="hot"><td>3</td><td>Haiku 4.5</td><td>with Mate</td><td>1:20</td></tr>
-      </tbody>
-    </table>
-    <p class="thesis">How much do you pay for the model, <mark>and how much for the environment?</mark><span class="by">same prompt, same project, one run each · <a class="vlink" href="#" id="bonus-toggle">▶ recording 3: Haiku + Mate (1:23)</a></span></p>
-    <div class="bonus-player" id="bonus-player" hidden><span class="close" id="bonus-close">✕ close (Esc)</span><video id="bonus-video" src="media/demo-3-haiku-mate.webm" preload="metadata" playsinline controls></video></div>
-  </section>
-
-  <!-- 20 · thanks -->
+  <!-- 21 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>
@@ -1010,6 +975,7 @@ description: Use when a task touches
     </div>
     <div class="qr-wrap"><svg xmlns="http://www.w3.org/2000/svg" class="qr" role="img" aria-label="QR: github.com/mpysiak/phpers-bydgoszcz-2026" viewBox="0 0 41 41" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h41v41H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h7M4 5.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h6m1 0h2m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m4 0h3m1 0h3m1 0h2m2 0h2m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M14 11.5h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2M4 12.5h1m1 0h1m1 0h1m1 0h1m5 0h2m2 0h2m3 0h3m4 0h1m2 0h1M5 13.5h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h3m1 0h2m2 0h4m3 0h2M4 14.5h2m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h1M4 15.5h1m1 0h2m6 0h1m2 0h3m1 0h4m2 0h1m2 0h1m1 0h1m3 0h1M4 16.5h8m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h4m2 0h1m2 0h1M4 17.5h2m1 0h2m3 0h2m2 0h9m5 0h1m3 0h1m1 0h1M4 18.5h1m4 0h2m3 0h12m2 0h2m1 0h1m1 0h4M4 19.5h5m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h2m4 0h1m4 0h1M5 20.5h2m2 0h2m3 0h4m1 0h1m1 0h1m1 0h3m1 0h4M4 21.5h2m2 0h2m1 0h1m2 0h1m1 0h3m1 0h1m3 0h1m3 0h4m4 0h1M4 22.5h1m3 0h3m3 0h2m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m3 0h3M8 23.5h1m5 0h1m3 0h1m1 0h1m3 0h2m1 0h2m1 0h3m2 0h2M4 24.5h1m3 0h3m1 0h1m1 0h3m1 0h2m3 0h1m1 0h1m3 0h2m2 0h1m2 0h1M5 25.5h3m1 0h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M4 26.5h1m2 0h1m2 0h2m2 0h3m5 0h1m2 0h2m2 0h2m1 0h1m2 0h2M5 27.5h1m1 0h1m1 0h1m2 0h3m1 0h2m1 0h1m1 0h3m1 0h2m3 0h1m4 0h1M4 28.5h1m1 0h3m1 0h7m3 0h2m2 0h2m2 0h6m1 0h1M12 29.5h1m1 0h1m1 0h3m2 0h1m3 0h1m2 0h1m3 0h2m2 0h1M4 30.5h7m2 0h2m2 0h2m3 0h1m3 0h3m1 0h1m1 0h1m1 0h3M4 31.5h1m5 0h1m2 0h1m1 0h1m5 0h5m2 0h1m3 0h1M4 32.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h4m1 0h3m1 0h1m1 0h6m1 0h2M4 33.5h1m1 0h3m1 0h1m2 0h5m1 0h6m7 0h5M4 34.5h1m1 0h3m1 0h1m1 0h2m2 0h5m1 0h4m6 0h3m1 0h1M4 35.5h1m5 0h1m3 0h2m1 0h2m1 0h3m1 0h7m1 0h1m2 0h1M4 36.5h7m1 0h2m1 0h2m2 0h3m1 0h3m1 0h2m3 0h1m2 0h2"/></svg></div>
   </section>
+
 
   <div class="brand" aria-label="Sylius | PrestaShop"><img src="media/pss/sylius-prestashop-lockup.png" alt="Sylius | PrestaShop"></div>
   <div class="counter" id="counter"></div>
