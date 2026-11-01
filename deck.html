@@ -630,7 +630,7 @@
           <code>Error: Exit code 1 · no json found</code>
         </div>
         <div class="step card pss-card" data-step="6" data-at="62.7" data-until="62.7">
-          <h3>1:03 · 5 min · 13.9k tokens</h3>
+          <h3>1:03 · 5 min · 30 turns</h3>
           <p class="kw"><span>Finds the N+1. Then blames dev mode</span></p>
           <code>Ale to nie N+1 sprawia, że strona wydaje się wolna</code>
         </div>
@@ -652,8 +652,8 @@
 <span class="ok">✓</span> AGENTS.md          instruction block for the agent
 <span class="ok">✓</span> CLAUDE.md          @AGENTS.md
 <span class="ok">✓</span> .agents/skills/    <span class="hi">5 skills</span>: profiler-debugging, request-triage, service-inspection, …</div>
-    <p class="lede">Zero network, seconds. The agent gets instructions and skills in files. <strong>Between recording 1 and 2, this is the only thing that changes.</strong> A dev dependency that hands the agent the profiler and the container. Details in a moment.</p>
-    <div class="notes">No .mcp.json, but that comes at the end. Facts: interactive init also runs discover (skills); with --no-interaction skills are only installed by `mate discover`. init warns about a missing .gitignore in the package — cosmetic.</div>
+    <p class="lede">One dev dependency, init takes seconds and no network. The agent gets instructions and skills in files. <strong>Between recording 1 and 2, this is the only thing that changes.</strong> It hands the agent the profiler and the container. Details after the second run.</p>
+    <div class="notes">No .mcp.json, but that comes at the end. Facts: interactive init also runs discover (skills); with --no-interaction skills are only installed by `mate discover`. init also writes mate/.gitignore and mate/config.php. Re-check the skill names and count on the demo stack: core alone adds two skills.</div>
   </section>
 
   <!-- 8 · demo run 2 -->
@@ -758,7 +758,7 @@
     <div class="intro-grid two what-grid">
       <div class="card pss-card">
         <h3>What</h3>
-        <p class="kw"><span>A developer MCP server*</span><span>Part of symfony/ai, dev dependency</span></p>
+        <p class="kw"><span>A CLI the agent calls, was an MCP server</span><span>Part of symfony/ai, dev dependency</span></p>
       </div>
       <div class="card pss-card">
         <h3>How</h3>
@@ -774,7 +774,7 @@
       </div>
     </div>
     <p class="thesis outside"><span class="muted">The rest of symfony/ai: your application uses AI.</span> Mate: <mark>AI uses your application</mark>.</p>
-    <div class="notes">Entry: "Mate is exactly access to the bottom of the pyramid". Mate does not plug into the kernel: its own DI container, tools and skills discovered from Composer. To share tools between projects, an extension is a regular Composer package. The asterisk on MCP: it is also a CLI, and that matters, punchline on #16. Like Johannes: outside-in. The rest of symfony/ai lets your application use AI. Mate does the opposite.</div>
+    <div class="notes">Entry: "Mate is exactly access to the bottom of the pyramid". Mate does not plug into the kernel: its own DI container, tools and skills discovered from Composer. To share tools between projects, an extension is a regular Composer package. MCP: it started as an MCP server and the server is gone, Mate is a CLI now; why, on #16. Like Johannes: outside-in. The rest of symfony/ai lets your application use AI. Mate does the opposite.</div>
   </section>
 
   <!-- 12 · where the tools come from -->
@@ -801,12 +801,12 @@
       </div>
       <div class="bar engine">
         <b>Mate</b>
-        <span>The engine: discovery, CLI and MCP, skills installer. No tools of its own</span>
+        <span>The engine: discovery, the CLI, skills installer. No tools of its own</span>
         <i>symfony/ai-mate</i>
       </div>
     </div>
     <p class="thesis">The packages know Symfony and Sylius. <mark>Only you know your project.</mark></p>
-    <div class="notes">Bottom up: Mate alone is only the engine, it ships no domain tools. The Symfony extension gives the generic Symfony layer, that is what run 2 used. The Sylius extension sits on top with the Sylius domain, and a PrestaShop extension would sit in exactly the same place. The top layer is the point of the next slides: your own tools and skills, in the project, no package needed. The installation slide showed mate/src and mate/skills already waiting after init.</div>
+    <div class="notes">Bottom up: Mate alone is only the engine, it ships no domain tools. The Symfony extension gives the generic Symfony layer, that is what run 2 used. The Sylius extension sits on top with the Sylius domain, and a PrestaShop extension would sit in exactly the same place. The top layer is the point of the next slides: your own tools and skills, in the project, no package needed. The installation slide showed mate/src already waiting after init; mate/skills is one line in composer.json, slide 15.</div>
   </section>
 
   <!-- 13 · the tool -->
@@ -860,7 +860,7 @@ final class ResolvePrice
       <div class="term code"><span class="dim">$</span> vendor/bin/mate discover
 <span class="ok">✓</span> mate/src   1 new tool: <span class="hi">app_resolve_price</span>
 
-<span class="dim">›</span> Why does ACME see 79 instead of 99 for TSHIRT-M?
+<span class="dim">›</span> ACME, gold group, sees 79 instead of 99 for TSHIRT-M. Why?
 
 <span class="ok">●</span> Resolving the price for ACME's group via Mate
 <span class="ok">●</span> Bash(vendor/bin/mate tools:call <span class="hi">app_resolve_price</span>
@@ -918,17 +918,17 @@ description: <span class="hi">Use for any question about a price a customer sees
     <div class="intro-grid what-grid syn-grid">
       <div class="card pss-card step" data-step="1">
         <h3>Skills only</h3>
-        <div class="kw"><span>The model keeps guessing</span><span>Instructions bloat</span></div>
+        <div class="kw"><span>The model keeps guessing</span><span>2,000 lines of AGENTS.md</span></div>
       </div>
       <div class="card pss-card step" data-step="2">
         <h3>Tools only</h3>
         <div class="kw"><span>A binary in vendor</span><span>Nobody tells the agent to use it</span></div>
-        <div class="lab">Mate Lab · CLI 0/10 · MCP 3/10</div>
+        <div class="lab">Mate Lab · 2 tasks · CLI 0/10, 0/10 · MCP 3/10, 2/10</div>
       </div>
       <div class="card pss-card step" data-step="3">
         <h3>Together</h3>
         <div class="kw"><span>The skill says when</span><span>The tool says how it is</span></div>
-        <div class="lab">Mate Lab · CLI + skills 10/10</div>
+        <div class="lab">Mate Lab · 2 tasks · CLI + skills 10/10, 5/10</div>
       </div>
     </div>
     <div class="thesis">That's why the skill ships <mark>in the same package as the tools.</mark></div>
@@ -951,55 +951,11 @@ description: <span class="hi">Use for any question about a price a customer sees
         <div class="lab">installed by mate discover · .agents/skills</div>
       </div>
     </div>
-    <div class="thesis">Nothing here <mark>you couldn't write yourself.</mark></div>
-    <div class="notes">Same mechanism as slides 13 to 15, just more of it. Honestly: our extension boots the host kernel, the opposite of Mate's core, because hooks, grids and decorators can't be read from the XML dump. Skills: sylius-dev gives the mental model and the "Mate first" protocol (profile, then plugins and decorators, then hooks, before the first file is created). Refuse-rules live in a separate file loaded on demand, SKILL.md itself is 30 to 90 lines. sylius-verify is the definition of done: verify pass, cache, Playwright gate. Count checked 1 Nov: 27 #[MateTool], 5 MCP resource templates, 6 skills.</div>
+    <div class="thesis">Nothing here <mark>you couldn't write yourself.</mark><span class="by">composer require --dev sylius/sylius-ai-dev-tools</span></div>
+    <div class="notes">Same mechanism as slides 13 to 15, just more of it. Honestly: our extension boots the host kernel, the opposite of Mate's core, because hooks, grids and decorators can't be read from the XML dump. Skills: sylius-dev gives the mental model and the "Mate first" protocol (profile, then plugins and decorators, then hooks, before the first file is created). Refuse-rules live in a separate file loaded on demand, SKILL.md itself is 30 to 90 lines. sylius-verify is the definition of done: verify pass, cache, Playwright gate. Count checked 1 Nov: 27 #[MateTool], 5 resource templates, 6 skills.</div>
   </section>
 
-  <!-- 19 · takeaway + closing bracket -->
-  <section class="slide">
-    <div class="eyebrow">What's in it for you · not necessarily Sylius</div>
-    <h2>Not just Sylius. Not even Symfony. <span class="q">Any PHP.</span></h2>
-    <div class="intro-grid two what-grid gain-grid">
-      <div class="card pss-card accent">
-        <h3>Any PHP project</h3>
-        <div class="kw"><span>Mate needs no Symfony</span><span>Plain PHP core, bridges on top</span><span>PrestaShop, Laravel, legacy: same mechanism</span></div>
-      </div>
-      <div class="card pss-card">
-        <h3>Whole team, every agent</h3>
-        <div class="kw"><span>composer install, done</span><span>Claude Code, Codex, Copilot, Cursor</span></div>
-      </div>
-      <div class="card pss-card">
-        <h3>Nothing in production</h3>
-        <div class="kw"><span>A dev dependency</span><span>Its own container, nothing in the kernel</span></div>
-      </div>
-      <div class="card pss-card">
-        <h3>Yours in an afternoon</h3>
-        <div class="kw"><span>A method in mate/src</span><span>A directory in mate/skills</span></div>
-      </div>
-    </div>
-    <div class="thesis">Tools and skills in vendor. <mark>Versioned with the code, not in a CLAUDE.md per person.</mark></div>
-    <div class="notes">The answer to "what's in it for me, if I don't do Sylius". Stress: Mate does NOT need Symfony. The core is plain PHP with its own container, Symfony is one bridge among possible ones, legacy apps work too. PrestaShop: same mechanism, a Composer package with mate/src and mate/skills, with or without the Symfony bridge. Do not frame it as "Sylius has it, Presta does not", that is not the thesis; the thesis is that the mechanism is framework-neutral. Team: one composer require in the project and every dev, every agent has the same, no more CLAUDE.md that everyone writes their own way. Dropped from the slide, say if time: works when the app doesn't boot (container from the dump, profiler and logs from disk).</div>
-  </section>
-
-  <!-- 19 · takeaway + closing bracket -->
-  <section class="slide">
-    <div class="eyebrow">Your project · Monday</div>
-    <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
-    <div class="intro-grid two what-grid take-grid">
-      <div class="card pss-card">
-        <h3>Start Monday</h3>
-        <div class="kw"><span>One tool for the most frequent guess</span><span>One skill that says when</span><span>Measure whether the agent uses it</span></div>
-      </div>
-      <div class="card pss-card">
-        <h3>Two disciplines</h3>
-        <div class="kw"><span>Context: what gets in, and when</span><span>Harness: what the environment enforces</span></div>
-      </div>
-    </div>
-    <div class="thesis">The model is replaceable. <mark>The environment is what matters.</mark></div>
-    <div class="notes">Takeaway and closing bracket. The last sentence is the thesis. "Measure": the Mate Lab numbers from slide 16, don't assume the agent reaches for the tool.</div>
-  </section>
-
-  <!-- 22 · community -->
+  <!-- 18 · ecosystem -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Same pattern, <span class="q">many domains.</span></h2>
@@ -1020,11 +976,55 @@ description: <span class="hi">Use for any question about a price a customer sees
         <div class="lab">each over its own domain</div>
       </div>
     </div>
-    <p class="thesis"><span class="muted">The list:</span> <mark>github.com/MatesOfMate/awesome-mate</mark><br><span class="muted">Start your own:</span> <mark>github.com/MatesOfMate/extension-template</mark></p>
+    <p class="thesis"><span class="muted">The list:</span> github.com/MatesOfMate/awesome-mate<br><span class="muted">Start your own:</span> github.com/MatesOfMate/extension-template</p>
     <div class="notes">Official bridges live in the symfony/ai monorepo: Symfony (container, profiler, the one from recording 2) and Monolog (logs). Versions as of 1 Nov 2026: symfony/ai-mate and the Symfony and Monolog bridges are 1.0.0-BETA1, our extension accepts ^1.0. MatesOfMate is the community organization: PHPStan, PHPUnit, Composer, Rector at 0.7.2, already on the 1.0 beta, plus self-review, extension-template, awesome-mate. Products: Sylius (ours), Sulu (Johannes, 0.3.0), OroCommerce (community, 0.2.0), OpenDXP (1.0.4), Softspring CMS. Building your own: start from extension-template. Re-check versions on 4 Nov, a 1.0 stable may land before the talk.</div>
   </section>
 
-  <!-- 23 · thanks -->
+  <!-- 19 · any PHP -->
+  <section class="slide">
+    <div class="eyebrow">What's in it for you · not necessarily Sylius</div>
+    <h2>Not just Sylius. Not even Symfony. <span class="q">Any PHP.</span></h2>
+    <div class="intro-grid two what-grid gain-grid">
+      <div class="card pss-card accent">
+        <h3>Any PHP project</h3>
+        <div class="kw"><span>Your app needs no Symfony</span><span>Own container, bridges on top</span><span>PrestaShop, Laravel, legacy: same mechanism</span></div>
+      </div>
+      <div class="card pss-card">
+        <h3>Whole team, every agent</h3>
+        <div class="kw"><span>composer install, done</span><span>Claude Code, Codex, Copilot, Cursor</span></div>
+      </div>
+      <div class="card pss-card">
+        <h3>Nothing in production</h3>
+        <div class="kw"><span>A dev dependency</span><span>Its own container, nothing in the kernel</span></div>
+      </div>
+      <div class="card pss-card">
+        <h3>Yours in an afternoon</h3>
+        <div class="kw"><span>A method in mate/src</span><span>A directory in mate/skills</span></div>
+      </div>
+    </div>
+    <div class="thesis">Tools and skills in vendor. Versioned with the code, not in a CLAUDE.md per person.</div>
+    <div class="notes">The answer to "what's in it for me, if I don't do Sylius". Stress: the APP does not need Symfony. Mate brings its own container and its own Symfony components in vendor, Symfony is one bridge among possible ones, legacy apps work too. PrestaShop: same mechanism, a Composer package with mate/src and mate/skills, with or without the Symfony bridge. Do not frame it as "Sylius has it, Presta does not", that is not the thesis; the thesis is that the mechanism is framework-neutral. Team: one composer require in the project and every dev, every agent has the same, no more CLAUDE.md that everyone writes their own way. Dropped from the slide, say if time: works when the app doesn't boot (container from the dump, profiler and logs from disk).</div>
+  </section>
+
+  <!-- 20 · takeaway + closing bracket -->
+  <section class="slide">
+    <div class="eyebrow">Your project · Monday</div>
+    <h2>Harness engineering <span class="q">> picking the model</span></h2>
+    <div class="intro-grid two what-grid take-grid">
+      <div class="card pss-card">
+        <h3>Start Monday</h3>
+        <div class="kw"><span>One tool for the most frequent guess</span><span>One skill that says when</span><span>Measure whether the agent uses it</span></div>
+      </div>
+      <div class="card pss-card">
+        <h3>Inside the harness</h3>
+        <div class="kw"><span>Context: what gets in, and when</span><span>Tools: facts from the app</span><span>Checks: what the environment enforces</span></div>
+      </div>
+    </div>
+    <div class="thesis">The model is replaceable. <mark>The harness is yours.</mark></div>
+    <div class="notes">Takeaway and closing bracket: the same sentence as slide 4, word for word. The three layers are the three from slide 4. "Measure": the Mate Lab numbers from slide 16, don't assume the agent reaches for the tool.</div>
+  </section>
+
+  <!-- 21 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>
