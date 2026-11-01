@@ -481,7 +481,9 @@
   .vs-overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; opacity: 0; transition: opacity .18s ease; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 2.4cqi; color: #fff; text-shadow: 0 .2cqi 1cqi rgba(0,0,0,.6); }
   .vs-overlay.show { opacity: 1; }
   .vs-overlay span { background: rgba(0,0,0,.55); padding: .8cqi 1.6cqi; border-radius: 1cqi; }
-  .vs-steps { display: grid; gap: .8cqi; }
+  .vs-steps { display: grid; gap: .8cqi; min-width: 0; }   /* long code lines must not widen the column and shrink the video */
+  .vs-video { min-width: 0; }
+  .vs-steps .step { min-width: 0; overflow: hidden; }
   .vs-steps .step.card.pss-card { padding: 1cqi 1.6cqi 1.1cqi; border-radius: 1.2cqi; gap: .2cqi; opacity: .4; transition: opacity .2s ease, outline-color .2s ease; outline: .25cqi solid transparent; }
   .vs-steps .step.card.pss-card.hot { opacity: 1; outline-color: var(--pss-green); }
   .vs-steps .step h3 { font-size: 1.15cqi; }
@@ -680,22 +682,22 @@
         <div class="step card pss-card" data-step="2" data-at="7.4" data-until="10.5">
           <h3>0:03 · first line</h3>
           <p class="kw"><span>Goes straight to the profiler, via Mate</span></p>
-          <code>I'll use the Mate profiler tooling. Loading the profiler skill first</code>
+          <code>I'll use the Mate profiler tooling. Loading the profiler skill</code>
         </div>
         <div class="step card pss-card" data-step="3" data-at="10.7" data-until="19.5">
           <h3>0:06 · asks</h3>
           <p class="kw"><span>Lists profiles, reads the db collector</span></p>
-          <code>mate tools:call symfony-profiler-list --url=… · resources:read …/db</code>
+          <code>mate tools:call symfony-profiler-list · resources:read …/db</code>
         </div>
         <div class="step card pss-card" data-step="4" data-at="27.4" data-until="37.5">
           <h3>0:26 · fact</h3>
-          <p class="kw"><span>112 queries, 45× the same SELECT. Then: what changed?</span></p>
+          <p class="kw"><span>112 queries, 45× one SELECT. What changed?</span></p>
           <code>"query_count": 112 · git show 1e13261</code>
         </div>
         <div class="step card pss-card" data-step="5" data-at="52.7" data-until="52.7">
           <h3>0:48 · 7 turns · verdict</h3>
           <p class="kw"><span>N+1 from the card customization, not Sylius core</span></p>
-          <code>The cause is an N+1 query pattern introduced by the product card customization</code>
+          <code>The cause is an N+1 query pattern introduced by the product card…</code>
         </div>
       </div>
     </div>
