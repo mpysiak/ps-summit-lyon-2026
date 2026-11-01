@@ -403,6 +403,15 @@
   .syn-grid .lab, .our-grid .lab { margin-top: 1.1cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.15cqi; letter-spacing: .04em; color: var(--pss-green); opacity: .9; }
   .syn-grid .step { outline: .3cqi solid transparent; transition: outline-color .2s ease; }
   .syn-grid .step.hot { outline-color: var(--pss-green); }
+  .take-grid .card.pss-card { padding: 1.4cqi 2.2cqi 1.6cqi; }
+  .take-grid .card.pss-card .kw { font-size: 2.1cqi; gap: .5cqi; }
+  .card.pss-card.accent { background: var(--accent); }
+  .card.pss-card.accent h3 { color: #fff; opacity: .85; }
+  .card.pss-card.accent .kw { color: #fff; }
+  .gain-grid { gap: 1cqi; }
+  .gain-grid .card.pss-card { padding: 1.1cqi 2cqi 1.2cqi; border-radius: 1.4cqi; }
+  .gain-grid .card.pss-card .kw { font-size: 1.7cqi; gap: .25cqi; margin-top: .5cqi; }
+  .gain-grid + .thesis { margin-top: 1.1cqi; font-size: 1.9cqi; padding: .9cqi 1.5cqi; }
   .what-grid + .thesis { margin-top: 1.4cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   .intro-foot { margin-top: auto; display: flex; gap: 3cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .06em; color: var(--muted); }
 
@@ -912,16 +921,16 @@ description: <span class="hi">Use for any question about a price a customer sees
       <div class="card pss-card step" data-step="2">
         <h3>Tools only</h3>
         <div class="kw"><span>A binary in vendor</span><span>Nobody tells the agent to use it</span></div>
-        <div class="lab">Mate Lab · 0/10 runs reach for it</div>
+        <div class="lab">Mate Lab · CLI 0/10 · MCP 3/10</div>
       </div>
       <div class="card pss-card step" data-step="3">
         <h3>Together</h3>
         <div class="kw"><span>The skill says when</span><span>The tool says how it is</span></div>
-        <div class="lab">Mate Lab · 10/10 runs reach for it</div>
+        <div class="lab">Mate Lab · CLI + skills 10/10</div>
       </div>
     </div>
     <div class="thesis">That's why the skill ships <mark>in the same package as the tools.</mark></div>
-    <div class="notes">You saw it a moment ago: profiler skill + profiler tool. Do NOT say "CLI" or "MCP" here, that's the punchline on #19. Mate Lab (Johannes): Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server, tools visible through the protocol but no skills: 3/10 and 2/10. CLI + skills and instructions in files: 10/10 and 5/10. Visibility decides. Johannes himself: a pattern, not statistical proof. Mate distributes skills natively since 0.12, 0.13 installs copies into .agents/skills.</div>
+    <div class="notes">You saw it a moment ago: profiler skill + profiler tool. One sentence on MCP, no more: Mate removed its MCP server after this measurement, transport does not decide, visibility does. Johannes: "kill the transport, not the capability". If asked: MCP was only a transport, skills are read from files by every agent anyway, CLI + files is cheaper (no process, no handshake). Mate Lab (Johannes): Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server, tools visible through the protocol but no skills: 3/10 and 2/10. CLI + skills and instructions in files: 10/10 and 5/10. Visibility decides. Johannes himself: a pattern, not statistical proof. Mate distributes skills natively since 0.12, 0.13 installs copies into .agents/skills.</div>
   </section>
 
   <!-- 17 · our case: tools and skills -->
@@ -946,74 +955,46 @@ description: <span class="hi">Use for any question about a price a customer sees
 
   <!-- 19 · takeaway + closing bracket -->
   <section class="slide">
-    <div class="eyebrow">Your project</div>
+    <div class="eyebrow">What's in it for you · not necessarily Sylius</div>
+    <h2>Not just Sylius. Not even Symfony. <span class="q">Any PHP.</span></h2>
+    <div class="intro-grid two what-grid gain-grid">
+      <div class="card pss-card accent">
+        <h3>Any PHP project</h3>
+        <div class="kw"><span>Mate needs no Symfony</span><span>Plain PHP core, bridges on top</span><span>PrestaShop, Laravel, legacy: same mechanism</span></div>
+      </div>
+      <div class="card pss-card">
+        <h3>Whole team, every agent</h3>
+        <div class="kw"><span>composer install, done</span><span>Claude Code, Codex, Copilot, Cursor</span></div>
+      </div>
+      <div class="card pss-card">
+        <h3>Nothing in production</h3>
+        <div class="kw"><span>A dev dependency</span><span>Its own container, nothing in the kernel</span></div>
+      </div>
+      <div class="card pss-card">
+        <h3>Yours in an afternoon</h3>
+        <div class="kw"><span>A method in mate/src</span><span>A directory in mate/skills</span></div>
+      </div>
+    </div>
+    <div class="thesis">Tools and skills in vendor. <mark>Versioned with the code, not in a CLAUDE.md per person.</mark></div>
+    <div class="notes">The answer to "what's in it for me, if I don't do Sylius". Stress: Mate does NOT need Symfony. The core is plain PHP with its own container, Symfony is one bridge among possible ones, legacy apps work too. PrestaShop: same mechanism, a Composer package with mate/src and mate/skills, with or without the Symfony bridge. Do not frame it as "Sylius has it, Presta does not", that is not the thesis; the thesis is that the mechanism is framework-neutral. Team: one composer require in the project and every dev, every agent has the same, no more CLAUDE.md that everyone writes their own way. Dropped from the slide, say if time: works when the app doesn't boot (container from the dump, profiler and logs from disk).</div>
+  </section>
+
+  <!-- 19 · takeaway + closing bracket -->
+  <section class="slide">
+    <div class="eyebrow">Your project · Monday</div>
     <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
-    <div class="isnot takeaway">
-      <div class="is">
-        <h3>Start with</h3>
-        <ul>
-          <li>one tool that replaces the most frequent guess</li>
-          <li>one skill that says when to use it</li>
-          <li>measuring whether the agent uses it. Don't assume</li>
-        </ul>
+    <div class="intro-grid two what-grid take-grid">
+      <div class="card pss-card">
+        <h3>Start Monday</h3>
+        <div class="kw"><span>One tool for the most frequent guess</span><span>One skill that says when</span><span>Measure whether the agent uses it</span></div>
       </div>
-      <div class="is">
+      <div class="card pss-card">
         <h3>Two disciplines</h3>
-        <ul>
-          <li><strong>context:</strong> what gets into the context and when</li>
-          <li><strong>harness:</strong> what the environment enforces instead of the model</li>
-        </ul>
+        <div class="kw"><span>Context: what gets in, and when</span><span>Harness: what the environment enforces</span></div>
       </div>
     </div>
-    <p class="thesis">The model is replaceable. <mark>The environment is what matters.</mark></p>
-    <div class="notes">Takeaway and closing bracket. The last sentence is the thesis.</div>
-  </section>
-
-  <!-- 20 · speaking of MCP -->
-  <section class="slide">
-    <div class="eyebrow">* Speaking of MCP</div>
-    <h2 style="margin-bottom:1.4cqi">Why Mate <span class="q">removed the MCP server</span></h2>
-    <ol class="steps why-mcp">
-      <li><span><strong>Visibility decides, not transport.</strong><span class="sub">Mate Lab: MCP 3/10, bare CLI 0/10, CLI + files 10/10.</span></span></li>
-      <li><span><strong>MCP was only a transport.</strong><span class="sub">Tools, schemas, runtime, skills, discovery: none of it needed it.</span></span></li>
-      <li><span><strong>Nobody reads skills via MCP.</strong><span class="sub">Claude Code, Codex, Copilot: all from files. The file layer had to exist anyway.</span></span></li>
-      <li><span><strong>CLI + files are cheaper.</strong><span class="sub">No process, no handshake, no generated config.</span></span></li>
-    </ol>
-    <p class="thesis">"Kill the transport, <mark>not the capability.</mark>" <span class="by inline">Johannes Wachter · The hardest code to delete</span></p>
-    <div class="notes">Intro in one sentence: in Berlin he himself argued "Why MCP, Not Just a CLI?" (interactive context, one standard, per-tool consent); five months later he measured and removed it. Quote to say: "the amount of work put into an architecture says surprisingly little about whether it should survive the next one". Last sentence: even the tool transport turned out to be a harness question — the thesis from 17 once more.</div>
-  </section>
-
-  <!-- 21 · what Mate gives in your project -->
-  <section class="slide">
-    <div class="eyebrow">What Mate gives you in your project · not necessarily Symfony</div>
-    <h2 style="margin-bottom:1.6cqi">Summary</h2>
-    <div class="cols cols-2x3 what pros">
-      <div class="gain">
-        <h3>Any PHP application</h3>
-        <p class="ex">the core doesn't know the framework, Symfony is one of the bridges. Legacy too</p>
-      </div>
-      <div class="gain">
-        <h3>The whole team gets the same</h3>
-        <p class="ex"><code>composer install</code> gives every dev and every agent the same tools and skills: Claude Code, Codex, Copilot, Cursor</p>
-      </div>
-      <div class="gain">
-        <h3>Zero interference with the app</h3>
-        <p class="ex">dev dependency with its own container. Nothing in the kernel, nothing in production</p>
-      </div>
-      <div class="gain">
-        <h3>One source of truth</h3>
-        <p class="ex">tools and instructions in vendor, versioned with the code. Not in a CLAUDE.md per person</p>
-      </div>
-      <div class="gain">
-        <h3>Works when the app doesn't boot</h3>
-        <p class="ex">container from the dump, profiler and logs from disk. Answers when you need it most</p>
-      </div>
-      <div class="gain">
-        <h3>Your own tool and skill without an extension</h3>
-        <p class="ex">tool = a method with <code>#[MateTool]</code> in <code>mate/src</code>, skill = a directory in <code>mate/skills</code></p>
-      </div>
-    </div>
-    <div class="notes">The answer to "what's in it for me, if I don't do Sylius or Symfony". Two points deliberately repeat 8–9, here in the role of "for you too". Team: one composer require in the project and every dev, every agent has the same — no more CLAUDE.md that everyone writes their own way.</div>
+    <div class="thesis">The model is replaceable. <mark>The environment is what matters.</mark></div>
+    <div class="notes">Takeaway and closing bracket. The last sentence is the thesis. "Measure": the Mate Lab numbers from slide 16, don't assume the agent reaches for the tool.</div>
   </section>
 
   <!-- 22 · community -->
