@@ -729,33 +729,7 @@
     <div class="notes">Entry: "Mate is exactly access to the bottom of the pyramid". Like Johannes: outside-in. The rest of symfony/ai lets your application use AI. Mate does the opposite.</div>
   </section>
 
-  <!-- 12 · what the agent got -->
-  <section class="slide">
-    <div class="eyebrow">Demo · what the agent got</div>
-    <h2>One call. <span class="q">111 queries, 45 identical.</span></h2>
-    <div class="split">
-      <div class="term">{
-  "query_count": <span class="hi">111</span>,
-  "distinct_statements": 19,
-  "duplicates": [
-    {
-      "sql": "SELECT … FROM
-              sylius_product_option_value
-              … WHERE variant_id = ?",
-      "count": <span class="hi">45</span>
-    }
-  ]
-}</div>
-      <ul>
-        <li>compact, structured, actionable</li>
-        <li>the agent doesn't have to read code to know where the problem is</li>
-        <li><strong>the profiler always knows, guessing never does</strong></li>
-      </ul>
-    </div>
-    <div class="notes">Approximate format, to be replaced with the real output from the bridge.</div>
-  </section>
-
-  <!-- 13 · own tool, own skill -->
+  <!-- 12 · own tool, own skill -->
   <section class="slide">
     <div class="eyebrow">How to extend it</div>
     <h2 style="margin-bottom:1.4cqi">Your own tool, <span class="q">your own skill</span></h2>
@@ -794,7 +768,7 @@ description: Use when a task touches
     <div class="notes">After the demo: how to extend it yourself. Tool: one method with #[MateTool], DI works (Mate's own container). Skill: a directory + an entry in composer.json, lands in .agents/skills/mate-app-flags just like the ones from packages. Extension only when the tool and skill need to travel to many projects — then a package with extra.ai-mate (scan-dirs, instructions, skills), start from extension-template.</div>
   </section>
 
-  <!-- 14 · synergy -->
+  <!-- 13 · synergy -->
   <section class="slide" data-steps="3">
     <div class="eyebrow">Synergy</div>
     <h2>Skills + tools <span class="q">> each on its own</span></h2>
@@ -822,10 +796,10 @@ description: Use when a task touches
       <p><strong>You saw it a moment ago:</strong> profiler skill + profiler tool.</p>
       <p><strong>That's why</strong> Mate has distributed skills natively since 0.12, and we version the skill with the tools in one package.</p>
     </div>
-    <div class="notes">The core of the middle. Do NOT say "CLI" or "MCP" here — that's the punchline on #17. Mate Lab: Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server (tools visible through the protocol, no skills) 3/10 and 2/10. CLI + skills and instructions in files 10/10 and 5/10. Visibility decides. Johannes himself notes: a pattern, not statistical proof. Skills via extra.ai-mate.skills since 0.12; 0.13 changed the install to copies in .agents/skills.</div>
+    <div class="notes">The core of the middle. Do NOT say "CLI" or "MCP" here — that's the punchline on #16. Mate Lab: Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server (tools visible through the protocol, no skills) 3/10 and 2/10. CLI + skills and instructions in files 10/10 and 5/10. Visibility decides. Johannes himself notes: a pattern, not statistical proof. Skills via extra.ai-mate.skills since 0.12; 0.13 changed the install to copies in .agents/skills.</div>
   </section>
 
-  <!-- 15 · extension = facts -->
+  <!-- 14 · extension = facts -->
   <section class="slide">
     <div class="eyebrow">Our case · sylius/sylius-mate-extension</div>
     <h2 style="margin-bottom:1.6cqi">Our domain: <span class="q">29 tools for Sylius</span></h2>
@@ -860,7 +834,7 @@ description: Use when a task touches
     <div class="notes">It's not the profiler that's magic, it's the mechanism of a measured fact. Honestly: our extension boots the host kernel (the opposite of Mate's core), because hooks, grids and decorators can't be read from the XML dump.</div>
   </section>
 
-  <!-- 16 · skill = judgment -->
+  <!-- 15 · skill = judgment -->
   <section class="slide">
     <div class="eyebrow">Our case · skills</div>
     <h2>Tools are facts. <span class="q">A skill is judgment.</span></h2>
@@ -887,7 +861,7 @@ description: Use when a task touches
     <div class="notes">The skill shrunk down to judgment. Skills versioned together with the tools, in one package — upstream (Mate 0.13) arrived at the same thing. The five dimmed ones are the skills from Mate core and the Symfony bridge, the same ones the room saw in the demo.</div>
   </section>
 
-  <!-- 17 · takeaway + closing bracket -->
+  <!-- 16 · takeaway + closing bracket -->
   <section class="slide">
     <div class="eyebrow">Your project</div>
     <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
@@ -912,7 +886,7 @@ description: Use when a task touches
     <div class="notes">Takeaway and closing bracket. The last sentence is the thesis.</div>
   </section>
 
-  <!-- 18 · speaking of MCP -->
+  <!-- 17 · speaking of MCP -->
   <section class="slide">
     <div class="eyebrow">* Speaking of MCP</div>
     <h2 style="margin-bottom:1.4cqi">Why Mate <span class="q">removed the MCP server</span></h2>
@@ -926,7 +900,7 @@ description: Use when a task touches
     <div class="notes">Intro in one sentence: in Berlin he himself argued "Why MCP, Not Just a CLI?" (interactive context, one standard, per-tool consent); five months later he measured and removed it. Quote to say: "the amount of work put into an architecture says surprisingly little about whether it should survive the next one". Last sentence: even the tool transport turned out to be a harness question — the thesis from 17 once more.</div>
   </section>
 
-  <!-- 19 · what Mate gives in your project -->
+  <!-- 18 · what Mate gives in your project -->
   <section class="slide">
     <div class="eyebrow">What Mate gives you in your project · not necessarily Symfony</div>
     <h2 style="margin-bottom:1.6cqi">Summary</h2>
@@ -959,7 +933,7 @@ description: Use when a task touches
     <div class="notes">The answer to "what's in it for me, if I don't do Sylius or Symfony". Two points deliberately repeat 8–9, here in the role of "for you too". Team: one composer require in the project and every dev, every agent has the same — no more CLAUDE.md that everyone writes their own way.</div>
   </section>
 
-  <!-- 20 · community -->
+  <!-- 19 · community -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Community</h2>
@@ -984,7 +958,7 @@ description: Use when a task touches
     <div class="notes">Official bridges in the symfony/ai monorepo. MatesOfMate is the community organization (PHPStan, PHPUnit, Composer, Rector, self-review, extension-template, awesome-mate) — 0.6.0 tags for Mate 0.12; the version for 0.13 is on the way. Ecosystem: Sylius (ours), Sulu (Johannes), OroCommerce (community), Softspring CMS. If you're building your own: start from extension-template.</div>
   </section>
 
-  <!-- 21 · thanks -->
+  <!-- 20 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>
