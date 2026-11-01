@@ -501,7 +501,7 @@
     <div class="notes">Era 1: the model guesses because it has to answer. Era 2: our reaction, instructions. Remember this slide, we'll come back to it as the "skills only" side.</div>
   </section>
 
-  <!-- 4 · prose doesn't scale -->
+  <!-- 4 · harness -->
   <section class="slide harness">
     <div class="eyebrow">The word for it</div>
     <h2>Harness</h2>
@@ -548,7 +548,7 @@
     <div class="notes">Context before recording 1. The customization is correct in terms of conventions (hook, not override), the bug sits in the data path: a loop in the template over a relation = classic N+1. With the customization 111 queries, of which 45 are the same SELECT on option values. Do NOT give the baseline (71 on a clean listing) from the stage — if someone asks: "part of it is Sylius itself, but our 40 is one template". Both recordings get the same page and the same prompt.</div>
   </section>
 
-  <!-- 5 · demo run 1 -->
+  <!-- 6 · demo run 1 -->
   <section class="slide vsteps" data-steps="6">
     <div class="eyebrow">Demo · run 1 · bare agent, no Mate · recording ×5</div>
     <div class="vs-grid">
@@ -592,96 +592,7 @@
     <div class="notes">Same mechanism as run 2: arrow = next block, the video jumps there and plays the fragment, then stops. The model knows Symfony: it tried curl on /_profiler and parsed the HTML with regex. The knowledge was there, the path was missing. Real time 5 minutes, 13.9k tokens, and the final answer waters the N+1 down to "dev mode is slow". Times pinned to the September recording (Polish prompt); re-pin after the English re-record.</div>
   </section>
 
-
-  <!-- 6 · result of run 1 -->
-  <section class="slide">
-    <div class="eyebrow">Demo · run 1 · result</div>
-    <h2>It gets there. <span class="q">Eventually.</span></h2>
-    <div class="isnot">
-      <div class="is">
-        <h3>What we saw</h3>
-        <ul>
-          <li>starts with <strong>what changed recently</strong> in the project, then reads templates and entities</li>
-          <li>it <strong>knows</strong> the profiler exists, and gets at it by hand</li>
-          <li>several turns of grinding before it sees the queries</li>
-        </ul>
-      </div>
-      <div class="is">
-        <h3>What it means</h3>
-        <ul>
-          <li>the knowledge is there, the path is missing</li>
-          <li>in a small project it will hit, in a big one the same method costs more</li>
-        </ul>
-      </div>
-    </div>
-    <p class="thesis">Without a tool it gets there. The question: <mark>at what cost</mark>?</p>
-    <div class="notes">Right after the recording. The model knows Symfony, tried curl on /_profiler, reading files from var/cache — the knowledge was there, the path was missing.</div>
-  </section>
-  <!-- 7 · pyramid -->
-  <section class="slide" data-steps="4">
-    <div class="eyebrow">Where the 5 minutes came from · Dave Liddament's pyramid</div>
-    <h2>What the model doesn't know, <span class="q">it guesses</span></h2>
-    <div class="pyr-wrap">
-      <div class="axis">
-        <span>human</span>
-        <i></i>
-        <span>machine</span>
-      </div>
-      <svg class="pyr" viewBox="0 0 100 68" role="img" aria-label="Pyramid: deterministic checks at the bottom, code review at the top">
-        <g class="step" data-step="4">
-          <polygon points="50,2 61.25,18 38.75,18"/>
-          <text x="50" y="14.5" text-anchor="middle">CR</text>
-        </g>
-        <g class="step" data-step="3">
-          <polygon points="38.75,18 61.25,18 72.5,34 27.5,34"/>
-          <text x="50" y="27.6" text-anchor="middle">Plan mode</text>
-        </g>
-        <g class="step" data-step="2">
-          <polygon points="27.5,34 72.5,34 83.75,50 16.25,50"/>
-          <text x="50" y="43.6" text-anchor="middle">CLAUDE.md, skills, agents</text>
-        </g>
-        <g class="step" data-step="1">
-          <polygon points="16.25,50 83.75,50 95,66 5,66"/>
-          <text x="50" y="57.4" text-anchor="middle">Deterministic checks</text>
-          <text x="50" y="62.6" text-anchor="middle" class="sub">tests · static analysis · <tspan class="hi">profiler · container</tspan></text>
-        </g>
-      </svg>
-      <div class="pyr-side">
-        <p><strong>The answer lived at the bottom.</strong> Profiler, container, logs: things that don't guess, they know. The agent spent 5 minutes one floor up, inferring from code.</p>
-        <p class="muted">The bottom is enforced by code. The middle by the model. The top by a human.</p>
-      </div>
-    </div>
-    <p class="thesis">Everything above works only because <mark>the base is solid</mark>.</p>
-    <div class="notes">Diagnosis of the 5 minutes from the recording. Liddament's pyramid from SymfonyLive Berlin, Johannes added the profiler and the container to the base. I highlight from the bottom: code, model, human. One pass, without expanding the floors — this is no longer filler. Transition to 8: "Mate is exactly access to the bottom of this pyramid".</div>
-  </section>
-
-  <!-- 9 · Mate* -->
-  <section class="slide">
-    <div class="eyebrow">Symfony AI Mate</div>
-    <h2>What <span class="q">Symfony Mate</span> is</h2>
-    <div class="cols cols-2x2 what">
-      <div class="gain">
-        <h3>A developer MCP server*</h3>
-        <p class="ex">for PHP and Symfony applications; dev dependency, a <code>symfony/ai</code> component</p>
-      </div>
-      <div class="gain">
-        <h3>Its own container next to the app</h3>
-        <p class="ex">Mate doesn't plug into the kernel: its own DI container, tools and skills discovered from Composer</p>
-      </div>
-      <div class="gain">
-        <h3>Extensible</h3>
-        <p class="ex">your own tools and skills right in the project; to share between projects: extension = a regular Composer package</p>
-      </div>
-      <div class="gain">
-        <h3>With any agent</h3>
-        <p class="ex">Claude Code, Codex, Cursor, Copilot, JetBrains AI</p>
-      </div>
-    </div>
-    <p class="thesis outside"><span class="muted">Platform · Agent · Store → your application uses AI</span><br>Mate → <mark>AI uses your application</mark></p>
-    <div class="notes">Entry: "Mate is exactly access to the bottom of the pyramid". Like Johannes: outside-in. The rest of symfony/ai lets your application use AI. Mate does the opposite.</div>
-  </section>
-
-  <!-- 9 · mate init -->
+  <!-- 7 · install, the only change -->
   <section class="slide install">
     <div class="eyebrow">Installation</div>
     <h2>Installation: <span class="q">three commands</span></h2>
@@ -694,11 +605,11 @@
 <span class="ok">✓</span> AGENTS.md          instruction block for the agent
 <span class="ok">✓</span> CLAUDE.md          @AGENTS.md
 <span class="ok">✓</span> .agents/skills/    <span class="hi">5 skills</span>: profiler-debugging, request-triage, service-inspection, …</div>
-    <p class="lede">Zero network, seconds. The agent gets instructions and skills in files. <strong>Between recording 1 and 2, this is the only thing that changed.</strong></p>
+    <p class="lede">Zero network, seconds. The agent gets instructions and skills in files. <strong>Between recording 1 and 2, this is the only thing that changes.</strong> A dev dependency that hands the agent the profiler and the container. Details in a moment.</p>
     <div class="notes">No .mcp.json, but that comes at the end. Facts: interactive init also runs discover (skills); with --no-interaction skills are only installed by `mate discover`. init warns about a missing .gitignore in the package — cosmetic.</div>
   </section>
 
-  <!-- 10 · demo run 2 -->
+  <!-- 8 · demo run 2 -->
   <section class="slide vsteps" data-steps="5">
     <div class="eyebrow">Demo · run 2 · same prompt, new session, with Mate</div>
     <div class="vs-grid">
@@ -737,6 +648,87 @@
     <div class="notes">Arrow = next block: the video jumps to it, plays the fragment and stops by itself. Left arrow goes back the same way. Space pauses/plays. Times are placeholders pinned to the September recording (Polish prompt); re-pin to the English recording. Mate init was the only thing that changed between runs.</div>
   </section>
 
+  <!-- 9 · comparison -->
+  <section class="slide bonus">
+    <div class="eyebrow">What you just saw · same prompt, same project, one run each</div>
+    <h2>The model didn't get smarter. <span class="q">The harness did.</span></h2>
+    <table class="runs">
+      <thead><tr><th></th><th>model</th><th>harness</th><th>turns</th><th>to "it's N+1"</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Fable 5.1</td><td>bare</td><td>30</td><td>~5 min, then blames dev mode</td></tr>
+        <tr class="hot"><td>2</td><td>Fable 5.1</td><td>with Mate</td><td>12</td><td>1:20</td></tr>
+        <tr><td>3</td><td>Haiku 4.5</td><td>with Mate</td><td>71</td><td>1:20</td></tr>
+      </tbody>
+    </table>
+    <p class="thesis">How much do you pay for the model, <mark>and how much for the harness?</mark><span class="by"><a class="vlink" href="#" id="bonus-toggle">▶ recording 3: Haiku + Mate (1:23)</a></span></p>
+    <div class="bonus-player" id="bonus-player" hidden><span class="close" id="bonus-close">✕ close (Esc)</span><video id="bonus-video" src="media/demo-3-haiku-mate.webm" preload="metadata" playsinline controls></video></div>
+    <div class="notes">Comparison right after the two recordings, while both are fresh. Same model, same prompt, same project, new session each time, project memory empty; the only shared source is git. Bare run: 30 turns, 12 tool calls, 76k new input + 1.38M from cache, 38k output, and the final answer waters the N+1 down to "dev mode is slow". With Mate: 12 turns, 6 calls, 43k + 0.51M, 6k output, first line "I'll check this page with the Symfony profiler via Mate". Roughly 3x cheaper, 6x less output. Haiku with Mate: 71 turns, 34 calls, grinds finer, but lands in the same 1:20 where Fable alone needed 5 minutes. Recording 3 only if time allows (clock under 28:00). One run per variant = illustration, not statistics. Pyramid and "what Mate is" come next as the explanation.</div>
+  </section>
+
+  <!-- 10 · pyramid -->
+  <section class="slide" data-steps="4">
+    <div class="eyebrow">Where the 5 minutes came from · Dave Liddament's pyramid</div>
+    <h2>What the model doesn't know, <span class="q">it guesses</span></h2>
+    <div class="pyr-wrap">
+      <div class="axis">
+        <span>human</span>
+        <i></i>
+        <span>machine</span>
+      </div>
+      <svg class="pyr" viewBox="0 0 100 68" role="img" aria-label="Pyramid: deterministic checks at the bottom, code review at the top">
+        <g class="step" data-step="4">
+          <polygon points="50,2 61.25,18 38.75,18"/>
+          <text x="50" y="14.5" text-anchor="middle">CR</text>
+        </g>
+        <g class="step" data-step="3">
+          <polygon points="38.75,18 61.25,18 72.5,34 27.5,34"/>
+          <text x="50" y="27.6" text-anchor="middle">Plan mode</text>
+        </g>
+        <g class="step" data-step="2">
+          <polygon points="27.5,34 72.5,34 83.75,50 16.25,50"/>
+          <text x="50" y="43.6" text-anchor="middle">CLAUDE.md, skills, agents</text>
+        </g>
+        <g class="step" data-step="1">
+          <polygon points="16.25,50 83.75,50 95,66 5,66"/>
+          <text x="50" y="57.4" text-anchor="middle">Deterministic checks</text>
+          <text x="50" y="62.6" text-anchor="middle" class="sub">tests · static analysis · <tspan class="hi">profiler · container</tspan></text>
+        </g>
+      </svg>
+      <div class="pyr-side">
+        <p><strong>The answer lived at the bottom.</strong> Profiler, container, logs: things that don't guess, they know. The agent spent 5 minutes one floor up, inferring from code.</p>
+        <p class="muted">The bottom is enforced by code. The middle by the model. The top by a human.</p>
+      </div>
+    </div>
+    <p class="thesis">Everything above works only because <mark>the base is solid</mark>.</p>
+    <div class="notes">Diagnosis of the 5 minutes from the recording. Liddament's pyramid from SymfonyLive Berlin, Johannes added the profiler and the container to the base. I highlight from the bottom: code, model, human. One pass, without expanding the floors — this is no longer filler. Transition to 8: "Mate is exactly access to the bottom of this pyramid".</div>
+  </section>
+
+  <!-- 11 · what Mate is -->
+  <section class="slide">
+    <div class="eyebrow">Symfony AI Mate</div>
+    <h2>What <span class="q">Symfony Mate</span> is</h2>
+    <div class="cols cols-2x2 what">
+      <div class="gain">
+        <h3>A developer MCP server*</h3>
+        <p class="ex">for PHP and Symfony applications; dev dependency, a <code>symfony/ai</code> component</p>
+      </div>
+      <div class="gain">
+        <h3>Its own container next to the app</h3>
+        <p class="ex">Mate doesn't plug into the kernel: its own DI container, tools and skills discovered from Composer</p>
+      </div>
+      <div class="gain">
+        <h3>Extensible</h3>
+        <p class="ex">your own tools and skills right in the project; to share between projects: extension = a regular Composer package</p>
+      </div>
+      <div class="gain">
+        <h3>With any agent</h3>
+        <p class="ex">Claude Code, Codex, Cursor, Copilot, JetBrains AI</p>
+      </div>
+    </div>
+    <p class="thesis outside"><span class="muted">Platform · Agent · Store → your application uses AI</span><br>Mate → <mark>AI uses your application</mark></p>
+    <div class="notes">Entry: "Mate is exactly access to the bottom of the pyramid". Like Johannes: outside-in. The rest of symfony/ai lets your application use AI. Mate does the opposite.</div>
+  </section>
+
   <!-- 12 · what the agent got -->
   <section class="slide">
     <div class="eyebrow">Demo · what the agent got</div>
@@ -763,19 +755,7 @@
     <div class="notes">Approximate format, to be replaced with the real output from the bridge.</div>
   </section>
 
-  <!-- 13 · three conclusions -->
-  <section class="slide" data-steps="3">
-    <div class="eyebrow">What you just saw</div>
-    <h2>The knowledge was in both. <span class="q">The path in one.</span></h2>
-    <ol class="steps">
-      <li class="step" data-step="1"><span>In both cases the agent <strong>gets there</strong>.<span class="sub">A matter of time and tokens.</span></span></li>
-      <li class="step" data-step="2"><span>In both it went to the <strong>profiler</strong>, like a developer.<span class="sub">Bare: several turns of grinding, ~5 minutes to N+1. With Mate: 1:20, and the first line is "I'll check this page with the Symfony profiler via Mate".</span></span></li>
-      <li class="step" data-step="3"><span>The agent is not smarter. <strong>Different environment.</strong><span class="sub">Same model, same prompt, same project.</span></span></li>
-    </ol>
-    <div class="notes">You saw the turns and the time in the recordings. The bare run was on Fable 5.1, the strongest model available, and still 5 minutes — recording sped up ×5 (overlay on the video). With Mate: 1:20 to the same conclusion, first move = profiler skill + tool. TOKENS (from transcripts, one run per variant, Fable 5.1): bare 30 turns / 12 tool calls / 76k new input + 1.38M from cache / 38k output; with Mate 12 turns / 6 calls / 43k + 0.51M / 6k output. So ~2.6× less input, 6× less output, cost-wise ~3× cheaper (cache ~10× cheaper, output ~5× more expensive). Caveat: illustration, not statistics; the Mate session also counts writing the summary, so the difference is if anything understated. HAIKU: don't mention for now (recording 3 = Haiku + Mate, also 1:20, skills and tools used — in reserve, in case a question about a weaker model comes up). Q&A "what about memory / cache?": each run = new session, project auto-memory empty (checked), the only shared source is the project's git (`git show` of the last commit in both runs).</div>
-  </section>
-
-  <!-- 14 · own tool, own skill -->
+  <!-- 13 · own tool, own skill -->
   <section class="slide">
     <div class="eyebrow">How to extend it</div>
     <h2 style="margin-bottom:1.4cqi">Your own tool, <span class="q">your own skill</span></h2>
@@ -814,7 +794,7 @@ description: Use when a task touches
     <div class="notes">After the demo: how to extend it yourself. Tool: one method with #[MateTool], DI works (Mate's own container). Skill: a directory + an entry in composer.json, lands in .agents/skills/mate-app-flags just like the ones from packages. Extension only when the tool and skill need to travel to many projects — then a package with extra.ai-mate (scan-dirs, instructions, skills), start from extension-template.</div>
   </section>
 
-  <!-- 15 · synergy -->
+  <!-- 14 · synergy -->
   <section class="slide" data-steps="3">
     <div class="eyebrow">Synergy</div>
     <h2>Skills + tools <span class="q">> each on its own</span></h2>
@@ -842,7 +822,7 @@ description: Use when a task touches
       <p><strong>You saw it a moment ago:</strong> profiler skill + profiler tool.</p>
       <p><strong>That's why</strong> Mate has distributed skills natively since 0.12, and we version the skill with the tools in one package.</p>
     </div>
-    <div class="notes">The core of the middle. Do NOT say "CLI" or "MCP" here — that's the punchline on #19. Mate Lab: Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server (tools visible through the protocol, no skills) 3/10 and 2/10. CLI + skills and instructions in files 10/10 and 5/10. Visibility decides. Johannes himself notes: a pattern, not statistical proof. Skills via extra.ai-mate.skills since 0.12; 0.13 changed the install to copies in .agents/skills.</div>
+    <div class="notes">The core of the middle. Do NOT say "CLI" or "MCP" here — that's the punchline on #17. Mate Lab: Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server (tools visible through the protocol, no skills) 3/10 and 2/10. CLI + skills and instructions in files 10/10 and 5/10. Visibility decides. Johannes himself notes: a pattern, not statistical proof. Skills via extra.ai-mate.skills since 0.12; 0.13 changed the install to copies in .agents/skills.</div>
   </section>
 
   <!-- 15 · extension = facts -->
@@ -880,7 +860,7 @@ description: Use when a task touches
     <div class="notes">It's not the profiler that's magic, it's the mechanism of a measured fact. Honestly: our extension boots the host kernel (the opposite of Mate's core), because hooks, grids and decorators can't be read from the XML dump.</div>
   </section>
 
-  <!-- 17 · skill = judgment -->
+  <!-- 16 · skill = judgment -->
   <section class="slide">
     <div class="eyebrow">Our case · skills</div>
     <h2>Tools are facts. <span class="q">A skill is judgment.</span></h2>
@@ -907,7 +887,7 @@ description: Use when a task touches
     <div class="notes">The skill shrunk down to judgment. Skills versioned together with the tools, in one package — upstream (Mate 0.13) arrived at the same thing. The five dimmed ones are the skills from Mate core and the Symfony bridge, the same ones the room saw in the demo.</div>
   </section>
 
-  <!-- 18 · takeaway + closing bracket -->
+  <!-- 17 · takeaway + closing bracket -->
   <section class="slide">
     <div class="eyebrow">Your project</div>
     <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
@@ -979,7 +959,7 @@ description: Use when a task touches
     <div class="notes">The answer to "what's in it for me, if I don't do Sylius or Symfony". Two points deliberately repeat 8–9, here in the role of "for you too". Team: one composer require in the project and every dev, every agent has the same — no more CLAUDE.md that everyone writes their own way.</div>
   </section>
 
-  <!-- 21 · community -->
+  <!-- 20 · community -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Community</h2>
@@ -1004,24 +984,7 @@ description: Use when a task touches
     <div class="notes">Official bridges in the symfony/ai monorepo. MatesOfMate is the community organization (PHPStan, PHPUnit, Composer, Rector, self-review, extension-template, awesome-mate) — 0.6.0 tags for Mate 0.12; the version for 0.13 is on the way. Ecosystem: Sylius (ours), Sulu (Johannes), OroCommerce (community), Softspring CMS. If you're building your own: start from extension-template.</div>
   </section>
 
-  <!-- 22 · bonus: weaker model -->
-  <section class="slide bonus">
-    <div class="eyebrow">Bonus · if there are a few minutes left</div>
-    <h2>What if we took <span class="q">a weaker model?</span></h2>
-    <table class="runs">
-      <thead><tr><th></th><th>model</th><th>environment</th><th>to "it's N+1"</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Fable 5.1</td><td>without Mate</td><td>~5 min</td></tr>
-        <tr><td>2</td><td>Fable 5.1</td><td>with Mate</td><td>1:20</td></tr>
-        <tr class="hot"><td>3</td><td>Haiku 4.5</td><td>with Mate</td><td>1:20</td></tr>
-      </tbody>
-    </table>
-    <p class="thesis">How much do you pay for the model, <mark>and how much for the environment?</mark><span class="by">same prompt, same project, one run each · <a class="vlink" href="#" id="bonus-toggle">▶ recording 3: Haiku + Mate (1:23)</a></span></p>
-    <div class="bonus-player" id="bonus-player" hidden><span class="close" id="bonus-close">✕ close (Esc)</span><video id="bonus-video" src="media/demo-3-haiku-mate.webm" preload="metadata" playsinline controls></video></div>
-    <div class="notes">Show only if the clock on #21 is < 28:00. Haiku with Mate: the same skills and tools, 71 turns and 34 calls (grinds finer than Fable: 12 turns, 6 calls), but gets there in the same time where Fable without Mate needed 5 minutes. One run per variant = illustration, not statistics. Johannes's Mate Lab was on Haiku too.</div>
-  </section>
-
-  <!-- 20 · thanks -->
+  <!-- 21 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>
@@ -1033,6 +996,7 @@ description: Use when a task touches
     <div class="qr-wrap"><svg xmlns="http://www.w3.org/2000/svg" class="qr" role="img" aria-label="QR: github.com/mpysiak/phpers-bydgoszcz-2026" viewBox="0 0 41 41" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h41v41H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h7M4 5.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h6m1 0h2m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m4 0h3m1 0h3m1 0h2m2 0h2m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M14 11.5h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2M4 12.5h1m1 0h1m1 0h1m1 0h1m5 0h2m2 0h2m3 0h3m4 0h1m2 0h1M5 13.5h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h3m1 0h2m2 0h4m3 0h2M4 14.5h2m1 0h1m2 0h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h1m1 0h1M4 15.5h1m1 0h2m6 0h1m2 0h3m1 0h4m2 0h1m2 0h1m1 0h1m3 0h1M4 16.5h8m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m2 0h4m2 0h1m2 0h1M4 17.5h2m1 0h2m3 0h2m2 0h9m5 0h1m3 0h1m1 0h1M4 18.5h1m4 0h2m3 0h12m2 0h2m1 0h1m1 0h4M4 19.5h5m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h2m4 0h1m4 0h1M5 20.5h2m2 0h2m3 0h4m1 0h1m1 0h1m1 0h3m1 0h4M4 21.5h2m2 0h2m1 0h1m2 0h1m1 0h3m1 0h1m3 0h1m3 0h4m4 0h1M4 22.5h1m3 0h3m3 0h2m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m3 0h3M8 23.5h1m5 0h1m3 0h1m1 0h1m3 0h2m1 0h2m1 0h3m2 0h2M4 24.5h1m3 0h3m1 0h1m1 0h3m1 0h2m3 0h1m1 0h1m3 0h2m2 0h1m2 0h1M5 25.5h3m1 0h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h2M4 26.5h1m2 0h1m2 0h2m2 0h3m5 0h1m2 0h2m2 0h2m1 0h1m2 0h2M5 27.5h1m1 0h1m1 0h1m2 0h3m1 0h2m1 0h1m1 0h3m1 0h2m3 0h1m4 0h1M4 28.5h1m1 0h3m1 0h7m3 0h2m2 0h2m2 0h6m1 0h1M12 29.5h1m1 0h1m1 0h3m2 0h1m3 0h1m2 0h1m3 0h2m2 0h1M4 30.5h7m2 0h2m2 0h2m3 0h1m3 0h3m1 0h1m1 0h1m1 0h3M4 31.5h1m5 0h1m2 0h1m1 0h1m5 0h5m2 0h1m3 0h1M4 32.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h4m1 0h3m1 0h1m1 0h6m1 0h2M4 33.5h1m1 0h3m1 0h1m2 0h5m1 0h6m7 0h5M4 34.5h1m1 0h3m1 0h1m1 0h2m2 0h5m1 0h4m6 0h3m1 0h1M4 35.5h1m5 0h1m3 0h2m1 0h2m1 0h3m1 0h7m1 0h1m2 0h1M4 36.5h7m1 0h2m1 0h2m2 0h3m1 0h3m1 0h2m3 0h1m2 0h2"/></svg></div>
     <div class="notes">Stays on screen for the Q&amp;A. In the repo: README with links (Mate docs, pack, extension, Johannes's blog, his deck from Berlin), deck on GitHub Pages, installation commands.</div>
   </section>
+
 
   <div class="brand" aria-label="Sylius | PrestaShop"><img src="media/pss/sylius-prestashop-lockup.png" alt="Sylius | PrestaShop"></div>
   <div class="counter" id="counter"></div>
