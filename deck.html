@@ -424,6 +424,23 @@
   .ex-cards .card.pss-card h3 { font-size: 1.25cqi; }
   .ex-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.75cqi; gap: .25cqi; }
 
+  /* ---- tools ladder + own tool series ---- */
+  .ladder { display: grid; gap: .8cqi; margin-top: .4cqi; }
+  .ladder .card.pss-card { padding: 1cqi 2.2cqi 1.1cqi; border-radius: 1.3cqi; gap: .1cqi; }
+  .ladder .card.pss-card h3 { font-size: 1.25cqi; }
+  .ladder .card.pss-card .kw { margin-top: .3cqi; font-size: 1.85cqi; }
+  .ladder .card.pss-card.top { outline: .3cqi solid var(--pss-green); }
+  .ladder + .thesis { margin-top: 1.1cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
+  .tool-grid { display: grid; grid-template-columns: 62fr 38fr; gap: 2cqi; flex: 1; min-height: 0; align-items: start; margin-top: .8cqi; }
+  .tool-grid > .term.code { font-size: 1.3cqi; line-height: 1.55; padding: 1.4cqi 1.8cqi; border-radius: 1.2cqi; min-width: 0; }
+  .tool-grid .term .ok { color: var(--ok); }
+  .tool-cards { display: grid; gap: 1cqi; }
+  .tool-cards .card.pss-card { padding: 1.3cqi 2cqi 1.5cqi; border-radius: 1.4cqi; gap: .3cqi; }
+  .tool-cards .card.pss-card h3 { font-size: 1.25cqi; }
+  .tool-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.75cqi; gap: .3cqi; }
+  .tool-cards .term.schema { font-size: 1.15cqi; padding: 1.1cqi 1.5cqi; border-radius: 1.2cqi; }
+  .tool .tool-grid + .thesis { margin-top: 1.2cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
+
   /* video with step-driven blocks */
   .vsteps { padding: 4.9cqi 4cqi 3.6cqi; }
   .vs-grid { display: grid; grid-template-columns: 56fr 44fr; gap: 1.8cqi; flex: 1; min-height: 0; margin-top: 1cqi; align-items: start; }
@@ -724,45 +741,175 @@
     <p class="thesis outside"><span class="muted">The rest of symfony/ai: your application uses AI.</span> Mate: <mark>AI uses your application</mark>.</p>
   </section>
 
-  <!-- 12 · own tool, own skill -->
+  <!-- 12 · where the tools come from -->
   <section class="slide">
-    <div class="eyebrow">How to extend it</div>
-    <h2 style="margin-bottom:1.4cqi">Your own tool, <span class="q">your own skill</span></h2>
-    <div class="own">
-      <div>
-        <div class="tag">1 · Tool = a method with an attribute</div>
-        <div class="term code"><span class="dim">// mate/src/FeatureFlags.php</span>
-final class FeatureFlags
-{
-    <span class="hi">#[MateTool(</span>
-        name: 'app_feature_flags',
-        description: 'Flags and their state in this env',
-    <span class="hi">)]</span>
-    public function __invoke(string $env = 'dev'): array
-    {
-        return Yaml::parseFile("config/flags/$env.yaml");
-    }
-}</div>
-        <p class="cap"><code>mate/src</code> is already a scan dir after <code>init</code>. Parameter types = the tool's schema. <code>mate discover</code> and the agent sees it.</p>
+    <div class="eyebrow">How to extend it · four layers</div>
+    <h2>Where the tools <span class="q">come from</span></h2>
+    <div class="ladder">
+      <div class="card pss-card top">
+        <h3>Your project · mate/src, mate/skills</h3>
+        <p class="kw"><span>Your domain. The rules only you know</span></p>
       </div>
-      <div>
-        <div class="tag">2 · Skill = a directory with SKILL.md</div>
-        <div class="term code"><span class="dim">// mate/skills/app-flags/SKILL.md</span>
----
-name: app-flags
-description: Use when a task touches
-  feature flags. Call app_feature_flags
-  first, never read config by hand.
----
-- Flags: config/flags/&lt;env&gt;.yaml
-- Ask the tool, do not guess names</div>
-        <p class="cap"><code>extra.ai-mate.skills: ["mate/skills"]</code> in composer.json. The skill says <strong>when</strong>, the tool says <strong>how it is</strong>.</p>
+      <div class="card pss-card">
+        <h3>sylius/sylius-mate-extension</h3>
+        <p class="kw"><span>Sylius: resources, hooks, grids, mailer, plugins, 6 skills</span></p>
+      </div>
+      <div class="card pss-card">
+        <h3>symfony/ai-symfony-mate-extension</h3>
+        <p class="kw"><span>Symfony: profiler, container, services, routes, dotenv</span></p>
+      </div>
+      <div class="card pss-card">
+        <h3>symfony/ai-mate</h3>
+        <p class="kw"><span>The engine. Discovery, CLI and MCP, skills installer. No tools of its own</span></p>
       </div>
     </div>
-    <p class="thesis">Does the tool work in other projects too? <mark>Make it a Mate extension.</mark><span class="by">a regular Composer package with extra.ai-mate · start: github.com/MatesOfMate/extension-template</span></p>
+    <p class="thesis">The packages know Symfony and Sylius. <mark>Only you know your project.</mark></p>
   </section>
 
-  <!-- 13 · synergy -->
+  <!-- 13 · just a class, one attribute -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 1 of 4</div>
+    <h2>Just a class. <span class="q">One attribute.</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">// mate/src/ShippingCutoff.php</span>
+final class ShippingCutoff
+{
+    <span class="hi">#[MateTool(</span>
+    <span class="hi">    name: 'app_shipping_cutoff',</span>
+    <span class="hi">    description: 'Same-day shipping cut-off per warehouse.</span>
+    <span class="hi">        Call before answering about dispatch dates.',</span>
+    <span class="hi">)]</span>
+    public function __invoke(): array
+    {
+        return Yaml::parseFile('config/shipping/cutoff.yaml');
+    }
+}</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>The class</h3>
+          <p class="kw"><span>A method that returns an array</span><span>Nothing Mate-specific inside</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>The attribute</h3>
+          <p class="kw"><span>That is the whole integration</span><span>The description is for the model</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · types are the schema -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 2 of 4</div>
+    <h2>Types are <span class="q">the schema</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">// mate/src/ShippingCutoff.php</span>
+    #[MateTool(name: 'app_shipping_cutoff', description: '…')]
+    public function __invoke(<span class="hi">string $warehouse = 'PL'</span>): array
+    {
+        $all = Yaml::parseFile('config/shipping/cutoff.yaml');
+
+        return $all[$warehouse]
+            ?? ['error' => "Unknown warehouse $warehouse"];
+    }</div>
+      <div class="tool-cards">
+        <div class="term code schema"><span class="dim">// what the agent sees</span>
+"inputSchema": {
+  "properties": {
+    <span class="hi">"warehouse"</span>: {
+      "type": "string",
+      "default": "PL"
+    }
+  }
+}</div>
+        <div class="card pss-card">
+          <h3>No JSON by hand</h3>
+          <p class="kw"><span>Parameters become the schema</span><span>@param becomes the hint</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · discover -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 3 of 4</div>
+    <h2>Discover. <span class="q">That's it.</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">$</span> vendor/bin/mate discover
+<span class="ok">✓</span> mate/src   1 new tool: <span class="hi">app_shipping_cutoff</span>
+
+<span class="dim">$</span> vendor/bin/mate tools:list
+  symfony-profiler-list           recent profiler requests
+  sylius_hooks_find_for_template  hooks rendering a template
+  <span class="hi">app_shipping_cutoff</span>             cut-off per warehouse
+  …</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>No registration</h3>
+          <p class="kw"><span>mate/src is scanned since init</span><span>No config, no service definition</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>One list</h3>
+          <p class="kw"><span>Yours next to the package tools</span><span>The agent sees one list</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 · the agent asks -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 4 of 4</div>
+    <h2>The agent <span class="q">asks</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">›</span> Customer in Berlin ordered at 13:40. Ships today?
+
+<span class="ok">●</span> Checking the cut-off for the DE warehouse via Mate
+<span class="ok">●</span> Bash(vendor/bin/mate tools:call <span class="hi">app_shipping_cutoff</span>
+       --warehouse=DE)
+  { "warehouse": "DE", "cutoff": "12:00" }
+
+<span class="ok">●</span> No. 13:40 is past the 12:00 cut-off for DE.
+  It ships tomorrow morning.</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>Without the tool</h3>
+          <p class="kw"><span>Reads code, then guesses</span><span>Or asks you</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>With the tool</h3>
+          <p class="kw"><span>Your rule, in one call</span><span>Same move as the profiler in run 2</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · your own skill -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own skill</div>
+    <h2>The tool says how it is. <span class="q">The skill says when to ask.</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">// mate/skills/shipping-cutoff/SKILL.md</span>
+---
+name: shipping-cutoff
+description: <span class="hi">Use for dispatch or delivery date questions.</span>
+---
+- Call <span class="hi">app_shipping_cutoff</span> first, per warehouse
+- Never hardcode cut-off hours
+- Unknown warehouse: ask the user, do not guess</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>A directory with SKILL.md</h3>
+          <p class="kw"><span>Three lines of judgment</span><span>One line in composer.json</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>Installed like the rest</h3>
+          <p class="kw"><span>Installed by mate discover</span><span>Lands in .agents/skills</span></p>
+        </div>
+      </div>
+    </div>
+    <p class="thesis">Works in other projects too? <mark>Make it a Composer package.</mark><span class="by">extra.ai-mate · github.com/MatesOfMate/extension-template</span></p>
+  </section>
+
+  <!-- 18 · synergy -->
   <section class="slide" data-steps="3">
     <div class="eyebrow">Synergy</div>
     <h2>Skills + tools <span class="q">> each on its own</span></h2>
@@ -792,7 +939,7 @@ description: Use when a task touches
     </div>
   </section>
 
-  <!-- 14 · extension = facts -->
+  <!-- 19 · extension = facts -->
   <section class="slide">
     <div class="eyebrow">Our case · sylius/sylius-mate-extension</div>
     <h2 style="margin-bottom:1.6cqi">Our domain: <span class="q">29 tools for Sylius</span></h2>
@@ -826,7 +973,7 @@ description: Use when a task touches
     </div>
   </section>
 
-  <!-- 15 · skill = judgment -->
+  <!-- 20 · skill = judgment -->
   <section class="slide">
     <div class="eyebrow">Our case · skills</div>
     <h2>Tools are facts. <span class="q">A skill is judgment.</span></h2>
@@ -852,7 +999,7 @@ description: Use when a task touches
     </div>
   </section>
 
-  <!-- 16 · takeaway + closing bracket -->
+  <!-- 21 · takeaway + closing bracket -->
   <section class="slide">
     <div class="eyebrow">Your project</div>
     <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
@@ -876,7 +1023,7 @@ description: Use when a task touches
     <p class="thesis">The model is replaceable. <mark>The environment is what matters.</mark></p>
   </section>
 
-  <!-- 17 · speaking of MCP -->
+  <!-- 22 · speaking of MCP -->
   <section class="slide">
     <div class="eyebrow">* Speaking of MCP</div>
     <h2 style="margin-bottom:1.4cqi">Why Mate <span class="q">removed the MCP server</span></h2>
@@ -889,7 +1036,7 @@ description: Use when a task touches
     <p class="thesis">"Kill the transport, <mark>not the capability.</mark>" <span class="by inline">Johannes Wachter · The hardest code to delete</span></p>
   </section>
 
-  <!-- 18 · what Mate gives in your project -->
+  <!-- 23 · what Mate gives in your project -->
   <section class="slide">
     <div class="eyebrow">What Mate gives you in your project · not necessarily Symfony</div>
     <h2 style="margin-bottom:1.6cqi">Summary</h2>
@@ -921,7 +1068,7 @@ description: Use when a task touches
     </div>
   </section>
 
-  <!-- 19 · community -->
+  <!-- 24 · community -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Community</h2>
@@ -945,7 +1092,7 @@ description: Use when a task touches
     <p class="thesis"><span class="muted">The list:</span> <mark>github.com/MatesOfMate/awesome-mate</mark><br><span class="muted">Start your own:</span> <mark>github.com/MatesOfMate/extension-template</mark></p>
   </section>
 
-  <!-- 20 · thanks -->
+  <!-- 25 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>
