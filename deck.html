@@ -393,6 +393,11 @@
   .intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2cqi; margin: 3.5cqi 0 2.5cqi; }
   .intro-grid .card p { margin: 0; font-size: 1.7cqi; color: var(--muted); line-height: 1.45; }
   .intro-grid.two { grid-template-columns: repeat(2, 1fr); }
+  .what-grid { flex: 0 0 auto; align-content: start; margin-top: 1cqi; }
+  .what-grid { gap: 1.2cqi; }
+  .what-grid .card.pss-card { padding: 1.4cqi 2cqi 1.6cqi; border-radius: 1.8cqi; }
+  .what-grid .card.pss-card .kw { margin-top: .6cqi; font-size: 1.9cqi; gap: .4cqi; }
+  .what-grid + .thesis { margin-top: 1.4cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   .intro-foot { margin-top: auto; display: flex; gap: 3cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .06em; color: var(--muted); }
 
   /* black rounded card from the PS Summit template */
@@ -698,25 +703,25 @@
   <section class="slide">
     <div class="eyebrow">Symfony AI Mate</div>
     <h2>What <span class="q">Symfony Mate</span> is</h2>
-    <div class="cols cols-2x2 what">
-      <div class="gain">
-        <h3>A developer MCP server*</h3>
-        <p class="ex">for PHP and Symfony applications; dev dependency, a <code>symfony/ai</code> component</p>
+    <div class="intro-grid two what-grid">
+      <div class="card pss-card">
+        <h3>What</h3>
+        <p class="kw"><span>A developer MCP server*</span><span>Part of symfony/ai, dev dependency</span></p>
       </div>
-      <div class="gain">
-        <h3>Its own container next to the app</h3>
-        <p class="ex">Mate doesn't plug into the kernel: its own DI container, tools and skills discovered from Composer</p>
+      <div class="card pss-card">
+        <h3>How</h3>
+        <p class="kw"><span>Its own container next to the app</span><span>Tools and skills found via Composer</span></p>
       </div>
-      <div class="gain">
+      <div class="card pss-card">
         <h3>Extensible</h3>
-        <p class="ex">your own tools and skills right in the project; to share between projects: extension = a regular Composer package</p>
+        <p class="kw"><span>Your own tools and skills in the project</span><span>Shared as a Composer package</span></p>
       </div>
-      <div class="gain">
+      <div class="card pss-card">
         <h3>With any agent</h3>
-        <p class="ex">Claude Code, Codex, Cursor, Copilot, JetBrains AI</p>
+        <p class="kw"><span>Claude Code, Codex, Cursor</span><span>Copilot, JetBrains AI</span></p>
       </div>
     </div>
-    <p class="thesis outside"><span class="muted">Platform · Agent · Store → your application uses AI</span><br>Mate → <mark>AI uses your application</mark></p>
+    <p class="thesis outside"><span class="muted">The rest of symfony/ai: your application uses AI.</span> Mate: <mark>AI uses your application</mark>.</p>
   </section>
 
   <!-- 12 · own tool, own skill -->
