@@ -8,20 +8,22 @@ PS Summit 2026, Lyon, 5 November 2026 — Michał Pysiak (Sylius).
 
 ## Demo recordings (`media/`)
 
-Same prompt ("The page … is slow for me, find the cause"), same project
-(clean Sylius Standard 2.2 with one listing customization that introduces an N+1),
-one run per variant:
+Same prompt ("The page … is slow for me. Find the cause."), same project
+(clean Sylius Standard 2.3 with one listing customization that introduces an N+1),
+fresh Claude Code session every time. The deck shows one run per variant, picked
+close to the median of 5 runs; the full series (four models, bare and with Mate,
+turns, time, tokens) is in [`results.md`](results.md).
 
 | file | model | harness | turns | to "it's an N+1" |
 | --- | --- | --- | --- | --- |
-| `demo-1-bare.webm` | Claude Fable 5.1 | bare, no Mate | 30 | ~5 min, then blames dev mode (recording sped up ×5) |
-| `demo-2-mate.webm` | Claude Fable 5.1 | Mate + Symfony bridge | 12 | 1:20 |
-| `demo-3-haiku-mate.webm` | Claude Haiku 4.5 | Mate + Symfony bridge | 71 | 1:20 |
+| `demo-1-bare.webm` | Claude Fable 5.1 | bare, no Mate | 10 | 2:41, proven by hand (recording sped up ×3) |
+| `demo-2-mate.webm` | Claude Fable 5.1 | Mate + Symfony bridge | 7 | 0:30, verdict at 0:48 |
+| `demo-3-haiku-mate.webm` | Claude Haiku 5.5 | Mate + Symfony bridge | 11 | 0:38, verdict at 0:58 |
 
-Between recording 1 and 2 the only change is what `vendor/bin/mate init` leaves behind
-(the block in `AGENTS.md`, `mate/`, skills in `.agents/skills`). Every run is a fresh
-Claude Code session with no memory of the previous ones. One run per variant is an
-illustration, not statistics.
+Between the bare and the Mate run the only change is what `vendor/bin/mate init`
+leaves behind (the block in `AGENTS.md`, `mate/`, skills in `.agents/skills`).
+Recorded with the scripts in `tools/` (asciinema in tmux, metrics from the session
+transcript).
 
 ## Install Mate in a Symfony project (as in the demo)
 
