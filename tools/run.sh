@@ -14,6 +14,7 @@ PORT="${PORT:-8000}"
 URL="https://127.0.0.1:$PORT/en_US/taxons/t-shirts/men"
 PROMPT="${PROMPT:-The page $URL is slow for me. Find the cause.}"
 COLS="${COLS:-120}"; ROWS="${ROWS:-34}"
+ALLOWED="${ALLOWED:-Bash Read Grep Glob Edit Write}"   # pre-approved tools: models without auto mode (Haiku) fall back to manual and would block on the first Bash
 TIMEOUT="${TIMEOUT:-900}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 RUNS_DIR="${RUNS_DIR:-$HERE/../runs}"
@@ -64,7 +65,7 @@ for i in $(seq 1 "$N"); do
 
   tmux kill-session -t rec 2>/dev/null || true
   tmux new-session -d -s rec -x "$COLS" -y "$ROWS" -c "$DEMO_DIR" \
-    "asciinema rec --overwrite --cols $COLS --rows $ROWS -c 'claude --model $MODEL --permission-mode auto --session-id $SID' '$OUT/session.cast'"
+    "asciinema rec --overwrite --cols $COLS --rows $ROWS -c 'claude --model $MODEL --permission-mode auto --allowedTools $ALLOWED --session-id $SID' '$OUT/session.cast'"
 
   echo "  watching: tmux attach -t rec   (detach: Ctrl-b d; do not type into it)"
   JSONL="$TRANSCRIPTS/$SID.jsonl"
