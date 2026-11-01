@@ -36,18 +36,21 @@ if ! git log --oneline | grep -q "variants, sizes and stock"; then
   git cherry-pick -x "$CUSTOMIZATION_COMMIT"
 fi
 
-say "install, assets, database with fixtures"
+say "install, assets, database with fixtures (skipped when already there)"
 composer install --no-interaction
 [ -d node_modules ] || npm install --silent
-npm run build --silent || true
-bin/console doctrine:database:drop --force --if-exists -q
-bin/console doctrine:database:create -q
-bin/console doctrine:migrations:migrate -n -q
-bin/console sylius:fixtures:load default -n -q
+[ -d public/build/shop ] || npm run build --silent || true
+if ! bin/console doctrine:query:sql "SELECT 1 FROM sylius_product LIMIT 1" -q 2>/dev/null; then
+  bin/console doctrine:database:drop --force --if-exists -q
+  bin/console doctrine:database:create -q
+  bin/console doctrine:migrations:migrate -n -q
+  bin/console sylius:fixtures:load default -n -q
+fi
 bin/console cache:clear -q
 
 say "Mate $MATE_VERSION (vendor only; branch demo-bare = no init)"
-composer require --dev "symfony/ai-mate:$MATE_VERSION" "symfony/ai-symfony-mate-extension:$MATE_VERSION" --no-interaction -W
+composer config allow-plugins.symfony/ai-mate-composer-plugin true
+composer require --dev "symfony/ai-mate:$MATE_VERSION" "symfony/ai-symfony-mate-extension:$MATE_VERSION" "symfony/ai-mate-composer-plugin:$MATE_VERSION" --no-interaction -W
 git add -A && git commit -qm "Add Symfony AI Mate and the Symfony bridge as dev dependencies" || true
 git branch -f demo-bare HEAD
 
