@@ -397,6 +397,12 @@
   .what-grid { gap: 1.2cqi; }
   .what-grid .card.pss-card { padding: 1.4cqi 2cqi 1.6cqi; border-radius: 1.8cqi; }
   .what-grid .card.pss-card .kw { margin-top: .6cqi; font-size: 1.9cqi; gap: .4cqi; }
+  .syn-grid .card.pss-card, .our-grid .card.pss-card { padding: 1.6cqi 2.2cqi 1.8cqi; }
+  .syn-grid .card.pss-card .kw { font-size: 2cqi; }
+  .our-grid .card.pss-card .kw { font-size: 2cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; }
+  .syn-grid .lab, .our-grid .lab { margin-top: 1.1cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.15cqi; letter-spacing: .04em; color: var(--pss-green); opacity: .9; }
+  .syn-grid .step { outline: .3cqi solid transparent; transition: outline-color .2s ease; }
+  .syn-grid .step.hot { outline-color: var(--pss-green); }
   .what-grid + .thesis { margin-top: 1.4cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   .intro-foot { margin-top: auto; display: flex; gap: 3cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .06em; color: var(--muted); }
 
@@ -896,95 +902,46 @@ description: <span class="hi">Use for any question about a price a customer sees
 
   <!-- 16 · synergy -->
   <section class="slide" data-steps="3">
-    <div class="eyebrow">Synergy</div>
-    <h2>Skills + tools <span class="q">> each on its own</span></h2>
-    <div class="clocks">
-      <div class="clock step" data-step="1">
-        <div class="tag">Skills only</div>
-        <h3>Instructions bloat</h3>
-        <p>The model keeps guessing. Our era 2.</p>
-        <div class="score">slide 3</div>
+    <div class="eyebrow">Synergy · why one package</div>
+    <h2>Skills alone. Tools alone. <span class="q">Together.</span></h2>
+    <div class="intro-grid what-grid syn-grid">
+      <div class="card pss-card step" data-step="1">
+        <h3>Skills only</h3>
+        <div class="kw"><span>The model keeps guessing</span><span>Instructions bloat</span></div>
       </div>
-      <div class="clock step" data-step="2">
-        <div class="tag">Tools only</div>
-        <h3>A binary in vendor</h3>
-        <p>The agent doesn't know it has something to ask with.</p>
-        <div class="score">Mate Lab: binary alone 0/10 and 0/10</div>
+      <div class="card pss-card step" data-step="2">
+        <h3>Tools only</h3>
+        <div class="kw"><span>A binary in vendor</span><span>Nobody tells the agent to use it</span></div>
+        <div class="lab">Mate Lab · 0/10 runs reach for it</div>
       </div>
-      <div class="clock step" data-step="3">
-        <div class="tag">Together</div>
-        <h3>When + how it is</h3>
-        <p>The skill says when and why. The tool says how it is.</p>
-        <div class="score">Mate Lab: binary + files 10/10 and 5/10</div>
+      <div class="card pss-card step" data-step="3">
+        <h3>Together</h3>
+        <div class="kw"><span>The skill says when</span><span>The tool says how it is</span></div>
+        <div class="lab">Mate Lab · 10/10 runs reach for it</div>
       </div>
     </div>
-    <div class="rules">
-      <p><strong>You saw it a moment ago:</strong> profiler skill + profiler tool.</p>
-      <p><strong>That's why</strong> Mate has distributed skills natively since 0.12, and we version the skill with the tools in one package.</p>
-    </div>
-    <div class="notes">The core of the middle. Do NOT say "CLI" or "MCP" here — that's the punchline on #20. Mate Lab: Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server (tools visible through the protocol, no skills) 3/10 and 2/10. CLI + skills and instructions in files 10/10 and 5/10. Visibility decides. Johannes himself notes: a pattern, not statistical proof. Skills via extra.ai-mate.skills since 0.12; 0.13 changed the install to copies in .agents/skills.</div>
+    <div class="thesis">That's why the skill ships <mark>in the same package as the tools.</mark></div>
+    <div class="notes">You saw it a moment ago: profiler skill + profiler tool. Do NOT say "CLI" or "MCP" here, that's the punchline on #19. Mate Lab (Johannes): Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server, tools visible through the protocol but no skills: 3/10 and 2/10. CLI + skills and instructions in files: 10/10 and 5/10. Visibility decides. Johannes himself: a pattern, not statistical proof. Mate distributes skills natively since 0.12, 0.13 installs copies into .agents/skills.</div>
   </section>
 
-  <!-- 17 · extension = facts -->
+  <!-- 17 · our case: tools and skills -->
   <section class="slide">
     <div class="eyebrow">Our case · sylius/sylius-mate-extension</div>
-    <h2 style="margin-bottom:1.6cqi">Our domain: <span class="q">29 tools for Sylius</span></h2>
-    <div class="split tools">
-      <div>
-        <p class="lede">The agent asks the booted kernel of <em>this</em> project, it doesn't guess.</p>
-        <ul>
-          <li><code>sylius_project_profile</code> namespace, locale, channel, mailer<span class="instead">instead of reading composer.json, .env and configs</span></li>
-          <li><code>sylius_installed_plugins</code> plugins, decorators, entities<span class="instead">instead of guessing whether stock lives in MSI</span></li>
-          <li><code>sylius_twig_function_verify</code> whether <code>sylius_*</code> exists and with what signature<span class="instead">instead of the made-up Twig helper from slide 3</span></li>
-          <li><code>sylius_routes_show</code> / <code>sylius_route_inspect</code> routes, duplicated prefixes<span class="instead">instead of <code>path()</code> to a route that doesn't exist</span></li>
-          <li><code>sylius_hooks_find_for_template</code> the hook a template sits in<span class="instead">instead of grepping through templates</span></li>
-        </ul>
+    <h2>27 tools. 6 skills. <span class="q">One package.</span></h2>
+    <div class="intro-grid two what-grid our-grid">
+      <div class="card pss-card">
+        <h3>Tools · facts from the booted kernel</h3>
+        <div class="kw"><span>sylius_project_profile</span><span>sylius_installed_plugins</span><span>sylius_hooks_find_for_template</span><span>sylius_twig_function_verify</span></div>
+        <div class="lab">+23 more · resources, grids, routes, mailer, tests</div>
       </div>
-      <div>
-      <div class="term"><span class="dim">$</span> vendor/bin/mate tools:call \
-    sylius_project_profile
-
-{
-  "app_namespace": <span class="hi">"App"</span>,
-  "enabled_locales": ["en_US"],
-  "default_channel_code": "default",
-  "mailer_dsn_observable": <span class="hi">false</span>,
-  "services_yaml_app_glob_exclude":
-    ["../src/Entity/", "../src/Kernel.php"],
-  "hook_config_dir_convention":
-    "config/packages/&lt;feature&gt;_hooks.yaml",
-  "symfony_mate_bridge": <span class="hi">true</span>
-}</div>
+      <div class="card pss-card">
+        <h3>Skills · when to ask</h3>
+        <div class="kw"><span>sylius-dev · the entry point</span><span>resource · frontend · events</span><span>mailer · verify</span></div>
+        <div class="lab">installed by mate discover · .agents/skills</div>
       </div>
     </div>
-    <div class="notes">It's not the profiler that's magic, it's the mechanism of a measured fact. Honestly: our extension boots the host kernel (the opposite of Mate's core), because hooks, grids and decorators can't be read from the XML dump.</div>
-  </section>
-
-  <!-- 18 · skill = judgment -->
-  <section class="slide">
-    <div class="eyebrow">Our case · skills</div>
-    <h2>Tools are facts. <span class="q">A skill is judgment.</span></h2>
-    <div class="split skills">
-      <ul>
-        <li><strong>Six skills, one entry point.</strong> <code>sylius-dev</code> gives the mental model and the "Mate first" protocol, the rest by domain: resource, frontend, events, mailer, verify</li>
-        <li><strong>When which tool.</strong> Instead of describing the project, the skill says how to ask it: profile → plugins and decorators → hooks, before the first file is created</li>
-        <li><strong>55 refuse-rules instead of an essay.</strong> DI, mailer and hook traps as rules in a separate file, on demand. <code>SKILL.md</code> itself is 30–90 lines</li>
-        <li><strong>Definition of DONE.</strong> <code>sylius-verify</code>: verify pass, cache, Playwright gate</li>
-      </ul>
-      <div class="term"><span class="dim">$</span> ls .agents/skills/
-<span class="dim">mate-php-environment-check</span>
-<span class="hi">mate-sylius-dev</span>
-<span class="hi">mate-sylius-events</span>
-<span class="hi">mate-sylius-frontend</span>
-<span class="hi">mate-sylius-mailer</span>
-<span class="hi">mate-sylius-resource</span>
-<span class="hi">mate-sylius-verify</span>
-<span class="dim">mate-symfony-profiler-debugging</span>
-<span class="dim">mate-symfony-request-triage</span>
-<span class="dim">mate-symfony-service-inspection</span>
-<span class="dim">mate-system-information</span></div>
-    </div>
-    <div class="notes">The skill shrunk down to judgment. Skills versioned together with the tools, in one package — upstream (Mate 0.13) arrived at the same thing. The five dimmed ones are the skills from Mate core and the Symfony bridge, the same ones the room saw in the demo.</div>
+    <div class="thesis">Nothing here <mark>you couldn't write yourself.</mark></div>
+    <div class="notes">Same mechanism as slides 13 to 15, just more of it. Honestly: our extension boots the host kernel, the opposite of Mate's core, because hooks, grids and decorators can't be read from the XML dump. Skills: sylius-dev gives the mental model and the "Mate first" protocol (profile, then plugins and decorators, then hooks, before the first file is created). Refuse-rules live in a separate file loaded on demand, SKILL.md itself is 30 to 90 lines. sylius-verify is the definition of done: verify pass, cache, Playwright gate. Count checked 1 Nov: 27 #[MateTool], 5 MCP resource templates, 6 skills.</div>
   </section>
 
   <!-- 19 · takeaway + closing bracket -->
