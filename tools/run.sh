@@ -66,6 +66,7 @@ for i in $(seq 1 "$N"); do
   tmux new-session -d -s rec -x "$COLS" -y "$ROWS" -c "$DEMO_DIR" \
     "asciinema rec --overwrite --cols $COLS --rows $ROWS -c 'claude --model $MODEL --permission-mode auto --session-id $SID' '$OUT/session.cast'"
 
+  echo "  watching: tmux attach -t rec   (detach: Ctrl-b d; do not type into it)"
   JSONL="$TRANSCRIPTS/$SID.jsonl"
   # wait for the TUI, then type the prompt like a human would
   for _ in $(seq 1 60); do tmux capture-pane -pt rec 2>/dev/null | grep -qE '^\s*[>›❯]' && break; sleep 1; done
