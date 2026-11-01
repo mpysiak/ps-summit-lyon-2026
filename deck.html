@@ -412,6 +412,8 @@
   .gain-grid .card.pss-card { padding: 1.1cqi 2cqi 1.2cqi; border-radius: 1.4cqi; }
   .gain-grid .card.pss-card .kw { font-size: 1.7cqi; gap: .25cqi; margin-top: .5cqi; }
   .gain-grid + .thesis { margin-top: 1.1cqi; font-size: 1.9cqi; padding: .9cqi 1.5cqi; }
+  .eco-grid .card.pss-card .kw { font-size: 1.85cqi; }
+  .eco-grid + .thesis { margin-top: 1.4cqi; }
   .what-grid + .thesis { margin-top: 1.4cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
   .intro-foot { margin-top: auto; display: flex; gap: 3cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .06em; color: var(--muted); }
 
@@ -981,22 +983,22 @@ description: <span class="hi">Use for any question about a price a customer sees
   <!-- 22 · community -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
-    <h2>Community</h2>
-    <div class="clocks eco">
-      <div class="clock">
-        <div class="tag">Official · symfony/ai</div>
-        <h3>Symfony · Monolog</h3>
-        <p>the Symfony bridge (container, profiler) and Monolog (logs). The profiler in recording 2 is exactly the Symfony bridge.</p>
+    <h2>Same pattern, <span class="q">many domains.</span></h2>
+    <div class="intro-grid what-grid syn-grid eco-grid">
+      <div class="card pss-card">
+        <h3>Official · symfony/ai</h3>
+        <div class="kw"><span>Symfony</span><span>Monolog</span></div>
+        <div class="lab">the profiler from recording 2</div>
       </div>
-      <div class="clock">
-        <div class="tag">MatesOfMate</div>
-        <h3>PHPStan · PHPUnit · Composer · Rector</h3>
-        <p>plus self-review, the extension template and the <code>awesome-mate</code> list.</p>
+      <div class="card pss-card">
+        <h3>MatesOfMate</h3>
+        <div class="kw"><span>PHPStan · PHPUnit</span><span>Composer · Rector</span></div>
+        <div class="lab">template · awesome-mate list</div>
       </div>
-      <div class="clock">
-        <div class="tag">Frameworks and products</div>
-        <h3>Sylius · Sulu · OroCommerce</h3>
-        <p>the same pattern: a Composer package with tools and skills over its own domain.</p>
+      <div class="card pss-card">
+        <h3>Products</h3>
+        <div class="kw"><span>Sylius · Sulu · Oro</span><span>OpenDXP · Softspring</span></div>
+        <div class="lab">each over its own domain</div>
       </div>
     </div>
     <p class="thesis"><span class="muted">The list:</span> <mark>github.com/MatesOfMate/awesome-mate</mark><br><span class="muted">Start your own:</span> <mark>github.com/MatesOfMate/extension-template</mark></p>
