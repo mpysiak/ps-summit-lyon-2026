@@ -425,12 +425,20 @@
   .ex-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.75cqi; gap: .25cqi; }
 
   /* ---- tools ladder + own tool series ---- */
-  .ladder { display: grid; gap: .8cqi; margin-top: .4cqi; }
-  .ladder .card.pss-card { padding: 1cqi 2.2cqi 1.1cqi; border-radius: 1.3cqi; gap: .1cqi; }
-  .ladder .card.pss-card h3 { font-size: 1.25cqi; }
-  .ladder .card.pss-card .kw { margin-top: .3cqi; font-size: 1.85cqi; }
-  .ladder .card.pss-card.top { outline: .3cqi solid var(--pss-green); }
-  .ladder + .thesis { margin-top: 1.1cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
+  .stack { display: grid; grid-template-columns: 12cqi 1fr; column-gap: 1.6cqi; row-gap: .8cqi; margin-top: .6cqi; align-items: stretch; }
+  .stack .side { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); align-self: center; text-align: right; padding-right: .4cqi; }
+  .stack .side.you { color: var(--accent); font-weight: 600; }
+  .stack .side.req { grid-row: 2 / span 3; border-right: .25cqi solid rgba(22,32,42,.25); align-self: stretch; display: flex; align-items: center; justify-content: flex-end; }
+  .stack .bar { display: grid; grid-template-columns: 19cqi 1fr auto; align-items: center; column-gap: 1.6cqi; padding: 1.1cqi 2.2cqi; border-radius: 1.2cqi; }
+  .stack .bar b { font-family: "Inter Tight", "Instrument Sans", sans-serif; font-weight: 700; font-size: 2.1cqi; letter-spacing: -.01em; }
+  .stack .bar span { font-size: 1.8cqi; line-height: 1.3; }
+  .stack .bar i { font-style: normal; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.05cqi; opacity: .75; white-space: nowrap; }
+  .stack .bar.pkg { background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.7); backdrop-filter: blur(6px); color: var(--ink); }
+  .stack .bar.pkg span { color: var(--muted); }
+  .stack .bar.yours { background: var(--accent); color: #fff; padding: 1.5cqi 2.2cqi; }
+  .stack .bar.engine { background: #000; color: #fff; padding: .9cqi 2.2cqi; }
+  .stack .bar.engine span { color: #c8d2d9; font-size: 1.6cqi; }
+  .stack + .thesis { margin-top: 1.3cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
   .tool-grid { display: grid; grid-template-columns: 62fr 38fr; gap: 2cqi; flex: 1; min-height: 0; align-items: start; margin-top: .8cqi; }
   .tool-grid > .term.code { font-size: 1.3cqi; line-height: 1.55; padding: 1.4cqi 1.8cqi; border-radius: 1.2cqi; min-width: 0; }
   .tool-grid .term .ok { color: var(--ok); }
@@ -756,22 +764,28 @@
   <section class="slide">
     <div class="eyebrow">How to extend it · four layers</div>
     <h2>Where the tools <span class="q">come from</span></h2>
-    <div class="ladder">
-      <div class="card pss-card top">
-        <h3>Your project · mate/src, mate/skills</h3>
-        <p class="kw"><span>Your domain. The rules only you know</span></p>
+    <div class="stack">
+      <div class="side you">You write</div>
+      <div class="bar yours">
+        <b>Your project</b>
+        <span>Your domain. The rules only you know</span>
+        <i>mate/src · mate/skills</i>
       </div>
-      <div class="card pss-card">
-        <h3>sylius/sylius-mate-extension</h3>
-        <p class="kw"><span>Sylius: resources, hooks, grids, mailer, plugins, 6 skills</span></p>
+      <div class="side req">composer<br>require</div>
+      <div class="bar pkg">
+        <b>Sylius extension</b>
+        <span>Resources, hooks, grids, mailer, plugins, 6 skills</span>
+        <i>sylius/sylius-mate-extension</i>
       </div>
-      <div class="card pss-card">
-        <h3>symfony/ai-symfony-mate-extension</h3>
-        <p class="kw"><span>Symfony: profiler, container, services, routes, dotenv</span></p>
+      <div class="bar pkg">
+        <b>Symfony extension</b>
+        <span>Profiler, container, services, routes, dotenv</span>
+        <i>symfony/ai-symfony-mate-extension</i>
       </div>
-      <div class="card pss-card">
-        <h3>symfony/ai-mate</h3>
-        <p class="kw"><span>The engine. Discovery, CLI and MCP, skills installer. No tools of its own</span></p>
+      <div class="bar engine">
+        <b>Mate</b>
+        <span>The engine: discovery, CLI and MCP, skills installer. No tools of its own</span>
+        <i>symfony/ai-mate</i>
       </div>
     </div>
     <p class="thesis">The packages know Symfony and Sylius. <mark>Only you know your project.</mark></p>
