@@ -582,7 +582,7 @@
       <div class="ex-cards">
         <div class="card pss-card">
           <h3>Setup</h3>
-          <p class="kw"><span>Sylius Standard 2.2</span><span>9 products × 5 variants</span></p>
+          <p class="kw"><span>Sylius Standard 2.3</span><span>9 products × 5 variants</span></p>
         </div>
         <div class="card pss-card">
           <h3>Ticket</h3>
@@ -590,7 +590,7 @@
         </div>
         <div class="card pss-card">
           <h3>Result</h3>
-          <p class="kw"><span>45× the same SELECT</span><span>111 queries on one page</span></p>
+          <p class="kw"><span>45× the same SELECT</span><span>112 queries on one page</span></p>
         </div>
       </div>
       <div class="shots">
@@ -599,7 +599,7 @@
         <p class="cap">The profiler sees it. <strong>Will the agent ask?</strong></p>
       </div>
     </div>
-    <div class="notes">Context before recording 1. The customization is correct in terms of conventions (hook, not override), the bug sits in the data path: a loop in the template over a relation = classic N+1. With the customization 111 queries, of which 45 are the same SELECT on option values. Do NOT give the baseline (71 on a clean listing) from the stage — if someone asks: "part of it is Sylius itself, but our 40 is one template". Both recordings get the same page and the same prompt.</div>
+    <div class="notes">Context before recording 1. The customization is correct in terms of conventions (hook, not override), the bug sits in the data path: a loop in the template over a relation = classic N+1. Measured on Sylius Standard 2.3 (1 Nov): 112 queries, of which 45 are the same SELECT on option values. Do NOT give the baseline from the stage — if someone asks: "part of it is Sylius itself, but our ~40 is one template". Toolbar screenshot still shows 111 from 2.2: re-shoot on 2.3. Both recordings get the same page and the same prompt.</div>
   </section>
 
   <!-- 6 · demo run 1 -->
