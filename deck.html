@@ -591,7 +591,7 @@
       </div>
       <div class="shots">
         <img class="shot" src="media/example-listing.png" alt="T-shirts / Men product list with a variants line under the name and the profiler toolbar">
-        <img class="shot strip" src="media/example-toolbar.png" alt="Profiler toolbar: 111 database queries, in yellow">
+        <img class="shot strip" src="media/example-toolbar.png" alt="Profiler toolbar: 112 database queries, in yellow">
         <p class="cap">The profiler sees it. <strong>Will the agent ask?</strong></p>
       </div>
     </div>
@@ -599,42 +599,42 @@
 
   <!-- 6 · demo run 1 -->
   <section class="slide vsteps" data-steps="6">
-    <div class="eyebrow">Demo · run 1 · bare agent, no Mate · recording ×5</div>
+    <div class="eyebrow">Demo · run 1 · bare agent, no Mate · recording ×3</div>
     <div class="vs-grid">
       <div class="vs-video">
         <video class="vid" src="media/demo-1-bare.webm" preload="auto" playsinline></video>
         <div class="vs-overlay" aria-hidden="true"></div>
       </div>
       <div class="vs-steps">
-        <div class="step card pss-card" data-step="1" data-at="2" data-until="2">
+        <div class="step card pss-card" data-step="1" data-at="2.1" data-until="2.1">
           <h3>0:00 · prompt</h3>
           <p class="kw"><span>One sentence. No hints.</span></p>
-          <code>Strona …/t-shirts/men działa mi wolno</code>
+          <code>The page …/t-shirts/men is slow for me. Find the cause.</code>
         </div>
-        <div class="step card pss-card" data-step="2" data-at="3" data-until="9">
-          <h3>0:03 · first move</h3>
+        <div class="step card pss-card" data-step="2" data-at="3.7" data-until="6.8">
+          <h3>0:07 · first move</h3>
           <p class="kw"><span>Starts with git. What changed recently?</span></p>
-          <code>git show 1fd073e --stat -- templates src</code>
+          <code>git show --stat HEAD~1 && git show HEAD~1 -- .</code>
         </div>
-        <div class="step card pss-card" data-step="3" data-at="9" data-until="17">
-          <h3>0:09 · by hand</h3>
-          <p class="kw"><span>Knows the profiler. Scrapes it by hand</span></p>
-          <code>curl -sk …/_profiler/ded858 | python3 - import re,html</code>
+        <div class="step card pss-card" data-step="3" data-at="7" data-until="11">
+          <h3>0:16 · the guess</h3>
+          <p class="kw"><span>Names the N+1 from the diff. Now has to prove it</span></p>
+          <code>…which is a classic N+1. Let me confirm by measuring</code>
         </div>
-        <div class="step card pss-card" data-step="4" data-at="17" data-until="34">
-          <h3>0:17 · grinding</h3>
-          <p class="kw"><span>Timing loops, env checks, 15 requests</span></p>
-          <code>baseline time=0.49s · WITH HOOK: 0.33 … · (timeout 4m)</code>
+        <div class="step card pss-card" data-step="4" data-at="11.4" data-until="25">
+          <h3>0:29 · by hand</h3>
+          <p class="kw"><span>Knows the profiler. Unpacks it in raw PHP</span></p>
+          <code>php -r '$d = unserialize(file_get_contents($argv[1]))…'</code>
         </div>
-        <div class="step card pss-card" data-step="5" data-at="44" data-until="52">
-          <h3>0:44 · retries</h3>
-          <p class="kw"><span>Its own scripts break. It keeps going</span></p>
-          <code>Error: Exit code 1 · no json found</code>
+        <div class="step card pss-card" data-step="5" data-at="28.3" data-until="41">
+          <h3>1:20 · grinding</h3>
+          <p class="kw"><span>112 queries. Then a baseline with the hook off</span></p>
+          <code>The cache:clear wiped the profile. Re-measuring</code>
         </div>
-        <div class="step card pss-card" data-step="6" data-at="62.7" data-until="62.7">
-          <h3>1:03 · 5 min · 30 turns</h3>
-          <p class="kw"><span>Finds the N+1. Then blames dev mode</span></p>
-          <code>Ale to nie N+1 sprawia, że strona wydaje się wolna</code>
+        <div class="step card pss-card" data-step="6" data-at="55.4" data-until="55.4">
+          <h3>2:41 · 10 turns · verdict</h3>
+          <p class="kw"><span>The N+1 from the template. Proven the long way</span></p>
+          <code>The cause is the product card template added in the last commit…</code>
         </div>
       </div>
     </div>
@@ -665,30 +665,30 @@
         <div class="vs-overlay" aria-hidden="true"></div>
       </div>
       <div class="vs-steps">
-        <div class="step card pss-card" data-step="1" data-at="3" data-until="3">
+        <div class="step card pss-card" data-step="1" data-at="5.4" data-until="5.4">
           <h3>0:00</h3>
           <p class="kw"><span>The same prompt as in run 1</span></p>
-          <code>Strona …/t-shirts/men działa mi wolno</code>
+          <code>The page …/t-shirts/men is slow for me. Find the cause.</code>
         </div>
-        <div class="step card pss-card" data-step="2" data-at="5" data-until="12">
-          <h3>0:08 · first line</h3>
+        <div class="step card pss-card" data-step="2" data-at="7.4" data-until="10.5">
+          <h3>0:03 · first line</h3>
           <p class="kw"><span>Goes straight to the profiler, via Mate</span></p>
-          <code>Sprawdzę tę stronę profilerem Symfony przez Mate</code>
+          <code>I'll use the Mate profiler tooling. Loading the profiler skill first</code>
         </div>
-        <div class="step card pss-card" data-step="3" data-at="14" data-until="27">
-          <h3>0:16 · asks</h3>
-          <p class="kw"><span>Lists profiles, reads the request</span></p>
-          <code>mate tools:call symfony-profiler-list --url=…</code>
+        <div class="step card pss-card" data-step="3" data-at="10.7" data-until="19.5">
+          <h3>0:06 · asks</h3>
+          <p class="kw"><span>Lists profiles, reads the db collector</span></p>
+          <code>mate tools:call symfony-profiler-list --url=… · resources:read …/db</code>
         </div>
-        <div class="step card pss-card" data-step="4" data-at="38" data-until="52">
-          <h3>0:40 · fact</h3>
-          <p class="kw"><span>111 queries. Then: what changed?</span></p>
-          <code>"query_count": 111 · git show 1fd073e</code>
+        <div class="step card pss-card" data-step="4" data-at="27.4" data-until="37.5">
+          <h3>0:26 · fact</h3>
+          <p class="kw"><span>112 queries, 45× the same SELECT. Then: what changed?</span></p>
+          <code>"query_count": 112 · git show 1e13261</code>
         </div>
-        <div class="step card pss-card" data-step="5" data-at="70" data-until="79">
-          <h3>1:20 · verdict</h3>
-          <p class="kw"><span>Classic N+1, 45× the same SELECT</span></p>
-          <code>Winowajca to nowy blok „variants" … klasyczne N+1</code>
+        <div class="step card pss-card" data-step="5" data-at="52.7" data-until="52.7">
+          <h3>0:48 · 7 turns · verdict</h3>
+          <p class="kw"><span>N+1 from the card customization, not Sylius core</span></p>
+          <code>The cause is an N+1 query pattern introduced by the product card customization</code>
         </div>
       </div>
     </div>
@@ -696,17 +696,17 @@
 
   <!-- 9 · comparison -->
   <section class="slide bonus">
-    <div class="eyebrow">What you just saw · same prompt, same project, one run each</div>
+    <div class="eyebrow">What you just saw · same prompt, same project, median of 5 runs each</div>
     <h2>The model didn't get smarter. <span class="q">The harness did.</span></h2>
     <table class="runs">
       <thead><tr><th></th><th>model</th><th>harness</th><th>turns</th><th>to "it's N+1"</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>Fable 5.1</td><td>bare</td><td>30</td><td>~5 min, then blames dev mode</td></tr>
-        <tr class="hot"><td>2</td><td>Fable 5.1</td><td>with Mate</td><td>12</td><td>1:20</td></tr>
-        <tr><td>3</td><td>Haiku 4.5</td><td>with Mate</td><td>71</td><td>1:20</td></tr>
+        <tr><td>1</td><td>Fable 5.1</td><td>bare</td><td>12</td><td>2:45, proven by hand</td></tr>
+        <tr class="hot"><td>2</td><td>Fable 5.1</td><td>with Mate</td><td>6</td><td>0:37</td></tr>
+        <tr><td>3</td><td>Haiku 5.5</td><td>with Mate</td><td>11</td><td>0:27</td></tr>
       </tbody>
     </table>
-    <p class="thesis">How much do you pay for the model, <mark>and how much for the harness?</mark><span class="by"><a class="vlink" href="#" id="bonus-toggle">▶ recording 3: Haiku + Mate (1:23)</a></span></p>
+    <p class="thesis">How much do you pay for the model, <mark>and how much for the harness?</mark><span class="by"><a class="vlink" href="#" id="bonus-toggle">▶ recording 3: Haiku 5.5 + Mate (0:58)</a></span></p>
     <div class="bonus-player" id="bonus-player" hidden><span class="close" id="bonus-close">✕ close (Esc)</span><video id="bonus-video" src="media/demo-3-haiku-mate.webm" preload="metadata" playsinline controls></video></div>
   </section>
 
