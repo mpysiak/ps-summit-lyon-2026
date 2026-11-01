@@ -440,7 +440,7 @@
   .stack .bar.engine span { color: #c8d2d9; font-size: 1.6cqi; }
   .stack + .thesis { margin-top: 1.3cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
   .tool-grid { display: grid; grid-template-columns: 62fr 38fr; gap: 2cqi; flex: 1; min-height: 0; align-items: start; margin-top: .8cqi; }
-  .tool-grid > .term.code { font-size: 1.3cqi; line-height: 1.55; padding: 1.4cqi 1.8cqi; border-radius: 1.2cqi; min-width: 0; }
+  .tool-grid > .term.code { font-size: 1.25cqi; line-height: 1.5; padding: 1.4cqi 1.8cqi; border-radius: 1.2cqi; min-width: 0; }
   .tool-grid .term .ok { color: var(--ok); }
   .tool-cards { display: grid; gap: 1cqi; }
   .tool-cards .card.pss-card { padding: 1.3cqi 2cqi 1.5cqi; border-radius: 1.4cqi; gap: .3cqi; }
@@ -780,135 +780,91 @@
     <p class="thesis">The packages know Symfony and Sylius. <mark>Only you know your project.</mark></p>
   </section>
 
-  <!-- 13 · just a class, one attribute -->
+  <!-- 13 · the tool -->
   <section class="slide tool">
-    <div class="eyebrow">Your own tool · 1 of 4</div>
-    <h2>Just a class. <span class="q">One attribute.</span></h2>
+    <div class="eyebrow">Your own tool · 1 of 2</div>
+    <h2>A method. An attribute. <span class="q">Types are the schema.</span></h2>
     <div class="tool-grid">
-      <div class="term code"><span class="dim">// mate/src/ShippingCutoff.php</span>
-final class ShippingCutoff
+      <div class="term code"><span class="dim">// mate/src/ResolvePrice.php</span>
+final class ResolvePrice
 {
+    public function __construct(private PriceResolver $prices) {}
     <span class="hi">#[MateTool(</span>
-    <span class="hi">    name: 'app_shipping_cutoff',</span>
-    <span class="hi">    description: 'Same-day shipping cut-off per warehouse.</span>
-    <span class="hi">        Call before answering about dispatch dates.',</span>
+    <span class="hi">    name: 'app_resolve_price',</span>
+    <span class="hi">    description: 'Final price for a variant, channel and group,</span>
+    <span class="hi">        with the price list and the rule that won.',</span>
     <span class="hi">)]</span>
-    public function __invoke(): array
-    {
-        return Yaml::parseFile('config/shipping/cutoff.yaml');
+    public function __invoke(
+        <span class="hi">string $variant,</span>
+        <span class="hi">string $channel,</span>
+        <span class="hi">?string $customerGroup = null,</span>
+    ): array {
+        return $this->prices
+            ->explain($variant, $channel, $customerGroup);
     }
 }</div>
-      <div class="tool-cards">
-        <div class="card pss-card">
-          <h3>The class</h3>
-          <p class="kw"><span>A method that returns an array</span><span>Nothing Mate-specific inside</span></p>
-        </div>
-        <div class="card pss-card">
-          <h3>The attribute</h3>
-          <p class="kw"><span>That is the whole integration</span><span>The description is for the model</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 14 · types are the schema -->
-  <section class="slide tool">
-    <div class="eyebrow">Your own tool · 2 of 4</div>
-    <h2>Types are <span class="q">the schema</span></h2>
-    <div class="tool-grid">
-      <div class="term code"><span class="dim">// mate/src/ShippingCutoff.php</span>
-    #[MateTool(name: 'app_shipping_cutoff', description: '…')]
-    public function __invoke(<span class="hi">string $warehouse = 'PL'</span>): array
-    {
-        $all = Yaml::parseFile('config/shipping/cutoff.yaml');
-
-        return $all[$warehouse]
-            ?? ['error' => "Unknown warehouse $warehouse"];
-    }</div>
       <div class="tool-cards">
         <div class="term code schema"><span class="dim">// what the agent sees</span>
+"name": "app_resolve_price",
 "inputSchema": {
   "properties": {
-    <span class="hi">"warehouse"</span>: {
-      "type": "string",
-      "default": "PL"
-    }
-  }
+    "variant":       { "type": "string" },
+    "channel":       { "type": "string" },
+    "customerGroup": { "type": "string" }
+  },
+  "required": ["variant", "channel"]
 }</div>
         <div class="card pss-card">
-          <h3>No JSON by hand</h3>
-          <p class="kw"><span>Parameters become the schema</span><span>@param becomes the hint</span></p>
+          <h3>Nothing to learn</h3>
+          <p class="kw"><span>Your service, injected as usual</span><span>The attribute is the integration</span><span>Parameters become the schema</span></p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 15 · discover -->
+  <!-- 14 · discover, then ask -->
   <section class="slide tool">
-    <div class="eyebrow">Your own tool · 3 of 4</div>
-    <h2>Discover. <span class="q">That's it.</span></h2>
+    <div class="eyebrow">Your own tool · 2 of 2</div>
+    <h2>Discover. <span class="q">Then the agent asks.</span></h2>
     <div class="tool-grid">
       <div class="term code"><span class="dim">$</span> vendor/bin/mate discover
-<span class="ok">✓</span> mate/src   1 new tool: <span class="hi">app_shipping_cutoff</span>
+<span class="ok">✓</span> mate/src   1 new tool: <span class="hi">app_resolve_price</span>
 
-<span class="dim">$</span> vendor/bin/mate tools:list
-  symfony-profiler-list           recent profiler requests
-  sylius_hooks_find_for_template  hooks rendering a template
-  <span class="hi">app_shipping_cutoff</span>             cut-off per warehouse
-  …</div>
+<span class="dim">›</span> Why does ACME see 79 instead of 99 for TSHIRT-M?
+
+<span class="ok">●</span> Resolving the price for ACME's group via Mate
+<span class="ok">●</span> Bash(vendor/bin/mate tools:call <span class="hi">app_resolve_price</span>
+       --variant=TSHIRT-M --channel=B2B --customerGroup=gold)
+  { "price": 7900, "list": "B2B-GOLD", "rule": "tier 50+" }
+
+<span class="ok">●</span> Not a bug. ACME is in the gold group, the B2B-GOLD list
+  applies the 50+ volume tier. The 99 is the retail list.</div>
       <div class="tool-cards">
         <div class="card pss-card">
           <h3>No registration</h3>
-          <p class="kw"><span>mate/src is scanned since init</span><span>No config, no service definition</span></p>
+          <p class="kw"><span>mate/src is scanned since init</span><span>One list with the package tools</span></p>
         </div>
         <div class="card pss-card">
-          <h3>One list</h3>
-          <p class="kw"><span>Yours next to the package tools</span><span>The agent sees one list</span></p>
+          <h3>Facts, not guesses</h3>
+          <p class="kw"><span>Without it: reads code, guesses</span><span>With it: one call, the rule that won</span></p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 16 · the agent asks -->
-  <section class="slide tool">
-    <div class="eyebrow">Your own tool · 4 of 4</div>
-    <h2>The agent <span class="q">asks</span></h2>
-    <div class="tool-grid">
-      <div class="term code"><span class="dim">›</span> Customer in Berlin ordered at 13:40. Ships today?
-
-<span class="ok">●</span> Checking the cut-off for the DE warehouse via Mate
-<span class="ok">●</span> Bash(vendor/bin/mate tools:call <span class="hi">app_shipping_cutoff</span>
-       --warehouse=DE)
-  { "warehouse": "DE", "cutoff": "12:00" }
-
-<span class="ok">●</span> No. 13:40 is past the 12:00 cut-off for DE.
-  It ships tomorrow morning.</div>
-      <div class="tool-cards">
-        <div class="card pss-card">
-          <h3>Without the tool</h3>
-          <p class="kw"><span>Reads code, then guesses</span><span>Or asks you</span></p>
-        </div>
-        <div class="card pss-card">
-          <h3>With the tool</h3>
-          <p class="kw"><span>Your rule, in one call</span><span>Same move as the profiler in run 2</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 17 · your own skill -->
+  <!-- 15 · your own skill -->
   <section class="slide tool">
     <div class="eyebrow">Your own skill</div>
     <h2>The tool says how it is. <span class="q">The skill says when to ask.</span></h2>
     <div class="tool-grid">
-      <div class="term code"><span class="dim">// mate/skills/shipping-cutoff/SKILL.md</span>
+      <div class="term code"><span class="dim">// mate/skills/pricing/SKILL.md</span>
 ---
-name: shipping-cutoff
-description: <span class="hi">Use for dispatch or delivery date questions.</span>
+name: pricing
+description: <span class="hi">Use for any question about a price a customer sees.</span>
 ---
-- Call <span class="hi">app_shipping_cutoff</span> first, per warehouse
-- Never hardcode cut-off hours
-- Unknown warehouse: ask the user, do not guess</div>
+- Call <span class="hi">app_resolve_price</span> before reading the calculator code
+- Price lists live in the admin, never in config or fixtures
+- Unknown customer group: ask, do not assume retail</div>
       <div class="tool-cards">
         <div class="card pss-card">
           <h3>A directory with SKILL.md</h3>
@@ -923,7 +879,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     <p class="thesis">Works in other projects too? <mark>Make it a Composer package.</mark><span class="by">extra.ai-mate · github.com/MatesOfMate/extension-template</span></p>
   </section>
 
-  <!-- 18 · synergy -->
+  <!-- 16 · synergy -->
   <section class="slide" data-steps="3">
     <div class="eyebrow">Synergy</div>
     <h2>Skills + tools <span class="q">> each on its own</span></h2>
@@ -953,7 +909,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     </div>
   </section>
 
-  <!-- 19 · extension = facts -->
+  <!-- 17 · extension = facts -->
   <section class="slide">
     <div class="eyebrow">Our case · sylius/sylius-mate-extension</div>
     <h2 style="margin-bottom:1.6cqi">Our domain: <span class="q">29 tools for Sylius</span></h2>
@@ -987,7 +943,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     </div>
   </section>
 
-  <!-- 20 · skill = judgment -->
+  <!-- 18 · skill = judgment -->
   <section class="slide">
     <div class="eyebrow">Our case · skills</div>
     <h2>Tools are facts. <span class="q">A skill is judgment.</span></h2>
@@ -1013,7 +969,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     </div>
   </section>
 
-  <!-- 21 · takeaway + closing bracket -->
+  <!-- 19 · takeaway + closing bracket -->
   <section class="slide">
     <div class="eyebrow">Your project</div>
     <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
@@ -1037,7 +993,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     <p class="thesis">The model is replaceable. <mark>The environment is what matters.</mark></p>
   </section>
 
-  <!-- 22 · speaking of MCP -->
+  <!-- 20 · speaking of MCP -->
   <section class="slide">
     <div class="eyebrow">* Speaking of MCP</div>
     <h2 style="margin-bottom:1.4cqi">Why Mate <span class="q">removed the MCP server</span></h2>
@@ -1050,7 +1006,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     <p class="thesis">"Kill the transport, <mark>not the capability.</mark>" <span class="by inline">Johannes Wachter · The hardest code to delete</span></p>
   </section>
 
-  <!-- 23 · what Mate gives in your project -->
+  <!-- 21 · what Mate gives in your project -->
   <section class="slide">
     <div class="eyebrow">What Mate gives you in your project · not necessarily Symfony</div>
     <h2 style="margin-bottom:1.6cqi">Summary</h2>
@@ -1082,7 +1038,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     </div>
   </section>
 
-  <!-- 24 · community -->
+  <!-- 22 · community -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Community</h2>
@@ -1106,7 +1062,7 @@ description: <span class="hi">Use for dispatch or delivery date questions.</span
     <p class="thesis"><span class="muted">The list:</span> <mark>github.com/MatesOfMate/awesome-mate</mark><br><span class="muted">Start your own:</span> <mark>github.com/MatesOfMate/extension-template</mark></p>
   </section>
 
-  <!-- 25 · thanks -->
+  <!-- 23 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>
