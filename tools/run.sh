@@ -30,8 +30,7 @@ case "$VARIANT" in bare) BRANCH=demo-bare;; mate) BRANCH=demo-mate;; *) die "var
 # server: must be THIS project on PORT (the profiler the agent reads lives in its var/cache)
 if ! symfony server:list 2>/dev/null | grep -q "$(basename "$DEMO_DIR").*$PORT"; then
   lsof -nP -iTCP:"$PORT" -sTCP:LISTEN >/dev/null 2>&1 && die "port $PORT is taken by another server; stop it (symfony server:stop in that dir) or set PORT"
-  (cd "$DEMO_DIR" && symfony server:start -d --port="$PORT" --no-tls >/dev/null) || die "could not start the server"
-  URL="http://127.0.0.1:$PORT/en_US/taxons/t-shirts/men"
+  (cd "$DEMO_DIR" && symfony server:start -d --port="$PORT" >/dev/null) || die "could not start the server (TLS needs symfony server:ca:install once)"
 fi
 
 # trust dialog would block an unattended interactive session
