@@ -48,7 +48,13 @@ cd "$DEMO_DIR"
 say "variant=$VARIANT branch=$BRANCH model=$MODEL runs=$N"
 git diff --quiet || die "demo project has uncommitted changes"
 git checkout -q "$BRANCH"
-for f in mate AGENTS.md CLAUDE.md .agents .mcp.json; do git ls-files --error-unmatch "$f" >/dev/null 2>&1 || rm -rf "$f"; done
+BASE="$(git rev-parse HEAD)"
+reset_project() {   # agents sometimes "fix" the bug and even commit; every run starts from the same commit
+  git reset -q --hard "$BASE" && git clean -fdq
+  for f in mate AGENTS.md CLAUDE.md .agents .mcp.json; do git ls-files --error-unmatch "$f" >/dev/null 2>&1 || rm -rf "$f"; done
+  bin/console cache:clear -q 2>/dev/null || true
+}
+reset_project
 git status --porcelain | grep -q . && die "stray files after checkout: $(git status --porcelain | tr '\n' ' ')"
 
 for i in $(seq 1 "$N"); do
@@ -90,8 +96,11 @@ for i in $(seq 1 "$N"); do
   for _ in $(seq 1 30); do tmux has-session -t rec 2>/dev/null || break; sleep 1; done
   tmux kill-session -t rec 2>/dev/null || true
 
+  git status --porcelain | grep -q . && echo "agent_changed_files=yes" >> "$OUT/meta.txt"
+  [ "$(git rev-parse HEAD)" != "$BASE" ] && echo "agent_committed=yes" >> "$OUT/meta.txt"
+  reset_project
   cp "$JSONL" "$OUT/transcript.jsonl" 2>/dev/null || echo "no transcript" >> "$OUT/meta.txt"
   python3 "$HERE/metrics.py" "$OUT/transcript.jsonl" > "$OUT/metrics.json" 2>/dev/null && \
-    python3 -c "import json;m=json.load(open('$OUT/metrics.json'));print('  turns=%(api_requests)s tools=%(tool_calls)s wall=%(wall_s)ss out=%(output_tokens)s in=%(input_tokens)s cache_read=%(cache_read_tokens)s' % m)"
+    python3 -c "import json;m=json.load(open('$OUT/metrics.json'));print('  turns=%(api_requests)s tools=%(tool_calls)s wall=%(wall_s)ss diagnosis=%(diagnosis_s)ss out=%(output_tokens)s cache_read=%(cache_read_tokens)s' % m)"
 done
 say "all runs done → $RUNS_DIR ; summary: python3 tools/summary.py"
