@@ -433,6 +433,11 @@
   .vs-steps .step h3 { font-size: 1.15cqi; }
   .vs-steps .step .kw { margin-top: .3cqi; font-size: 1.6cqi; line-height: 1.3; }
   .vs-steps .step code { display: block; margin-top: .4cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.05cqi; color: #8fa3b0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: none; padding: 0; }
+  .vsteps[data-steps="6"] .vs-steps { gap: .55cqi; }
+  .vsteps[data-steps="6"] .vs-steps .step.card.pss-card { padding: .7cqi 1.4cqi .8cqi; border-radius: 1cqi; gap: .1cqi; }
+  .vsteps[data-steps="6"] .vs-steps .step h3 { font-size: 1.05cqi; }
+  .vsteps[data-steps="6"] .vs-steps .step .kw { margin-top: .2cqi; font-size: 1.45cqi; }
+  .vsteps[data-steps="6"] .vs-steps .step code { margin-top: .3cqi; font-size: .95cqi; }
 </style>
 
 <div class="stage" id="stage">
@@ -539,11 +544,45 @@
   </section>
 
   <!-- 5 · demo run 1 -->
-  <section class="slide video">
-    <div class="eyebrow">Demo · run 1 · bare agent, no Mate</div>
-    <div class="vid-wrap">
-      <video class="vid" src="media/demo-1-bare.webm" preload="auto" playsinline controls></video>
-      <span class="badge">recording ×5</span>
+  <section class="slide vsteps" data-steps="6">
+    <div class="eyebrow">Demo · run 1 · bare agent, no Mate · recording ×5</div>
+    <div class="vs-grid">
+      <div class="vs-video">
+        <video class="vid" src="media/demo-1-bare.webm" preload="auto" playsinline></video>
+        <div class="vs-overlay" aria-hidden="true"></div>
+      </div>
+      <div class="vs-steps">
+        <div class="step card pss-card" data-step="1" data-at="2" data-until="2">
+          <h3>0:00 · prompt</h3>
+          <p class="kw"><span>One sentence. No hints.</span></p>
+          <code>Strona …/t-shirts/men działa mi wolno</code>
+        </div>
+        <div class="step card pss-card" data-step="2" data-at="3" data-until="9">
+          <h3>0:03 · first move</h3>
+          <p class="kw"><span>Starts with git. What changed recently?</span></p>
+          <code>git show 1fd073e --stat -- templates src</code>
+        </div>
+        <div class="step card pss-card" data-step="3" data-at="9" data-until="17">
+          <h3>0:09 · by hand</h3>
+          <p class="kw"><span>Knows the profiler. Scrapes it by hand</span></p>
+          <code>curl -sk …/_profiler/ded858 | python3 - import re,html</code>
+        </div>
+        <div class="step card pss-card" data-step="4" data-at="17" data-until="34">
+          <h3>0:17 · grinding</h3>
+          <p class="kw"><span>Timing loops, env checks, 15 requests</span></p>
+          <code>baseline time=0.49s · WITH HOOK: 0.33 … · (timeout 4m)</code>
+        </div>
+        <div class="step card pss-card" data-step="5" data-at="44" data-until="52">
+          <h3>0:44 · retries</h3>
+          <p class="kw"><span>Its own scripts break. It keeps going</span></p>
+          <code>Error: Exit code 1 · no json found</code>
+        </div>
+        <div class="step card pss-card" data-step="6" data-at="62.7" data-until="62.7">
+          <h3>1:03 · 5 min · 13.9k tokens</h3>
+          <p class="kw"><span>Finds the N+1. Then blames dev mode</span></p>
+          <code>Ale to nie N+1 sprawia, że strona wydaje się wolna</code>
+        </div>
+      </div>
     </div>
   </section>
 
