@@ -424,6 +424,23 @@
   .ex-cards .card.pss-card h3 { font-size: 1.25cqi; }
   .ex-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.75cqi; gap: .25cqi; }
 
+  /* ---- tools ladder + own tool series ---- */
+  .ladder { display: grid; gap: .8cqi; margin-top: .4cqi; }
+  .ladder .card.pss-card { padding: 1cqi 2.2cqi 1.1cqi; border-radius: 1.3cqi; gap: .1cqi; }
+  .ladder .card.pss-card h3 { font-size: 1.25cqi; }
+  .ladder .card.pss-card .kw { margin-top: .3cqi; font-size: 1.85cqi; }
+  .ladder .card.pss-card.top { outline: .3cqi solid var(--pss-green); }
+  .ladder + .thesis { margin-top: 1.1cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
+  .tool-grid { display: grid; grid-template-columns: 62fr 38fr; gap: 2cqi; flex: 1; min-height: 0; align-items: start; margin-top: .8cqi; }
+  .tool-grid > .term.code { font-size: 1.3cqi; line-height: 1.55; padding: 1.4cqi 1.8cqi; border-radius: 1.2cqi; min-width: 0; }
+  .tool-grid .term .ok { color: var(--ok); }
+  .tool-cards { display: grid; gap: 1cqi; }
+  .tool-cards .card.pss-card { padding: 1.3cqi 2cqi 1.5cqi; border-radius: 1.4cqi; gap: .3cqi; }
+  .tool-cards .card.pss-card h3 { font-size: 1.25cqi; }
+  .tool-cards .card.pss-card .kw { margin-top: .4cqi; font-size: 1.75cqi; gap: .3cqi; }
+  .tool-cards .term.schema { font-size: 1.15cqi; padding: 1.1cqi 1.5cqi; border-radius: 1.2cqi; }
+  .tool .tool-grid + .thesis { margin-top: 1.2cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
+
   /* video with step-driven blocks */
   .vsteps { padding: 4.9cqi 4cqi 3.6cqi; }
   .vs-grid { display: grid; grid-template-columns: 56fr 44fr; gap: 1.8cqi; flex: 1; min-height: 0; margin-top: 1cqi; align-items: start; }
@@ -735,46 +752,181 @@
     <div class="notes">Entry: "Mate is exactly access to the bottom of the pyramid". Mate does not plug into the kernel: its own DI container, tools and skills discovered from Composer. To share tools between projects, an extension is a regular Composer package. The asterisk on MCP: it is also a CLI, and that matters, punchline on #16. Like Johannes: outside-in. The rest of symfony/ai lets your application use AI. Mate does the opposite.</div>
   </section>
 
-  <!-- 12 · own tool, own skill -->
+  <!-- 12 · where the tools come from -->
   <section class="slide">
-    <div class="eyebrow">How to extend it</div>
-    <h2 style="margin-bottom:1.4cqi">Your own tool, <span class="q">your own skill</span></h2>
-    <div class="own">
-      <div>
-        <div class="tag">1 · Tool = a method with an attribute</div>
-        <div class="term code"><span class="dim">// mate/src/FeatureFlags.php</span>
-final class FeatureFlags
-{
-    <span class="hi">#[MateTool(</span>
-        name: 'app_feature_flags',
-        description: 'Flags and their state in this env',
-    <span class="hi">)]</span>
-    public function __invoke(string $env = 'dev'): array
-    {
-        return Yaml::parseFile("config/flags/$env.yaml");
-    }
-}</div>
-        <p class="cap"><code>mate/src</code> is already a scan dir after <code>init</code>. Parameter types = the tool's schema. <code>mate discover</code> and the agent sees it.</p>
+    <div class="eyebrow">How to extend it · four layers</div>
+    <h2>Where the tools <span class="q">come from</span></h2>
+    <div class="ladder">
+      <div class="card pss-card top">
+        <h3>Your project · mate/src, mate/skills</h3>
+        <p class="kw"><span>Your domain. The rules only you know</span></p>
       </div>
-      <div>
-        <div class="tag">2 · Skill = a directory with SKILL.md</div>
-        <div class="term code"><span class="dim">// mate/skills/app-flags/SKILL.md</span>
----
-name: app-flags
-description: Use when a task touches
-  feature flags. Call app_feature_flags
-  first, never read config by hand.
----
-- Flags: config/flags/&lt;env&gt;.yaml
-- Ask the tool, do not guess names</div>
-        <p class="cap"><code>extra.ai-mate.skills: ["mate/skills"]</code> in composer.json. The skill says <strong>when</strong>, the tool says <strong>how it is</strong>.</p>
+      <div class="card pss-card">
+        <h3>sylius/sylius-mate-extension</h3>
+        <p class="kw"><span>Sylius: resources, hooks, grids, mailer, plugins, 6 skills</span></p>
+      </div>
+      <div class="card pss-card">
+        <h3>symfony/ai-symfony-mate-extension</h3>
+        <p class="kw"><span>Symfony: profiler, container, services, routes, dotenv</span></p>
+      </div>
+      <div class="card pss-card">
+        <h3>symfony/ai-mate</h3>
+        <p class="kw"><span>The engine. Discovery, CLI and MCP, skills installer. No tools of its own</span></p>
       </div>
     </div>
-    <p class="thesis">Does the tool work in other projects too? <mark>Make it a Mate extension.</mark><span class="by">a regular Composer package with extra.ai-mate · start: github.com/MatesOfMate/extension-template</span></p>
-    <div class="notes">After the demo: how to extend it yourself. Tool: one method with #[MateTool], DI works (Mate's own container). Skill: a directory + an entry in composer.json, lands in .agents/skills/mate-app-flags just like the ones from packages. Extension only when the tool and skill need to travel to many projects — then a package with extra.ai-mate (scan-dirs, instructions, skills), start from extension-template.</div>
+    <p class="thesis">The packages know Symfony and Sylius. <mark>Only you know your project.</mark></p>
+    <div class="notes">Bottom up: Mate alone is only the engine, it ships no domain tools. The Symfony extension gives the generic Symfony layer, that is what run 2 used. The Sylius extension sits on top with the Sylius domain, and a PrestaShop extension would sit in exactly the same place. The top layer is the point of the next slides: your own tools and skills, in the project, no package needed. The installation slide showed mate/src and mate/skills already waiting after init.</div>
   </section>
 
-  <!-- 13 · synergy -->
+  <!-- 13 · just a class, one attribute -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 1 of 4</div>
+    <h2>Just a class. <span class="q">One attribute.</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">// mate/src/ShippingCutoff.php</span>
+final class ShippingCutoff
+{
+    <span class="hi">#[MateTool(</span>
+    <span class="hi">    name: 'app_shipping_cutoff',</span>
+    <span class="hi">    description: 'Same-day shipping cut-off per warehouse.</span>
+    <span class="hi">        Call before answering about dispatch dates.',</span>
+    <span class="hi">)]</span>
+    public function __invoke(): array
+    {
+        return Yaml::parseFile('config/shipping/cutoff.yaml');
+    }
+}</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>The class</h3>
+          <p class="kw"><span>A method that returns an array</span><span>Nothing Mate-specific inside</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>The attribute</h3>
+          <p class="kw"><span>That is the whole integration</span><span>The description is for the model</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">The rule: orders before 14:00 ship the same day from PL, before 12:00 from DE. Lives in a YAML nobody but this project has. Step one: a plain class with one method. Step two: the attribute, name and description. The description is a prompt, not a docblock: it tells the model when to reach for the tool. DI works, Mate has its own container, so a repository or a client can be injected the same way as in the app.</div>
+  </section>
+
+  <!-- 14 · types are the schema -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 2 of 4</div>
+    <h2>Types are <span class="q">the schema</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">// mate/src/ShippingCutoff.php</span>
+    #[MateTool(name: 'app_shipping_cutoff', description: '…')]
+    public function __invoke(<span class="hi">string $warehouse = 'PL'</span>): array
+    {
+        $all = Yaml::parseFile('config/shipping/cutoff.yaml');
+
+        return $all[$warehouse]
+            ?? ['error' => "Unknown warehouse $warehouse"];
+    }</div>
+      <div class="tool-cards">
+        <div class="term code schema"><span class="dim">// what the agent sees</span>
+"inputSchema": {
+  "properties": {
+    <span class="hi">"warehouse"</span>: {
+      "type": "string",
+      "default": "PL"
+    }
+  }
+}</div>
+        <div class="card pss-card">
+          <h3>No JSON by hand</h3>
+          <p class="kw"><span>Parameters become the schema</span><span>@param becomes the hint</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">Add a typed parameter with a default and the schema writes itself: Mate reflects the signature, a @param line in PHPDoc becomes the parameter description. Return an array with an error key instead of throwing, the agent reads it and corrects itself. Schema output is approximate, re-check on the real stack before the talk.</div>
+  </section>
+
+  <!-- 15 · discover -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 3 of 4</div>
+    <h2>Discover. <span class="q">That's it.</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">$</span> vendor/bin/mate discover
+<span class="ok">✓</span> mate/src   1 new tool: <span class="hi">app_shipping_cutoff</span>
+
+<span class="dim">$</span> vendor/bin/mate tools:list
+  symfony-profiler-list           recent profiler requests
+  sylius_hooks_find_for_template  hooks rendering a template
+  <span class="hi">app_shipping_cutoff</span>             cut-off per warehouse
+  …</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>No registration</h3>
+          <p class="kw"><span>mate/src is scanned since init</span><span>No config, no service definition</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>One list</h3>
+          <p class="kw"><span>Yours next to the package tools</span><span>The agent sees one list</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">init already added mate/src to the scan dirs, so discover picks the class up. tools:list is the same list the agent reads, packages and project tools together. Output approximate, re-record on the real stack. A PrestaShop audience: the same would work next to any PHP app, Mate does not need the Symfony kernel.</div>
+  </section>
+
+  <!-- 16 · the agent asks -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own tool · 4 of 4</div>
+    <h2>The agent <span class="q">asks</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">›</span> Customer in Berlin ordered at 13:40. Ships today?
+
+<span class="ok">●</span> Checking the cut-off for the DE warehouse via Mate
+<span class="ok">●</span> Bash(vendor/bin/mate tools:call <span class="hi">app_shipping_cutoff</span>
+       --warehouse=DE)
+  { "warehouse": "DE", "cutoff": "12:00" }
+
+<span class="ok">●</span> No. 13:40 is past the 12:00 cut-off for DE.
+  It ships tomorrow morning.</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>Without the tool</h3>
+          <p class="kw"><span>Reads code, then guesses</span><span>Or asks you</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>With the tool</h3>
+          <p class="kw"><span>Your rule, in one call</span><span>Same move as the profiler in run 2</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">Mock-up of an agent turn, format like the recordings. The point: the agent did not read the YAML, it asked. The same pattern as the profiler in run 2, only this time the fact is yours, not Symfony's. If time allows, record this as a short real clip.</div>
+  </section>
+
+  <!-- 17 · your own skill -->
+  <section class="slide tool">
+    <div class="eyebrow">Your own skill</div>
+    <h2>The tool says how it is. <span class="q">The skill says when to ask.</span></h2>
+    <div class="tool-grid">
+      <div class="term code"><span class="dim">// mate/skills/shipping-cutoff/SKILL.md</span>
+---
+name: shipping-cutoff
+description: <span class="hi">Use for dispatch or delivery date questions.</span>
+---
+- Call <span class="hi">app_shipping_cutoff</span> first, per warehouse
+- Never hardcode cut-off hours
+- Unknown warehouse: ask the user, do not guess</div>
+      <div class="tool-cards">
+        <div class="card pss-card">
+          <h3>A directory with SKILL.md</h3>
+          <p class="kw"><span>Three lines of judgment</span><span>One line in composer.json</span></p>
+        </div>
+        <div class="card pss-card">
+          <h3>Installed like the rest</h3>
+          <p class="kw"><span>Installed by mate discover</span><span>Lands in .agents/skills</span></p>
+        </div>
+      </div>
+    </div>
+    <p class="thesis">Works in other projects too? <mark>Make it a Composer package.</mark><span class="by">extra.ai-mate · github.com/MatesOfMate/extension-template</span></p>
+    <div class="notes">A skill is when and why, the tool is how it is. Project skills: extra.ai-mate.skills pointing at mate/skills in composer.json, discover installs them into .agents/skills next to the package ones. Extension only when the tool and skill need to travel between projects: a regular Composer package with extra.ai-mate (scan-dirs, instructions, skills), start from extension-template. That is exactly what the Sylius extension is.</div>
+  </section>
+
+  <!-- 18 · synergy -->
   <section class="slide" data-steps="3">
     <div class="eyebrow">Synergy</div>
     <h2>Skills + tools <span class="q">> each on its own</span></h2>
@@ -802,10 +954,10 @@ description: Use when a task touches
       <p><strong>You saw it a moment ago:</strong> profiler skill + profiler tool.</p>
       <p><strong>That's why</strong> Mate has distributed skills natively since 0.12, and we version the skill with the tools in one package.</p>
     </div>
-    <div class="notes">The core of the middle. Do NOT say "CLI" or "MCP" here — that's the punchline on #16. Mate Lab: Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server (tools visible through the protocol, no skills) 3/10 and 2/10. CLI + skills and instructions in files 10/10 and 5/10. Visibility decides. Johannes himself notes: a pattern, not statistical proof. Skills via extra.ai-mate.skills since 0.12; 0.13 changed the install to copies in .agents/skills.</div>
+    <div class="notes">The core of the middle. Do NOT say "CLI" or "MCP" here — that's the punchline on #22. Mate Lab: Haiku, 2 tasks × 10 runs, metric = whether the agent reached for Mate at all. Binary alone 0/10 and 0/10. MCP server (tools visible through the protocol, no skills) 3/10 and 2/10. CLI + skills and instructions in files 10/10 and 5/10. Visibility decides. Johannes himself notes: a pattern, not statistical proof. Skills via extra.ai-mate.skills since 0.12; 0.13 changed the install to copies in .agents/skills.</div>
   </section>
 
-  <!-- 14 · extension = facts -->
+  <!-- 19 · extension = facts -->
   <section class="slide">
     <div class="eyebrow">Our case · sylius/sylius-mate-extension</div>
     <h2 style="margin-bottom:1.6cqi">Our domain: <span class="q">29 tools for Sylius</span></h2>
@@ -840,7 +992,7 @@ description: Use when a task touches
     <div class="notes">It's not the profiler that's magic, it's the mechanism of a measured fact. Honestly: our extension boots the host kernel (the opposite of Mate's core), because hooks, grids and decorators can't be read from the XML dump.</div>
   </section>
 
-  <!-- 15 · skill = judgment -->
+  <!-- 20 · skill = judgment -->
   <section class="slide">
     <div class="eyebrow">Our case · skills</div>
     <h2>Tools are facts. <span class="q">A skill is judgment.</span></h2>
@@ -867,7 +1019,7 @@ description: Use when a task touches
     <div class="notes">The skill shrunk down to judgment. Skills versioned together with the tools, in one package — upstream (Mate 0.13) arrived at the same thing. The five dimmed ones are the skills from Mate core and the Symfony bridge, the same ones the room saw in the demo.</div>
   </section>
 
-  <!-- 16 · takeaway + closing bracket -->
+  <!-- 21 · takeaway + closing bracket -->
   <section class="slide">
     <div class="eyebrow">Your project</div>
     <h2>Harness engineering + context engineering <span class="q">> model</span></h2>
@@ -892,7 +1044,7 @@ description: Use when a task touches
     <div class="notes">Takeaway and closing bracket. The last sentence is the thesis.</div>
   </section>
 
-  <!-- 17 · speaking of MCP -->
+  <!-- 22 · speaking of MCP -->
   <section class="slide">
     <div class="eyebrow">* Speaking of MCP</div>
     <h2 style="margin-bottom:1.4cqi">Why Mate <span class="q">removed the MCP server</span></h2>
@@ -906,7 +1058,7 @@ description: Use when a task touches
     <div class="notes">Intro in one sentence: in Berlin he himself argued "Why MCP, Not Just a CLI?" (interactive context, one standard, per-tool consent); five months later he measured and removed it. Quote to say: "the amount of work put into an architecture says surprisingly little about whether it should survive the next one". Last sentence: even the tool transport turned out to be a harness question — the thesis from 17 once more.</div>
   </section>
 
-  <!-- 18 · what Mate gives in your project -->
+  <!-- 23 · what Mate gives in your project -->
   <section class="slide">
     <div class="eyebrow">What Mate gives you in your project · not necessarily Symfony</div>
     <h2 style="margin-bottom:1.6cqi">Summary</h2>
@@ -939,7 +1091,7 @@ description: Use when a task touches
     <div class="notes">The answer to "what's in it for me, if I don't do Sylius or Symfony". Two points deliberately repeat 8–9, here in the role of "for you too". Team: one composer require in the project and every dev, every agent has the same — no more CLAUDE.md that everyone writes their own way.</div>
   </section>
 
-  <!-- 19 · community -->
+  <!-- 24 · community -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Community</h2>
@@ -964,7 +1116,7 @@ description: Use when a task touches
     <div class="notes">Official bridges in the symfony/ai monorepo. MatesOfMate is the community organization (PHPStan, PHPUnit, Composer, Rector, self-review, extension-template, awesome-mate) — 0.6.0 tags for Mate 0.12; the version for 0.13 is on the way. Ecosystem: Sylius (ours), Sulu (Johannes), OroCommerce (community), Softspring CMS. If you're building your own: start from extension-template.</div>
   </section>
 
-  <!-- 20 · thanks -->
+  <!-- 25 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>
