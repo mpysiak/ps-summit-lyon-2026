@@ -428,9 +428,19 @@
   .what-grid .card.pss-card { padding: 1.4cqi 2cqi 1.6cqi; border-radius: 1.8cqi; }
   .what-grid .card.pss-card .kw { margin-top: .6cqi; font-size: 1.9cqi; gap: .4cqi; }
   .syn-grid .card.pss-card, .our-grid .card.pss-card { padding: 1.6cqi 2.2cqi 1.8cqi; }
-  .syn-grid .card.pss-card .kw { font-size: 2cqi; }
+  .syn-grid .card.pss-card .kw { font-size: 1.75cqi; }
   .our-grid .card.pss-card .kw { font-size: 2cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 500; }
-  .syn-grid .lab, .our-grid .lab { margin-top: 1.1cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.15cqi; letter-spacing: .04em; color: var(--accent); opacity: .9; }
+  .syn-grid .lab, .our-grid .lab { margin-top: .9cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.15cqi; letter-spacing: .04em; color: var(--accent); opacity: .9; }
+  .lab-bars { display: grid; gap: .35cqi; margin-top: .6cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.15cqi; color: var(--muted); }
+  .lab-row { display: grid; grid-template-columns: 12.2cqi 1fr 2.6cqi; align-items: center; column-gap: .8cqi; white-space: nowrap; }
+  .lab-row em { font-style: normal; text-align: right; color: var(--ink); }
+  .segs { display: grid; grid-template-columns: repeat(10, 1fr); gap: .25cqi; }
+  .segs b { display: block; height: 1cqi; border-radius: .2cqi; border: 1px solid var(--line); background: transparent; }
+  .segs b.on { background: var(--accent); border-color: var(--accent); }
+  .syn-grid .step.card.pss-card.hot .lab-bars { color: #b9c6d2; }
+  .syn-grid .step.card.pss-card.hot .lab-row em { color: #fff; }
+  .syn-grid .step.card.pss-card.hot .segs b { border-color: rgba(255,255,255,.35); }
+  .syn-grid .step.card.pss-card.hot .segs b.on { background: var(--pss-green); border-color: var(--pss-green); }
   .syn-grid .step { outline: .3cqi solid transparent; transition: outline-color .2s ease; }
   .syn-grid .step.hot { outline-color: var(--pss-green); }
   .take-grid .card.pss-card { padding: 1.4cqi 2.2cqi 1.6cqi; }
@@ -958,12 +968,14 @@ description: <span class="hi">Use for any question about a price a customer sees
       <div class="card pss-card step" data-step="2">
         <h3>Tools only</h3>
         <div class="kw"><span>A binary in vendor</span><span>Nobody tells the agent to use it</span></div>
-        <div class="lab">Mate Lab · 2 tasks · CLI 0/10, 0/10 · MCP 3/10, 2/10</div>
+        <div class="lab">Mate Lab · 10 runs per task</div>
+        <div class="lab-bars"><div class="lab-row"><span>CLI task 1</span><i class="segs"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i><em>0/10</em></div><div class="lab-row"><span>CLI task 2</span><i class="segs"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i><em>0/10</em></div><div class="lab-row"><span>MCP task 1</span><i class="segs"><b class=on></b><b class=on></b><b class=on></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i><em>3/10</em></div><div class="lab-row"><span>MCP task 2</span><i class="segs"><b class=on></b><b class=on></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i><em>2/10</em></div></div>
       </div>
       <div class="card pss-card step" data-step="3">
         <h3>Together</h3>
         <div class="kw"><span>The skill says when</span><span>The tool says how it is</span></div>
-        <div class="lab">Mate Lab · 2 tasks · CLI + skills 10/10, 5/10</div>
+        <div class="lab">Mate Lab · same two tasks</div>
+        <div class="lab-bars"><div class="lab-row"><span>CLI+skills task 1</span><i class="segs"><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b class=on></b></i><em>10/10</em></div><div class="lab-row"><span>CLI+skills task 2</span><i class="segs"><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b class=on></b><b></b><b></b><b></b><b></b><b></b></i><em>5/10</em></div></div>
       </div>
     </div>
     <div class="thesis">That's why the skill ships <mark>in the same package as the tools.</mark></div>
