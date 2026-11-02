@@ -9,9 +9,9 @@ import glob, json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCALE = 165.0   # seconds across the full bar; the longest run (bare Fable, 2:41) nearly fills it
 ROWS = [  # stamp, model label, harness label, hot, median turns, median end, kind of first N+1 mention
-    ('20261101-115924', 'Fable 5.1', 'bare',      False, '12 turns', 'median 2:45', 'guess'),
-    ('20261101-122826', 'Fable 5.1', 'with Mate', True,  '6 turns',  'median 0:37', 'fact'),
-    ('20261101-141908', 'Haiku 5.5', 'with Mate', False, '11 turns', 'median 0:27', 'fact'),
+    ('20261101-115924', 'Fable 5.1', 'bare',      False, '12 turns', 'median of 6 runs · 2:45', 'guess'),
+    ('20261101-122826', 'Fable 5.1', 'with Mate', True,  '6 turns',  'median of 5 runs · 0:37', 'fact'),
+    ('20261101-141908', 'Haiku 5.5', 'with Mate', False, '11 turns', 'median of 5 runs · 0:27', 'fact'),
 ]
 def mmss(s): s = round(s); return f'{s // 60}:{s % 60:02d}'
 def pct(s): return f'{s / SCALE * 100:.1f}%'
@@ -34,6 +34,6 @@ for n, (stamp, model, harness, hot, turns, med, kind) in enumerate(ROWS, 1):
       </div>''')
 axis = ''.join(f'<span style="left:{pct(s)}">{mmss(s)}</span>' for s in (0, 60, 120))
 out.append(f'      <div class="tl-axis">{axis}</div>')
-out.append('      <div class="tl-legend"><span><i class="tick"></i> tool call</span><span><i class="mk guess"></i> N+1 named, no evidence yet</span><span><i class="mk fact"></i> N+1 with the profiler fact</span></div>')
+out.append('      <div class="tl-legend"><span><i class="tick"></i> tool call (one API turn may hold several)</span><span><i class="mk guess"></i> N+1 named, no evidence yet</span><span><i class="mk fact"></i> N+1 with the profiler fact</span></div>')
 out.append('    </div>')
 print('\n'.join(out))
