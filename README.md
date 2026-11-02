@@ -23,7 +23,8 @@ turns, time, tokens) is in [`results.md`](results.md).
 Between the bare and the Mate run the only change is what `vendor/bin/mate init`
 leaves behind (the block in `AGENTS.md`, `mate/`, skills in `.agents/skills`).
 Recorded with the scripts in `tools/` (asciinema in tmux, metrics from the session
-transcript).
+transcript; the timeline on the comparison slide is generated from the same
+transcripts by `tools/timeline.py`).
 
 ## Install Mate in a Symfony project (as in the demo)
 
