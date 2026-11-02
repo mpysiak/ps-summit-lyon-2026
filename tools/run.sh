@@ -51,7 +51,7 @@ git checkout -q "$BRANCH"
 BASE="$(git rev-parse HEAD)"
 reset_project() {   # agents sometimes "fix" the bug and even commit; every run starts from the same commit
   git reset -q --hard "$BASE" && git clean -fdq
-  for f in mate AGENTS.md CLAUDE.md .agents .mcp.json; do git ls-files --error-unmatch "$f" >/dev/null 2>&1 || rm -rf "$f"; done
+  for f in mate AGENTS.md CLAUDE.md .agents .claude .mcp.json; do git ls-files --error-unmatch "$f" >/dev/null 2>&1 || rm -rf "$f"; done
   bin/console cache:clear -q 2>/dev/null || true
 }
 reset_project
