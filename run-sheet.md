@@ -23,7 +23,7 @@ Say column = the one line the slide must land, not a script. Cue column = what t
 | 7:30 | 6 | Recording 1, bare | 3:30 | Narrate the blocks: diff, the guess at 0:16 (training), then two and a half minutes of proving it by hand, regex over profiler HTML, hook off for a baseline. Verdict 2:41, 10 turns. | `→` per block, video jumps and stops by itself. Space = pause. |
 | 11:00 | 7 | Installation | 1:30 | Three commands, no network, seconds. "Between recording 1 and 2 this is the only thing that changes." Point at what init left: AGENTS.md block, mate/src, skills. | |
 | 12:30 | 8 | Recording 2, with Mate | 2:30 | Same prompt. Skill tells it to ask the profiler, `resources:read …/db`, 112 queries in the output, git show. Verdict 0:48, 7 turns. | `→` per block. |
-| 15:00 | 9 | Comparison | 3:00 | Each tick a tool call. Both runs name N+1 almost at once, that is training. Mate does not improve the guess, it shortens the road from guess to fact. Medians of 5–6 runs. **Question to the room: how much do you pay for the model, and how much for the harness?** | Optional before revealing: "guess the number of turns". Recording 3 (Haiku + Mate, 0:58) only if clock ≤ 15:30 here. |
+| 15:00 | 9 | Comparison | 3:00 | Four bars, two models, each bare and with Mate. Each tick a tool call, right column median tokens. Both bare runs name N+1 almost at once, that is training. Mate does not improve the guess, it shortens the road from guess to fact and halves the tokens. Opus with Mate: 0:28, fastest of all. **Question to the room: how much do you pay for the model, and how much for the harness?** | Optional before revealing: "guess the tokens". |
 | 18:00 | 10 | Pyramid | 2:30 | What the model doesn't know, it guesses. Bottom of the pyramid: things that don't guess, they know: profiler, container, logs. The bare agent scraped the bottom by hand and spent its time one floor up. "Mate is exactly access to the bottom." | `→` ×4 lights the layers. |
 | 20:30 | 11 | What Mate is | 2:00 | Walk the diagram top down: agent calls a CLI, Mate has its own container, boots the app, reads profiler, container, routes. Nothing in the kernel, nothing in production. "The rest of symfony/ai: your app uses AI. Mate: AI uses your app." | |
 | 22:30 | 12 | Where the tools come from | 1:30 | Bottom up: engine, Symfony layer (what run 2 used), Sylius layer, and on top, your project. "The packages know Symfony and Sylius. Only you know your project." | |
@@ -43,7 +43,7 @@ Sum of the slide budgets is 36:00; the 34:00 target assumes the optional bits st
 
 | at slide | on time if clock ≤ | if later |
 |---|---|---|
-| 9 Comparison (arriving) | 15:00 | skip recording 3, no "guess the turns" |
+| 9 Comparison (arriving) | 15:00 | no "guess the tokens" |
 | 13 Your own tool (arriving) | 24:00 | slide 12 to one sentence, slide 15 without the package part |
 | 17 Our case (arriving) | 31:30 | slide 18 to one sentence, slide 19 to the first card only |
 | 20 Monday (arriving) | 36:00 | say the bracket sentence, straight to 21, shorter Q&A |
@@ -56,7 +56,9 @@ Never cut: 4, 6, 8, 9, 20. The talk is the two recordings and the bracket.
 - **Why did Mate drop the MCP server?** Transport did not decide, visibility did (the Mate Lab numbers). Skills are files every agent reads anyway; CLI + files is cheaper: no process, no handshake. The capability stayed, the transport went.
 - **How many queries is a clean Sylius listing?** "Part of it is Sylius itself, our ~40 is one template." Baseline is in the repo notes, not on the slides.
 - **Tokens and cost?** Bare Fable median 7.5k output, 591k input incl. cache; with Mate 3.1k and 299k. Roughly 2× fewer turns, 2.5× less output, 3.4× faster. Full table: results.md.
-- **Other models?** Opus 5.5 bare 1:20, with Mate 0:28 (fastest of all). Haiku 5.5 bare 1:08, with Mate 0:57. Haiku 4.5 keeps fixing after the diagnosis, 45–53 turns. Every model finishes faster and cheaper with Mate than the same model without.
+- **Other models?** Haiku 5.5 bare 1:08, with Mate 0:57, 8.6k to 6.8k output tokens. Haiku 4.5 keeps fixing after the diagnosis, 45–53 turns, in both variants. Every model finishes faster and cheaper with Mate than the same model without.
+- **Why is Opus bare faster than Fable bare?** Fable proved more: hook off for a baseline, cache:clear detour, re-measure. Opus bare did the hook-off too but in fewer turns. Both arrive at the same verdict; the point is the gap inside each pair, not between models.
+- **Tokens: is input incl. cache a fair number?** Most of it is cache reads, the cheap part. Output is the honest "how much the model worked" number: 7.5k to 3.1k, 4.5k to 1.8k. Both halve with Mate.
 - **Does this work with PrestaShop / Laravel / a legacy app?** Mate brings its own container and its own Symfony components in vendor; the app needs none. A Composer package with mate/src and mate/skills, with or without the Symfony bridge. Also works when the app does not boot: container from the dump, profiler and logs from disk.
 - **Does it run in production?** No. Dev dependency, own container, nothing in the kernel.
 - **Which agents?** Claude Code, Codex, Copilot, Cursor, JetBrains: anything that reads AGENTS.md and can run a CLI.

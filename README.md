@@ -11,14 +11,15 @@ PS Summit 2026, Lyon, 5 November 2026 — Michał Pysiak (Sylius).
 Same prompt ("The page … is slow for me. Find the cause."), same project
 (clean Sylius Standard 2.3 with one listing customization that introduces an N+1),
 fresh Claude Code session every time. The deck shows one run per variant, picked
-close to the median of 5 runs; the full series (four models, bare and with Mate,
-turns, time, tokens) is in [`results.md`](results.md).
+close to the median of 5 runs; the comparison slide adds a bare Opus 5.5 run
+(`runs/20261101-132107`, not a recording) and the token medians. The full series
+(four models, bare and with Mate, turns, time, tokens) is in [`results.md`](results.md).
 
 | file | model | harness | turns | to "it's an N+1" |
 | --- | --- | --- | --- | --- |
 | `demo-1-bare.webm` | Claude Fable 5.1 | bare, no Mate | 10 | 2:41, proven by hand (recording sped up ×3) |
 | `demo-2-mate.webm` | Claude Fable 5.1 | Mate + Symfony bridge | 7 | 0:30, verdict at 0:48 |
-| `demo-3-haiku-mate.webm` | Claude Haiku 5.5 | Mate + Symfony bridge | 11 | 0:38, verdict at 0:58 |
+| `demo-3-haiku-mate.webm` | Claude Haiku 5.5 | Mate + Symfony bridge | 11 | 0:38, verdict at 0:58 (not in the deck, kept for reference) |
 
 Between the bare and the Mate run the only change is what `vendor/bin/mate init`
 leaves behind (the block in `AGENTS.md`, `mate/`, skills in `.agents/skills`).
