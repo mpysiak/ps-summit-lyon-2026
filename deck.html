@@ -474,6 +474,9 @@
   .eco-grid .card.pss-card .kw { font-size: 1.85cqi; }
   .eco-grid + .thesis { margin-top: 1.4cqi; }
   .what-grid + .thesis { margin-top: 1.4cqi; font-size: 2.1cqi; padding: 1.2cqi 1.8cqi; }
+  .intro-line { margin-top: 7cqi; max-width: 30ch; font-family: "Bricolage Grotesque", "Instrument Sans", Arial, sans-serif; font-weight: 500; font-size: 3.4cqi; line-height: 1.2; letter-spacing: -.015em; text-wrap: balance; }
+  .intro-line .q { color: var(--accent); }
+  .intro-tags { margin-top: 2cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .06em; color: var(--muted); }
   .intro-foot { margin-top: auto; display: flex; gap: 3cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .06em; color: var(--muted); }
 
   /* black rounded card from the PS Summit template */
@@ -553,6 +556,50 @@
   .vsteps[data-steps="6"] .vs-steps .step h3 { font-size: 1.05cqi; }
   .vsteps[data-steps="6"] .vs-steps .step .kw { margin-top: .2cqi; font-size: 1.45cqi; }
   .vsteps[data-steps="6"] .vs-steps .step code { margin-top: .3cqi; font-size: .95cqi; }
+
+  /* ---- motion: slide fade, staggered reveal, step pop, drawn bars, ambient light ---- */
+  @keyframes slide-in { from { opacity: 0; } }
+  @keyframes rise { from { opacity: 0; translate: 0 1.6cqi; } }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes draw { from { scale: 0 1; } }
+  @keyframes drift {
+    0%   { translate: -6% -4%; }
+    100% { translate: 6% 5%; }
+  }
+  .slide.is-active { animation: slide-in .35s ease both; }
+  .reveal { animation: rise .6s cubic-bezier(.2, .7, .2, 1) backwards; animation-delay: var(--d, 0ms); }
+  .step.card { transition: opacity .2s ease, outline-color .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease, scale .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s ease; }
+  .step.card.hot { scale: 1.02; box-shadow: 0 1cqi 3cqi rgba(22, 32, 42, .18); }
+  .segs b { transition: background-color .3s ease, border-color .3s ease; }
+  .segs b:nth-child(2) { transition-delay: 40ms; } .segs b:nth-child(3) { transition-delay: 80ms; }
+  .segs b:nth-child(4) { transition-delay: 120ms; } .segs b:nth-child(5) { transition-delay: 160ms; }
+  .segs b:nth-child(6) { transition-delay: 200ms; } .segs b:nth-child(7) { transition-delay: 240ms; }
+  .segs b:nth-child(8) { transition-delay: 280ms; } .segs b:nth-child(9) { transition-delay: 320ms; }
+  .segs b:nth-child(10) { transition-delay: 360ms; }
+  .slide.is-active .tl .run { transform-origin: left center; animation: draw 1s cubic-bezier(.2, .7, .2, 1) .35s backwards; }
+  .slide.is-active .tl .tick, .slide.is-active .tl .mk, .slide.is-active .tl .end { animation: fade .5s ease .9s backwards; }
+  .slide.is-active .pyr .step { transition: opacity .3s ease; }
+  .stage::before {
+    content: ""; position: absolute; inset: -20%; pointer-events: none;
+    background: radial-gradient(38% 42% at 38% 36%, rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 70%);
+    animation: drift 26s ease-in-out infinite alternate;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slide.is-active, .reveal, .slide.is-active .tl .run, .slide.is-active .tl .tick, .slide.is-active .tl .mk, .slide.is-active .tl .end, .stage::before { animation: none; }
+    .step.card, .segs b { transition: none; }
+    .step.card.hot { scale: 1; }
+  }
+
+  /* ---- slide 7: terminal typing ---- */
+  @keyframes blink { 50% { opacity: 0; } }
+  .install .term.typing .typed.pending, .install .term.typing .dim:has(+ .typed.pending) { visibility: hidden; }
+  .install .term.typing .typed .cur { display: inline-block; width: .55em; height: 1em; vertical-align: -.15em; background: var(--term-ink); margin-left: .1em; animation: blink 1s steps(1) infinite; }
+  .install .term.typing .typed.pending .cur { display: none; }
+  .install .init-out .line.pending { visibility: hidden; }
+  .install .lede { transition: opacity .5s ease, translate .5s cubic-bezier(.2, .7, .2, 1); }
+  .install .lede.pending { opacity: 0; translate: 0 .8cqi; }
+  @media (prefers-reduced-motion: reduce) { .install .term.typing .typed .cur { animation: none; } }
+
 </style>
 
 <div class="stage" id="stage">
@@ -576,23 +623,11 @@
   <section class="slide intro">
     <div class="eyebrow">About me</div>
     <h2>Michał Pysiak</h2>
-    <p class="role">Senior Backend Developer at <strong>Sylius</strong></p>
-    <div class="intro-grid">
-      <div class="card pss-card">
-        <h3>Product</h3>
-        <p class="kw"><span>B2B Suite</span><span>Sylius core</span></p>
-      </div>
-      <div class="card pss-card">
-        <h3>Projects</h3>
-        <p class="kw"><span>E-commerce audits</span><span>Architecture advice</span><span>Pre-sales &amp; client calls</span></p>
-      </div>
-      <div class="card pss-card">
-        <h3>Developer experience</h3>
-        <p class="kw"><span>Sylius Mate extension</span><span>Open source</span></p>
-      </div>
-    </div>
+    <p class="role">Senior Software Engineer at <strong>Sylius</strong></p>
+    <p class="intro-line">I build Sylius for a living. <span class="q">For the last year I've been teaching AI agents to use it.</span></p>
+    <p class="intro-tags">Sylius AI Dev Tools · B2B Suite · Sylius core</p>
     <div class="intro-foot"><span>github.com/mpysiak</span><span>linkedin.com/in/mpysiak</span></div>
-    <div class="notes">30 seconds, no CV. One sentence per tile, the third one is the bridge to the talk.</div>
+    <div class="notes">20 seconds, no CV. Say the one sentence on the slide, it is the bridge to the talk. The grey line is for people who want to look things up afterwards, do not read it out.</div>
   </section>
 
   <!-- 3 · how it went for us -->
@@ -711,15 +746,15 @@
   <section class="slide install">
     <div class="eyebrow">Installation</div>
     <h2>Installation: <span class="q">three commands</span></h2>
-    <div class="term"><span class="dim">$</span> composer require --dev symfony/ai-mate symfony/ai-symfony-mate-extension
-<span class="dim">$</span> vendor/bin/mate init
-<span class="dim">$</span> vendor/bin/mate tools:list</div>
-    <div class="term init-out"><span class="dim"># what init left behind</span>
-<span class="ok">✓</span> mate/              config, extensions.php, AGENT_INSTRUCTIONS.md, src/
-<span class="ok">✓</span> composer.json      extra.ai-mate
-<span class="ok">✓</span> AGENTS.md          instruction block for the agent
-<span class="ok">✓</span> CLAUDE.md          @AGENTS.md
-<span class="ok">✓</span> .agents/skills/    <span class="hi">5 skills</span>: profiler-debugging, request-triage, service-inspection, …</div>
+    <div class="term typing"><span class="dim">$</span> <span class="typed">composer require --dev symfony/ai-mate symfony/ai-symfony-mate-extension</span>
+<span class="dim">$</span> <span class="typed">vendor/bin/mate init</span>
+<span class="dim">$</span> <span class="typed">vendor/bin/mate tools:list</span></div>
+    <div class="term init-out"><span class="line"><span class="dim"># what init left behind</span></span>
+<span class="line"><span class="ok">✓</span> mate/              config, extensions.php, AGENT_INSTRUCTIONS.md, src/</span>
+<span class="line"><span class="ok">✓</span> composer.json      extra.ai-mate</span>
+<span class="line"><span class="ok">✓</span> AGENTS.md          instruction block for the agent</span>
+<span class="line"><span class="ok">✓</span> CLAUDE.md          @AGENTS.md</span>
+<span class="line"><span class="ok">✓</span> .agents/skills/    <span class="hi">5 skills</span>: profiler-debugging, request-triage, service-inspection, …</span></div>
     <p class="lede">One dev dependency, init takes seconds and no network. The agent gets instructions and skills in files. <strong>Between recording 1 and 2, this is the only thing that changes.</strong> It hands the agent the profiler and the container. Details after the second run.</p>
     <div class="notes">No .mcp.json, but that comes at the end. Facts: interactive init also runs discover (skills); with --no-interaction skills are only installed by `mate discover`. init also writes mate/.gitignore and mate/config.php. Re-check the skill names and count on the demo stack: core alone adds two skills.</div>
   </section>
@@ -1139,7 +1174,66 @@ description: <span class="hi">Use for any question about a price a customer sees
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var counter = document.getElementById('counter');
   var progress = document.getElementById('progress');
-  var idx = 0, step = 1;
+  var idx = 0, step = 1, revealedIdx = -1;
+  var EXPAND = '.hero, .intro-grid, .harness-grid, .harness-text, .ex-grid, .shots, .vs-grid, .vs-steps, .tool-grid, .tool-cards, .mate-grid, .what-grid, .stack, .pyr-wrap, .pyr-cards, .ex-cards';
+  function revealItems(root) {
+    var out = [];
+    Array.prototype.forEach.call(root.children, function (el) {
+      if (el.classList.contains('notes') || el.classList.contains('vs-overlay')) return;
+      if (el.matches(EXPAND) && el.children.length) { out = out.concat(revealItems(el)); } else { out.push(el); }
+    });
+    return out;
+  }
+  var installTimers = [], installSlide = null;
+  function installReset(sec, finished) {
+    installTimers.forEach(clearTimeout); installTimers = [];
+    Array.prototype.forEach.call(sec.querySelectorAll('.typed'), function (t) {
+      if (!t.dataset.full) t.dataset.full = t.textContent;
+      t.textContent = t.dataset.full; t.classList.toggle('pending', !finished);
+    });
+    Array.prototype.forEach.call(sec.querySelectorAll('.init-out .line'), function (l) { l.classList.toggle('pending', !finished); });
+    var lede = sec.querySelector('.lede'); if (lede) lede.classList.toggle('pending', !finished);
+    var last = sec.querySelector('.typed:last-of-type');
+    if (finished && last) { var c = document.createElement('span'); c.className = 'cur'; last.appendChild(c); }
+  }
+  function playInstall(sec) {
+    if (installSlide && installSlide !== sec) { installReset(installSlide, true); }
+    installSlide = null;
+    if (!sec.classList.contains('install')) return;
+    installSlide = sec;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { installReset(sec, true); return; }
+    installReset(sec, false);
+    var typed = Array.prototype.slice.call(sec.querySelectorAll('.typed'));
+    var lines = Array.prototype.slice.call(sec.querySelectorAll('.init-out .line'));
+    var lede = sec.querySelector('.lede');
+    var t = 700;
+    function at(ms, fn) { installTimers.push(setTimeout(fn, ms)); }
+    typed.forEach(function (el, i) {
+      var full = el.dataset.full, cur = document.createElement('span'); cur.className = 'cur';
+      at(t, function () { el.classList.remove('pending'); el.textContent = ''; el.appendChild(cur); });
+      for (var c = 1; c <= full.length; c++) {
+        t += 16 + (full[c - 1] === ' ' ? 45 : 0) + Math.random() * 14;
+        (function (n) { at(t, function () { el.textContent = full.slice(0, n); el.appendChild(cur); }); })(c);
+      }
+      t += 420;
+      if (i < typed.length - 1) at(t, function () { cur.remove(); });
+    });
+    t += 300;
+    lines.forEach(function (l, i) { at(t + i * 110, function () { l.classList.remove('pending'); }); });
+    t += lines.length * 110 + 350;
+    if (lede) at(t, function () { lede.classList.remove('pending'); });
+  }
+  function finishInstall() { if (installSlide) installReset(installSlide, true); }
+
+  function reveal(sec) {
+    var items = revealItems(sec);
+    items.forEach(function (el) { el.classList.remove('reveal'); });
+    void sec.offsetWidth;
+    items.forEach(function (el, i) {
+      el.style.setProperty('--d', (80 + Math.min(i, 14) * 70) + 'ms');
+      el.classList.add('reveal');
+    });
+  }
 
   function stepsOf(i) { return parseInt(slides[i].getAttribute('data-steps') || '0', 10); }
   function fromHash() {
@@ -1163,6 +1257,7 @@ description: <span class="hi">Use for any question about a price a customer sees
     Array.prototype.forEach.call(nodes, function (n) {
       n.classList.toggle('hot', parseInt(n.getAttribute('data-step'), 10) === step);
     });
+    if (revealedIdx !== idx) { reveal(slides[idx]); revealedIdx = idx; playInstall(slides[idx]); }
     driveVideo();
     var max = stepsOf(idx);
     counter.textContent = (idx + 1) + ' / ' + slides.length + (max ? '  ·  ' + step + '/' + max : '');
@@ -1227,7 +1322,7 @@ description: <span class="hi">Use for any question about a price a customer sees
         break;
       case 'ArrowRight': case 'ArrowDown': case 'PageDown': e.preventDefault(); next(); break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); prev(); break;
-      case 'Escape': closeBonus(); break;
+      case 'Escape': closeBonus(); finishInstall(); break;
       case 'Home': e.preventDefault(); go(0, false); break;
       case 'End': e.preventDefault(); go(slides.length - 1, false); break;
       case 'n': case 'N': document.body.classList.toggle('notes-on'); break;

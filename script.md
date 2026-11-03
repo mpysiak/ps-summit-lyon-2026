@@ -24,15 +24,15 @@ better model. It is what the model gets at the moment it needs it. And I will sh
 
 ## 2 · About me · 1:00
 
-Very quickly, who I am. I'm a senior backend developer at Sylius.
+Very quickly, who I am. I'm a senior software engineer at Sylius.
 
-On the product side I work on the B2B Suite and on Sylius core.
+I build product: the B2B Suite and Sylius core.
 
-On the project side I do e-commerce audits, architecture advice, and I sit on pre-sales calls with clients.
+I work with the business side: architecture consulting on commercial projects, real use cases, real clients.
 That is where I hear "the page is slow" most often. You will hear it again in about five minutes.
 
-And the third tile is why I'm here: developer experience. I maintain the Sylius Mate extension, which is open
-source, and that is what this talk is about.
+And AI: I build Sylius AI Dev Tools and the Sylius AI Assistant, and I spend my days on what we will call
+the harness. That last one is what this talk is about.
 
 ---
 
