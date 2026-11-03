@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <title>Your AI Knows PHP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@700&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@700&family=Instrument+Serif:ital@1&display=swap">
 <style>
   :root {
     --ground: #e9edf1;
@@ -515,14 +515,26 @@
   .stack .side { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.1cqi; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); align-self: center; text-align: right; padding-right: .4cqi; }
   .stack .side.you { color: var(--accent); font-weight: 600; }
   .stack .side.req { grid-row: 2 / span 3; border-right: .25cqi solid rgba(22,32,42,.25); align-self: stretch; display: flex; align-items: center; justify-content: flex-end; }
-  .stack .bar { display: grid; grid-template-columns: 19cqi 1fr auto; align-items: center; column-gap: 1.6cqi; padding: 1.1cqi 2.2cqi; border-radius: 1.2cqi; }
+  .stack .bar { display: grid; grid-template-columns: 3cqi 18.6cqi 1fr auto; align-items: center; column-gap: 1.6cqi; padding: 1.1cqi 2cqi; border-radius: 1.2cqi; }
+  .stack .ico { width: 3cqi; height: 3cqi; display: block; }
+  .stack .ico.swan { height: 3.2cqi; }
+  .stack .ico.sf { color: var(--ink); }
+  .stack .ico.you { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700; font-size: 1.7cqi; line-height: 3cqi; text-align: center; white-space: nowrap; letter-spacing: -.1em; }
+  .stack .swan .lg-a { fill: #30ba9d; } .stack .swan .lg-b { fill: #1a9f83; }
+  .stack .bar.pkg.sylius { background: rgba(48, 186, 157, .22); border: 1px solid rgba(26, 159, 131, .6); }
+  .stack .bar.pkg.sylius b { color: #0f6e58; }
+  .stack .bar.pkg.sylius span { color: #2b5a4e; }
+  .stack .bar.pkg.sylius i { color: #0f6e58; opacity: .9; }
   .stack .bar b { font-family: "Inter Tight", "Instrument Sans", sans-serif; font-weight: 700; font-size: 2.1cqi; letter-spacing: -.01em; }
   .stack .bar span { font-size: 1.8cqi; line-height: 1.3; }
   .stack .bar i { font-style: normal; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.05cqi; opacity: .75; white-space: nowrap; }
   .stack .bar.pkg { background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.7); backdrop-filter: blur(6px); color: var(--ink); }
   .stack .bar.pkg span { color: var(--muted); }
-  .stack .bar.yours { background: var(--accent); color: #fff; padding: 1.5cqi 2.2cqi; }
-  .stack .bar.engine { background: #000; color: #fff; padding: .9cqi 2.2cqi; }
+  .stack .bar.yours { background: rgba(255, 216, 77, .45); color: var(--mark-ink); padding: 1.5cqi 2cqi; border: 1px solid rgba(201, 164, 30, .55); backdrop-filter: blur(6px); }
+  .stack .bar.yours span { color: #5a4a0a; }
+  .stack .bar.yours i { opacity: .8; }
+  .stack .bar.engine { background: #000; color: #fff; padding: .9cqi 2cqi; }
+  .stack .bar.engine .ico.sf { color: #fff; opacity: .9; }
   .stack .bar.engine span { color: #c8d2d9; font-size: 1.6cqi; }
   .stack + .thesis { margin-top: 1.3cqi; font-size: 2cqi; padding: 1cqi 1.6cqi; }
   .tool-grid { display: grid; grid-template-columns: 62fr 38fr; gap: 2cqi; flex: 1; min-height: 0; align-items: start; margin-top: .8cqi; }
@@ -600,6 +612,54 @@
   .install .lede.pending { opacity: 0; translate: 0 .8cqi; }
   @media (prefers-reduced-motion: reduce) { .install .term.typing .typed .cur { animation: none; } }
 
+
+  /* ---- slide 17: project map ---- */
+  .scan-grid { display: grid; grid-template-columns: auto 1fr; gap: 3.5cqi; flex: 0 0 auto; align-items: center; margin-top: 0; }
+  .pmap { height: 25cqi; width: auto; max-width: 46cqi; display: block; }
+  .pmap .lay rect { fill: rgba(22, 32, 42, .08); stroke: rgba(22, 32, 42, .22); stroke-width: 1; transition: fill .45s ease, stroke .45s ease; }
+  .pmap .lay text { font-family: "Instrument Sans", Arial, sans-serif; font-size: 14px; font-weight: 600; fill: rgba(22, 32, 42, .38); text-anchor: middle; transition: fill .45s ease; }
+  .pmap .lay text.lbl { text-anchor: start; }
+  .pmap .lay.lit rect { fill: rgba(255, 255, 255, .92); stroke: var(--accent); }
+  .pmap .lay.lit text { fill: var(--ink); }
+  .pmap .lay.core.lit rect { fill: #000; stroke: #000; }
+  .pmap .lay.core.lit text { fill: var(--pss-green); }
+  .pmap .cells rect { fill: rgba(22, 32, 42, .10); stroke: none; }
+  .pmap .lay.lit .cells rect { fill: rgba(22, 32, 42, .14); }
+  .pmap .lay.lit .cells rect.ov { fill: var(--accent); }
+  .scan-rows { display: grid; gap: .35cqi; align-self: center; }
+  .scan-row { display: grid; gap: .25cqi; opacity: .3; translate: .8cqi 0; transition: opacity .45s ease, translate .45s cubic-bezier(.2, .7, .2, 1); }
+  .scan-row code { background: none; padding: 0; font-size: 1.35cqi; font-weight: 500; color: var(--muted); transition: color .45s ease; }
+  .scan-row span { color: var(--muted); transition: color .45s ease; }
+  .scan-row.lit span { color: var(--ink); }
+  .scan-row span { font-size: 1.55cqi; line-height: 1.3; }
+  .scan-row.lit { opacity: 1; translate: 0 0; }
+  .scan-row.lit code { color: var(--accent); font-weight: 700; }
+  .scan-foot { margin-top: .3cqi; font-size: 1.5cqi; white-space: nowrap; color: var(--muted); opacity: 0; transition: opacity .5s ease; }
+  .scan-foot strong { color: var(--ink); }
+  .scan-foot.lit { opacity: 1; }
+  .scan-grid + .thesis { margin-top: auto; font-size: 1.9cqi; padding: .9cqi 1.5cqi; }
+  @media (prefers-reduced-motion: reduce) { .pmap .lay rect, .pmap .lay text, .scan-row, .scan-row code, .scan-foot { transition: none; } }
+
+  /* ---- slide 18: one question ---- */
+  .ask h2 { font-size: 3.6cqi; margin-bottom: 1.6cqi; }
+  .ask-grid { display: grid; grid-template-columns: auto 1fr; gap: 4cqi; flex: 0 0 auto; align-items: center; }
+  .pcard { height: 27cqi; width: auto; display: block; filter: drop-shadow(0 .8cqi 2cqi rgba(22, 32, 42, .14)); }
+  .pcard .frame { fill: #fff; }
+  .pcard .img { fill: url(#pcard-img); }
+  .pcard .t { font-family: "Instrument Sans", Arial, sans-serif; font-size: 17px; font-weight: 600; fill: #16202a; }
+  .pcard .v { font-family: "Instrument Sans", Arial, sans-serif; font-size: 13px; fill: #5a6b7a; }
+  .pcard .p { font-family: "Instrument Sans", Arial, sans-serif; font-size: 17px; font-weight: 600; fill: #16202a; }
+  .pcard .hl { fill: var(--mark); opacity: 0; transition: opacity .35s ease; }
+  .pcard .hl.hot { opacity: 1; }
+  .ask .answer { opacity: 0; translate: 0 1.2cqi; transition: opacity .45s ease, translate .45s cubic-bezier(.2, .7, .2, 1); align-self: center; }
+  .ask .answer.hot { opacity: 1; translate: 0 0; }
+  .ask .answer.card.pss-card { padding: 1.8cqi 2.2cqi 2cqi; }
+  .ask .answer h3 { text-transform: none; letter-spacing: .02em; }
+  .ask .answer dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: .7cqi 1.6cqi; font-size: 1.75cqi; line-height: 1.35; }
+  .ask .answer dt { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.15cqi; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); align-self: baseline; padding-top: .35cqi; }
+  .ask .answer dd { margin: 0; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.35cqi; overflow-wrap: anywhere; }
+  .ask-grid + .thesis { margin-top: auto; font-size: 2cqi; padding: 1cqi 1.6cqi; }
+  @media (prefers-reduced-motion: reduce) { .pcard .hl, .ask .answer { transition: none; } }
 </style>
 
 <div class="stage" id="stage">
@@ -908,22 +968,26 @@
     <div class="stack">
       <div class="side you">You write</div>
       <div class="bar yours">
+        <span class="ico you">{ }</span>
         <b>Your project</b>
         <span>Your domain. The rules only you know</span>
         <i>mate/src · mate/skills</i>
       </div>
       <div class="side req">composer<br>require</div>
-      <div class="bar pkg">
+      <div class="bar pkg sylius">
+        <svg class="ico swan" viewBox="0 0 140 168" aria-hidden="true"><polygon class="lg-a" points="27.8,97.3 57.7,157.2 113,157.2 126.4,138.4"/><polygon class="lg-b" points="7,103.8 47.2,159.1 113,159.2 126.4,138.5"/><polygon class="lg-b" points="55.2,36.5 74.8,51.7 92.6,17.7 86.5,13.9"/><polygon class="lg-a" points="113,159.2 55.2,36.5 67.6,27.6 134.8,125.5"/><polygon class="lg-a" points="81,17.9 118.6,48.3 92.2,9.5"/></svg>
         <b>Sylius extension</b>
         <span>Resources, hooks, grids, mailer, plugins, 6 skills</span>
         <i>sylius/sylius-mate-extension</i>
       </div>
       <div class="bar pkg">
+        <svg class="ico sf" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9C5.8.9.9 5.8.9 12a11 11 0 1 0 22.2 0A11 11 0 0 0 12 .9zm6.5 6c-.6 0-.9-.3-.9-.8 0-.2 0-.4.2-.6l.2-.4c0-.3-.5-.4-.6-.4-1.8.1-2.3 2.5-2.7 4.4l-.2 1c1 .2 1.8 0 2.2-.3.6-.4-.2-.7-.1-1.2.1-.3.5-.5.7-.6.5 0 .7.5.7.9 0 .7-1 1.8-3 1.8l-.6-.1-.6 2.4c-.4 1.6-.8 3.8-2.4 5.7-1.4 1.7-2.9 1.9-3.5 1.9-1.2 0-1.9-.6-2-1.5 0-.8.7-1.3 1.2-1.3.6 0 1.1.5 1.1 1s-.2.6-.4.6c-.1.1-.3.2-.3.4 0 .1.1.3.4.3.5 0 .8-.3 1.1-.5 1.2-.9 1.6-2.7 2.2-5.7l.1-.7.7-3.2c-.8-.6-1.3-1.4-2.4-1.7-.6-.1-1.1.1-1.5.5-.4.5-.2 1.1.2 1.5l.7.6c.7.8 1.2 1.6 1 2.5-.3 1.5-2 2.6-4 1.9-1.8-.6-2-1.8-1.8-2.5.2-.6.6-.7 1.1-.6.5.2.6.7.6 1.2l-.1.3c-.2.1-.3.3-.3.4-.1.4.4.6.7.7.7.3 1.6-.2 1.8-.8a1 1 0 0 0-.4-1.1l-.7-.8c-.4-.4-1.1-1.4-.7-2.6.1-.5.4-.9.7-1.3a4 4 0 0 1 2.8-.6c1.2.4 1.8 1.1 2.6 1.8.5-1.2 1-2.4 1.8-3.5.9-.9 1.9-1.6 3.1-1.7 1.3.2 2.2.7 2.2 1.6 0 .4-.2 1.1-.9 1.1z"/></svg>
         <b>Symfony extension</b>
         <span>Profiler, container, services, routes, dotenv</span>
         <i>symfony/ai-symfony-mate-extension</i>
       </div>
       <div class="bar engine">
+        <svg class="ico sf" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9C5.8.9.9 5.8.9 12a11 11 0 1 0 22.2 0A11 11 0 0 0 12 .9zm6.5 6c-.6 0-.9-.3-.9-.8 0-.2 0-.4.2-.6l.2-.4c0-.3-.5-.4-.6-.4-1.8.1-2.3 2.5-2.7 4.4l-.2 1c1 .2 1.8 0 2.2-.3.6-.4-.2-.7-.1-1.2.1-.3.5-.5.7-.6.5 0 .7.5.7.9 0 .7-1 1.8-3 1.8l-.6-.1-.6 2.4c-.4 1.6-.8 3.8-2.4 5.7-1.4 1.7-2.9 1.9-3.5 1.9-1.2 0-1.9-.6-2-1.5 0-.8.7-1.3 1.2-1.3.6 0 1.1.5 1.1 1s-.2.6-.4.6c-.1.1-.3.2-.3.4 0 .1.1.3.4.3.5 0 .8-.3 1.1-.5 1.2-.9 1.6-2.7 2.2-5.7l.1-.7.7-3.2c-.8-.6-1.3-1.4-2.4-1.7-.6-.1-1.1.1-1.5.5-.4.5-.2 1.1.2 1.5l.7.6c.7.8 1.2 1.6 1 2.5-.3 1.5-2 2.6-4 1.9-1.8-.6-2-1.8-1.8-2.5.2-.6.6-.7 1.1-.6.5.2.6.7.6 1.2l-.1.3c-.2.1-.3.3-.3.4-.1.4.4.6.7.7.7.3 1.6-.2 1.8-.8a1 1 0 0 0-.4-1.1l-.7-.8c-.4-.4-1.1-1.4-.7-2.6.1-.5.4-.9.7-1.3a4 4 0 0 1 2.8-.6c1.2.4 1.8 1.1 2.6 1.8.5-1.2 1-2.4 1.8-3.5.9-.9 1.9-1.6 3.1-1.7 1.3.2 2.2.7 2.2 1.6 0 .4-.2 1.1-.9 1.1z"/></svg>
         <b>Mate</b>
         <span>The engine: discovery, the CLI, skills installer. No tools of its own</span>
         <i>symfony/ai-mate</i>
@@ -1062,23 +1126,62 @@ description: <span class="hi">Use for any question about a price a customer sees
   </section>
 
   <!-- 17 · our case: tools and skills -->
-  <section class="slide">
-    <div class="eyebrow">Our case · sylius/sylius-mate-extension</div>
-    <h2>27 tools. 6 skills. <span class="q">One package.</span></h2>
-    <div class="intro-grid two what-grid our-grid">
-      <div class="card pss-card">
-        <h3>Tools · facts from the booted kernel</h3>
-        <div class="kw"><span>sylius_project_profile</span><span>sylius_installed_plugins</span><span>sylius_hooks_find_for_template</span><span>sylius_twig_function_verify</span></div>
-        <div class="lab">+23 more · resources, grids, routes, mailer, tests</div>
-      </div>
-      <div class="card pss-card">
-        <h3>Skills · when to ask</h3>
-        <div class="kw"><span>sylius-dev · the entry point</span><span>resource · frontend · events</span><span>mailer · verify</span></div>
-        <div class="lab">installed by mate discover · .agents/skills</div>
+  <section class="slide scan">
+    <div class="eyebrow">Our case · sylius/sylius-mate-extension · 27 tools · 6 skills · one package</div>
+    <h2>It knows <span class="q">your</span> Sylius project.</h2>
+    <div class="scan-grid">
+      <svg class="pmap" viewBox="0 0 600 330" aria-label="Layers of a Sylius project lighting up as the tools read them">
+        <g class="lay" data-seq="5"><rect x="40" y="22" width="520" height="52" rx="10"/><text x="300" y="54">app/ · your resources and grids</text></g>
+        <g class="lay hooks" data-seq="4">
+          <rect x="40" y="92" width="520" height="56" rx="10"/>
+          <text class="lbl" x="60" y="126">twig hooks</text>
+          <g class="cells">
+            <rect x="190" y="104" width="22" height="32" rx="4"/><rect x="218" y="104" width="22" height="32" rx="4"/><rect class="ov" x="246" y="104" width="22" height="32" rx="4"/><rect x="274" y="104" width="22" height="32" rx="4"/><rect x="302" y="104" width="22" height="32" rx="4"/><rect x="330" y="104" width="22" height="32" rx="4"/><rect class="ov" x="358" y="104" width="22" height="32" rx="4"/><rect x="386" y="104" width="22" height="32" rx="4"/><rect x="414" y="104" width="22" height="32" rx="4"/><rect x="442" y="104" width="22" height="32" rx="4"/><rect class="ov" x="470" y="104" width="22" height="32" rx="4"/><rect x="498" y="104" width="22" height="32" rx="4"/><rect x="526" y="104" width="22" height="32" rx="4"/>
+          </g>
+        </g>
+        <g class="lay" data-seq="3"><rect x="40" y="166" width="250" height="46" rx="10"/><text x="165" y="195">decorated services</text><rect x="310" y="166" width="250" height="46" rx="10"/><text x="435" y="195">event listeners</text></g>
+        <g class="lay" data-seq="2"><rect x="40" y="230" width="164" height="46" rx="10"/><text x="122" y="259">plugin</text><rect x="218" y="230" width="164" height="46" rx="10"/><text x="300" y="259">plugin</text><rect x="396" y="230" width="164" height="46" rx="10"/><text x="478" y="259">plugin</text></g>
+        <g class="lay core" data-seq="1"><rect x="40" y="294" width="520" height="30" rx="10"/><text x="300" y="314">Sylius core</text></g>
+      </svg>
+      <div class="scan-rows">
+        <div class="scan-row" data-seq="1"><code>sylius_project_profile</code><span>Which Sylius, which channels, which locales</span></div>
+        <div class="scan-row" data-seq="2"><code>sylius_installed_plugins</code><span>Every plugin, with its version</span></div>
+        <div class="scan-row" data-seq="3"><code>sylius_service_decorators</code><span>Who overrides what in the container</span></div>
+        <div class="scan-row" data-seq="4"><code>sylius_hooks_list</code><span>Every hook, every override, every priority</span></div>
+        <div class="scan-row" data-seq="5"><code>sylius_domain_list_resources</code><span>Your entities: model, repository, factory, form</span></div>
+        <div class="scan-row" data-seq="5"><code>sylius_domain_list_grids</code><span>Your grids: fields, filters, actions</span></div>
+        <p class="scan-foot" data-seq="6">From the booted kernel, <strong>not guessed from the code.</strong></p>
       </div>
     </div>
     <div class="thesis">Nothing here <mark>you couldn't write yourself.</mark><span class="by">composer require --dev sylius/sylius-ai-dev-tools</span></div>
-    <div class="notes">Same mechanism as slides 13 to 15, just more of it. Honestly: our extension boots the host kernel, the opposite of Mate's core, because hooks, grids and decorators can't be read from the XML dump. Skills: sylius-dev gives the mental model and the "Mate first" protocol (profile, then plugins and decorators, then hooks, before the first file is created). Refuse-rules live in a separate file loaded on demand, SKILL.md itself is 30 to 90 lines. sylius-verify is the definition of done: verify pass, cache, Playwright gate. Count checked 1 Nov: 27 #[MateTool], 5 resource templates, 6 skills.</div>
+    <div class="notes">Same mechanism as slides 13 to 15, just more of it. The map lights up layer by layer: core, plugins, decorators and listeners, hooks (the green cells are overrides), your own resources and grids on top. Each layer is one tool call, the top one is two: resources and grids. Honestly: our extension boots the host kernel, the opposite of Mate's core, because hooks, grids and decorators can't be read from the XML dump. Count checked 1 Nov: 27 #[MateTool], 5 resource templates, 6 skills. Skills were on slides 15 and 16, do not repeat them here.</div>
+  </section>
+
+  <!-- 18 · one question -->
+  <section class="slide ask" data-steps="2">
+    <div class="eyebrow">Our case · the question every new developer asks on day one</div>
+    <h2>Which hook renders the variants line, <span class="q">and who overrides it?</span></h2>
+    <div class="ask-grid">
+      <svg class="pcard" viewBox="0 0 300 400" aria-label="A product card with the variants line highlighted"><defs><linearGradient id="pcard-img" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9fe3d2"/><stop offset="1" stop-color="#0f9b7f"/></linearGradient></defs>
+        <rect class="frame" x="0" y="0" width="300" height="400" rx="14"/>
+        <rect class="img" x="18" y="18" width="264" height="240" rx="10"/>
+        <text class="t" x="18" y="292">Stellar Drift T-Shirt</text>
+        <rect class="hl step" data-step="2" x="10" y="304" width="280" height="30" rx="6"/>
+        <text class="v" x="18" y="324">5 variants · S, M, L, XL, XXL · 20 in stock</text>
+        <text class="p" x="18" y="362">$41.33</text>
+      </svg>
+      <div class="answer step card pss-card" data-step="2">
+        <h3>sylius_hooks_list · one call</h3>
+        <dl>
+          <dt>hookable</dt><dd>sylius_shop.shared.product.card.details</dd>
+          <dt>hook</dt><dd>variants · priority -10</dd>
+          <dt>template</dt><dd>templates/shop/product/card/details/variants.html.twig</dd>
+          <dt>declared in</dt><dd>config/packages/twig_hooks.yaml</dd>
+        </dl>
+      </div>
+    </div>
+    <p class="thesis">The customization from slide 5. <mark>The agent finds it before opening a file.</mark></p>
+    <div class="notes">Step 1: just the question and the card. Ask the room how long this takes on a project you do not know. Step 2: the answer, straight from the demo project's twig_hooks.yaml (checked 1 Nov): the hookable sylius_shop.shared.product.card.details, our hook named variants at priority -10, the template under templates/shop/product/card/details/. This is the same customization that caused the N+1 on slide 5, so the loop closes: the agent now knows where the bug lives before reading a file.</div>
   </section>
 
   <!-- 18 · ecosystem -->
@@ -1175,7 +1278,7 @@ description: <span class="hi">Use for any question about a price a customer sees
   var counter = document.getElementById('counter');
   var progress = document.getElementById('progress');
   var idx = 0, step = 1, revealedIdx = -1;
-  var EXPAND = '.hero, .intro-grid, .harness-grid, .harness-text, .ex-grid, .shots, .vs-grid, .vs-steps, .tool-grid, .tool-cards, .mate-grid, .what-grid, .stack, .pyr-wrap, .pyr-cards, .ex-cards';
+  var EXPAND = '.scan-grid, .ask-grid, .hero, .intro-grid, .harness-grid, .harness-text, .ex-grid, .shots, .vs-grid, .vs-steps, .tool-grid, .tool-cards, .mate-grid, .what-grid, .stack, .pyr-wrap, .pyr-cards, .ex-cards';
   function revealItems(root) {
     var out = [];
     Array.prototype.forEach.call(root.children, function (el) {
@@ -1225,6 +1328,23 @@ description: <span class="hi">Use for any question about a price a customer sees
   }
   function finishInstall() { if (installSlide) installReset(installSlide, true); }
 
+  var seqTimers = [], seqSlide = null;
+  function seqSet(sec, lit) { Array.prototype.forEach.call(sec.querySelectorAll('[data-seq]'), function (el) { el.classList.toggle('lit', lit); }); }
+  function playSeq(sec) {
+    seqTimers.forEach(clearTimeout); seqTimers = [];
+    if (seqSlide && seqSlide !== sec) { seqSet(seqSlide, true); }
+    seqSlide = null;
+    if (!sec.classList.contains('scan')) return;
+    seqSlide = sec;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { seqSet(sec, true); return; }
+    seqSet(sec, false);
+    Array.prototype.forEach.call(sec.querySelectorAll('[data-seq]'), function (el) {
+      var n = parseInt(el.getAttribute('data-seq'), 10);
+      seqTimers.push(setTimeout(function () { el.classList.add('lit'); }, 900 + (n - 1) * 650));
+    });
+  }
+  function finishSeq() { if (seqSlide) { seqTimers.forEach(clearTimeout); seqTimers = []; seqSet(seqSlide, true); } }
+
   function reveal(sec) {
     var items = revealItems(sec);
     items.forEach(function (el) { el.classList.remove('reveal'); });
@@ -1257,7 +1377,7 @@ description: <span class="hi">Use for any question about a price a customer sees
     Array.prototype.forEach.call(nodes, function (n) {
       n.classList.toggle('hot', parseInt(n.getAttribute('data-step'), 10) === step);
     });
-    if (revealedIdx !== idx) { reveal(slides[idx]); revealedIdx = idx; playInstall(slides[idx]); }
+    if (revealedIdx !== idx) { reveal(slides[idx]); revealedIdx = idx; playInstall(slides[idx]); playSeq(slides[idx]); }
     driveVideo();
     var max = stepsOf(idx);
     counter.textContent = (idx + 1) + ' / ' + slides.length + (max ? '  ·  ' + step + '/' + max : '');
@@ -1322,7 +1442,7 @@ description: <span class="hi">Use for any question about a price a customer sees
         break;
       case 'ArrowRight': case 'ArrowDown': case 'PageDown': e.preventDefault(); next(); break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); prev(); break;
-      case 'Escape': closeBonus(); finishInstall(); break;
+      case 'Escape': closeBonus(); finishInstall(); finishSeq(); break;
       case 'Home': e.preventDefault(); go(0, false); break;
       case 'End': e.preventDefault(); go(slides.length - 1, false); break;
       case 'n': case 'N': document.body.classList.toggle('notes-on'); break;
