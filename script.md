@@ -1,7 +1,7 @@
 # Script · PS Summit Lyon · 5 Nov 2026
 
 What to say on every slide, in full sentences, as spoken. Budgets are the ones from `run-sheet.md`
-(34:00 target, 36:00 with the optional bits). `[→]` = press the arrow. Lines in **bold** are the ones
+(34:00 target, 36:15 with the optional bits). `[→]` = press the arrow. Lines in **bold** are the ones
 that must land word for word. Everything in *italics* is a stage direction, not spoken.
 
 Pace: ~125 words per minute. That is slower than you talk in Polish. Keep it.
@@ -351,7 +351,7 @@ handshake. Do not go there from the stage.*
 
 ---
 
-## 17 · Our case · 1:30
+## 17 · Our case · 1:00
 
 Our extension. 27 tools, 6 skills, one package.
 
@@ -368,7 +368,22 @@ Nothing here you could not write yourself with what you saw on the last three sl
 
 ---
 
-## 18 · Ecosystem · 0:45
+## 18 · One question · 0:45
+
+One question, the kind you get every week. Which hook renders the variants line on the product card, and who
+overrides it?
+
+*Ask the room: on a project you do not know, how long does this take you?*
+
+[→] One call. The hookable, our hook, its priority, the template, the file that declares it. Straight from the
+booted kernel.
+
+This is the customization from slide 5, the one that caused the N+1. The loop closes: the agent now knows where
+the bug lives before it opens a single file.
+
+---
+
+## 19 · Ecosystem · 0:45
 
 Same pattern, many domains.
 
@@ -382,7 +397,7 @@ If you build your own, start from the template.
 
 ---
 
-## 19 · Not just Sylius · 1:00
+## 20 · Not just Sylius · 1:00
 
 If you don't do Sylius, what is in it for you?
 
@@ -403,7 +418,7 @@ Tools and skills in vendor. Versioned with the code, not in a CLAUDE.md that eve
 
 ---
 
-## 20 · Monday · 1:15
+## 21 · Monday · 1:15
 
 *Slow down. This is the close.*
 
@@ -421,7 +436,7 @@ Context, tools, checks. The same three from the beginning of the talk.
 
 ---
 
-## 21 · Thank you
+## 22 · Thank you
 
 Thank you. The slides, the links, the demo commands, the full results table: all in this repo, the QR code works.
 

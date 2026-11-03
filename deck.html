@@ -1201,7 +1201,7 @@ description: <span class="hi">Use for any question about a price a customer sees
     <div class="notes">Step 1: just the question and the card. Ask the room how long this takes on a project you do not know. Step 2: the answer, straight from the demo project's twig_hooks.yaml (checked 1 Nov): the hookable sylius_shop.shared.product.card.details, our hook named variants at priority -10, the template under templates/shop/product/card/details/. This is the same customization that caused the N+1 on slide 5, so the loop closes: the agent now knows where the bug lives before reading a file.</div>
   </section>
 
-  <!-- 18 · ecosystem -->
+  <!-- 19 · ecosystem -->
   <section class="slide">
     <div class="eyebrow">Ecosystem · Mate extensions</div>
     <h2>Same pattern, <span class="q">many domains.</span></h2>
@@ -1226,7 +1226,7 @@ description: <span class="hi">Use for any question about a price a customer sees
     <div class="notes">Official bridges live in the symfony/ai monorepo: Symfony (container, profiler, the one from recording 2) and Monolog (logs). Versions as of 1 Nov 2026: symfony/ai-mate and the Symfony and Monolog bridges are 1.0.0-BETA1, our extension accepts ^1.0. MatesOfMate is the community organization: PHPStan, PHPUnit, Composer, Rector at 0.7.2, already on the 1.0 beta, plus self-review, extension-template, awesome-mate. Products: Sylius (ours), Sulu (Johannes, 0.3.0), OroCommerce (community, 0.2.0), OpenDXP (1.0.4), Softspring CMS. Building your own: start from extension-template. Re-check versions on 4 Nov, a 1.0 stable may land before the talk.</div>
   </section>
 
-  <!-- 19 · any PHP -->
+  <!-- 20 · any PHP -->
   <section class="slide">
     <div class="eyebrow">What's in it for you · not necessarily Sylius</div>
     <h2>Not just Sylius. Not even Symfony. <span class="q">Any PHP.</span></h2>
@@ -1252,7 +1252,7 @@ description: <span class="hi">Use for any question about a price a customer sees
     <div class="notes">The answer to "what's in it for me, if I don't do Sylius". Stress: the APP does not need Symfony. Mate brings its own container and its own Symfony components in vendor, Symfony is one bridge among possible ones, legacy apps work too. PrestaShop: same mechanism, a Composer package with mate/src and mate/skills, with or without the Symfony bridge. Do not frame it as "Sylius has it, Presta does not", that is not the thesis; the thesis is that the mechanism is framework-neutral. Team: one composer require in the project and every dev, every agent has the same, no more CLAUDE.md that everyone writes their own way. Dropped from the slide, say if time: works when the app doesn't boot (container from the dump, profiler and logs from disk).</div>
   </section>
 
-  <!-- 20 · takeaway + closing bracket -->
+  <!-- 21 · takeaway + closing bracket -->
   <section class="slide">
     <div class="eyebrow">Your project · Monday</div>
     <h2>Harness engineering <span class="q">> picking the model</span></h2>
@@ -1270,7 +1270,7 @@ description: <span class="hi">Use for any question about a price a customer sees
     <div class="notes">Takeaway and closing bracket: the same sentence as slide 4, word for word. The three layers are the three from slide 4. "Measure": the Mate Lab numbers from slide 16, don't assume the agent reaches for the tool.</div>
   </section>
 
-  <!-- 21 · thanks -->
+  <!-- 22 · thanks -->
   <section class="slide title pss pss-thanks">
     <img class="wordmark" src="media/pss/pss-wordmark-light.png" alt="PS Summit 2026">
     <p class="t1">Thank</p>

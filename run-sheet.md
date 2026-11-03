@@ -9,16 +9,16 @@ Say column = the one line the slide must land, not a script. Cue column = what t
 - Click once on the deck (video autoplay needs a user gesture). Press `→` once on slide 6 and `←` back to confirm both videos seek.
 - Volume irrelevant: recordings are silent.
 - Chrome: no other tabs, notifications off, "Do not disturb" on the Mac.
-- Water. Clicker paired. Slide 21 QR tested on the phone.
+- Water. Clicker paired. Slide 22 QR tested on the phone.
 
 ## Timeline
 
 | clock | # | slide | min | say | cue |
 |---|---|---|---|---|---|
 | 0:00 | 1 | Title | 0:30 | The model knows PHP. Does it know *your* project? It is not about the next model, it is about what the model gets at the moment of need. | |
-| 0:30 | 2 | About me | 1:00 | One sentence per tile. Third tile is the bridge: Developer experience, the Mate extension. | |
+| 0:30 | 2 | About me | 1:00 | One sentence on screen. Say the three areas: product, business, and the bridge, the Mate extension. | |
 | 1:30 | 3 | Getting project knowledge in | 2:00 | Era 1 guess, era 2 instructions (2,000 lines of AGENTS.md), era 3 facts from the app, asked, not described. "Remember this slide." | Optional hands up: who has an AGENTS.md or CLAUDE.md in the repo? |
-| 3:30 | 4 | Harness | 2:00 | A harness does not climb for you, it decides what a fall costs. Context, tools, checks. **"The model is replaceable. The harness is yours."** (say it exactly, it comes back on 20) | |
+| 3:30 | 4 | Harness | 2:00 | A harness does not climb for you, it decides what a fall costs. Context, tools, checks. **"The model is replaceable. The harness is yours."** (say it exactly, it comes back on 21) | |
 | 5:30 | 5 | Simple example | 2:00 | Sylius Standard 2.3, one correct-looking customization, 112 queries, 45 times the same SELECT. "The profiler sees it. Will the agent ask?" | Do not give the baseline number. |
 | 7:30 | 6 | Recording 1, bare | 3:30 | Narrate the blocks: diff, the guess at 0:16 (training), then two and a half minutes of proving it by hand, regex over profiler HTML, hook off for a baseline. Verdict 2:41, 10 turns. | `→` per block, video jumps and stops by itself. Space = pause. |
 | 11:00 | 7 | Installation | 1:30 | Three commands, no network, seconds. "Between recording 1 and 2 this is the only thing that changes." Point at what init left: AGENTS.md block, mate/src, skills. | |
@@ -31,13 +31,14 @@ Say column = the one line the slide must land, not a script. Cue column = what t
 | 26:00 | 14 | Your own tool 2/2 | 1:30 | `mate discover`, no config. Then the support question: gold group sees 79 instead of 99. One call, the answer carries the price list and the rule that won. "Same move as the profiler, only this fact is yours." | |
 | 27:30 | 15 | Your own skill | 2:00 | The tool says how it is, the skill says when to ask. A directory with SKILL.md, one line in composer.json. "Works in other projects too? Make it a Composer package." | |
 | 29:30 | 16 | Synergy | 2:00 | Skills alone keep guessing. Tools alone sit in vendor unused: 0/10, 0/10; MCP 3/10, 2/10. Together 10/10, 5/10. Visibility decides. One sentence on MCP: Mate removed the server after this, "kill the transport, not the capability". That is why the skill ships with the tools. | `→` ×3 lights the cards. |
-| 31:30 | 17 | Our case | 1:30 | 27 tools, 6 skills, one package. sylius-dev is the entry, sylius-verify the definition of done. "Nothing here you couldn't write yourself." One line: `composer require --dev sylius/sylius-ai-dev-tools`. | |
-| 33:00 | 18 | Ecosystem | 0:45 | Same pattern, many domains: official bridges, MatesOfMate, products. Start from extension-template. | Cut to one sentence if behind. |
-| 33:45 | 19 | Any PHP | 1:00 | Your app needs no Symfony. PrestaShop, Laravel, legacy: same mechanism, a Composer package with mate/src and mate/skills. Versioned with the code, not in a CLAUDE.md per person. | Do not frame as "Sylius has it, Presta does not". |
-| 34:45 | 20 | Monday | 1:15 | Start Monday: one tool for the most frequent guess, one skill that says when, measure whether the agent uses it. Context, tools, checks, same three as slide 4. **"The model is replaceable. The harness is yours."** | |
-| 36:00 | 21 | Thank you | – | Repo, deck, QR. Stays on screen. | Q&A until 40:00. |
+| 31:30 | 17 | Our case | 1:00 | 27 tools, 6 skills, one package. sylius-dev is the entry, sylius-verify the definition of done. "Nothing here you couldn't write yourself." One line: `composer require --dev sylius/sylius-ai-dev-tools`. | |
+| 32:30 | 18 | One question | 0:45 | Which hook renders the variants line, who overrides it? Ask the room how long that takes on an unknown project. `→` one call, the answer from the booted kernel. "Same customization as slide 5, the agent knows where the bug lives before opening a file." | `→` ×1 reveals the answer. |
+| 33:15 | 19 | Ecosystem | 0:45 | Same pattern, many domains: official bridges, MatesOfMate, products. Start from extension-template. | Cut to one sentence if behind. |
+| 34:00 | 20 | Any PHP | 1:00 | Your app needs no Symfony. PrestaShop, Laravel, legacy: same mechanism, a Composer package with mate/src and mate/skills. Versioned with the code, not in a CLAUDE.md per person. | Do not frame as "Sylius has it, Presta does not". |
+| 35:00 | 21 | Monday | 1:15 | Start Monday: one tool for the most frequent guess, one skill that says when, measure whether the agent uses it. Context, tools, checks, same three as slide 4. **"The model is replaceable. The harness is yours."** | |
+| 36:15 | 22 | Thank you | – | Repo, deck, QR. Stays on screen. | Q&A until 40:00. |
 
-Sum of the slide budgets is 36:00; the 34:00 target assumes the optional bits stay out. Everything after slide 17 is short on purpose, so a late start still lands the bracket on 20.
+Sum of the slide budgets is 36:15; the 34:00 target assumes the optional bits stay out. Everything after slide 17 is short on purpose, so a late start still lands the bracket on 21.
 
 ## Checkpoints
 
@@ -45,10 +46,10 @@ Sum of the slide budgets is 36:00; the 34:00 target assumes the optional bits st
 |---|---|---|
 | 9 Comparison (arriving) | 15:00 | no "guess the tokens" |
 | 13 Your own tool (arriving) | 24:00 | slide 12 to one sentence, slide 15 without the package part |
-| 17 Our case (arriving) | 31:30 | slide 18 to one sentence, slide 19 to the first card only |
-| 20 Monday (arriving) | 36:00 | say the bracket sentence, straight to 21, shorter Q&A |
+| 17 Our case (arriving) | 31:30 | slide 18 to the answer only, slide 19 to one sentence, slide 20 to the first card only |
+| 21 Monday (arriving) | 36:15 | say the bracket sentence, straight to 22, shorter Q&A |
 
-Never cut: 4, 6, 8, 9, 20. The talk is the two recordings and the bracket.
+Never cut: 4, 6, 8, 9, 21. The talk is the two recordings and the bracket.
 
 ## Q&A, prepared
 
