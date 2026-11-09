@@ -410,6 +410,9 @@
   .vid-wrap .badge { position: absolute; top: 1.2cqi; right: 1.2cqi; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 1.3cqi; letter-spacing: .08em; text-transform: uppercase; background: var(--mark); color: var(--mark-ink); padding: .4cqi .9cqi; border-radius: .4cqi; }
 
   /* ---- nav & notes ---- */
+  body.thumb .counter, body.thumb .progress { display: none; }
+  body.thumb { padding: 0; }
+  body.thumb .stage { width: 100vw; height: 100vh; border-radius: 0; box-shadow: none; }
   .notes { display: none; }
   body.notes-on .slide.is-active .notes {
     display: block; position: absolute; left: 0; right: 0; bottom: 0;
@@ -1385,7 +1388,20 @@ description: <span class="hi">Use for any question about a price a customer sees
     counter.textContent = (idx + 1) + ' / ' + slides.length + (max ? '  ·  ' + step + '/' + max : '');
     progress.style.width = ((idx + 1) / slides.length * 100) + '%';
     if (location.hash !== '#' + (idx + 1)) history.replaceState(null, '', '#' + (idx + 1));
+    sync();
   }
+  var THUMB = /[?&]thumb/.test(location.search);
+  if (THUMB) { document.body.classList.add('thumb'); window.addEventListener('message', function (e) { var d = e.data; if (!d || typeof d.idx !== 'number') return; go(d.idx, false); step = d.step || 1; paint(); }); }
+  var chan = null; if (!THUMB) { try { chan = new BroadcastChannel('ps-summit-deck'); } catch (e) {} }
+  function sync() {
+    if (THUMB) return;
+    var msg = { idx: idx, step: step, steps: stepsOf(idx), t: Date.now() };
+    try { if (chan) chan.postMessage(msg); } catch (e) {}
+    try { localStorage.setItem('ps-summit-deck', JSON.stringify(msg)); } catch (e) {}
+  }
+  function onCmd(d) { if (!d) return; if (d.cmd === 'next') next(); else if (d.cmd === 'prev') prev(); else if (d.cmd === 'hello') sync(); }
+  if (chan) chan.onmessage = function (e) { onCmd(e.data); };
+  if (!chan) window.addEventListener('storage', function (e) { if (e.key === 'ps-summit-cmd' && e.newValue) { try { onCmd(JSON.parse(e.newValue)); } catch (err) {} } });
   function closeBonus() {
     var sec = document.querySelector('.slide.bonus'); if (!sec) return;
     var pl = document.getElementById('bonus-player'), v = document.getElementById('bonus-video'); if (!pl) return;

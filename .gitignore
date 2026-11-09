@@ -2,3 +2,4 @@ node_modules/
 slides.pdf
 .DS_Store
 runs/
+__pycache__/
